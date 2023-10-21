@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_FILE_UTILITY_SELSCRCTLR</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: Selection screen controller for File Utility</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>PT2</KEY>
+     <ENTRY>Select directory</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>PT3</KEY>
+     <ENTRY>Select file</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CALL_VALUE_HELP_4_LOGICAL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Call table value help for a logical name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_VALUE_HELP_N_REG_FIELDS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create value help for requested path parameter</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for logical or physical path / filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_FILE_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for logical file name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for logical path / filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_PATH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for logical path</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_PC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for physical path / filename at the client PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_PC_4_DIRECTORY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for a directory at the client PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_PC_4_FILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for a file at the client PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_PHYSICAL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for physical path / filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE_SERVER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Browsing for physical path / filename at the server</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FIELD_VALUE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get value either from screen or from default value</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Modifying / adjusting selection screen fields</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_SCR_FLD_ATTR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Screen field attributes (usage with table SCREEN)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_VALUE_HELP_TOOL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Value help supporting tool</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_VH_OPTIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Constants and value checks for value help tool</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_SEL_PARAM_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parameter names of corresponding file (set in CONSTRUCTOR)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_F4_SEL_FILE_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selected file name in F4_BROWSE</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_F4_SEL_PATH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selected path in F4_BROWSE</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_SCRFLDS_FILE_NO</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>This instance is assigned to the selection fields n</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Provide (hidden) selection screen parameter values</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ_LOGICAL_FILE_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Read logical file names for value help request</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ_LOGICAL_PATH_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Read logical path names for value help request</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Separate path and file name into attributes of it</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_LOG_FILE_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Logical file names to selected location</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_LOG_PATH_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Logical path names to selected location</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_SEL_PAR_VALUES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Values of the selection parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_TT_LOG_FILE_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>All found logical file names to selected location</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_TT_LOG_PATH_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>All found logical path names to selected location</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_VALUE_HELP_4_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IT_VALUE_LIST</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selection value list</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_VALUE_HELP_4_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_RETURN_FIELD_NAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Name of column to be returned</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_VALUE_HELP_4_LOGICAL_NAME</CMPNAME>
+     <SCONAME>RT_SELECTED_VALUES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>List with selected values</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_VALUE_HELP_4_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CALL_VALUE_HELP_4_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_LOCATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Location: server or client (FILE_OPTIONS-&gt;LOCATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_PROGNAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP Program Name were the sel.screen include is used</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_SCREEN_NO</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selection screen number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_SCRFLDS_FILE_NO</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File number for selection field access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_VALUE_HELP_N_REG_FIELDS</CMPNAME>
+     <SCONAME>IV_PROGNAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP Program Name were the sel.screen include is used</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_VALUE_HELP_N_REG_FIELDS</CMPNAME>
+     <SCONAME>IV_SCREEN_NO</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selection screen number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_VALUE_HELP_N_REG_FIELDS</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_FILE_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_FILE_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_FILE_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type for directories or files</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_PATH</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_PATH</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_LOGICAL_PATH</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type for directories or files</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC_4_DIRECTORY</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC_4_DIRECTORY</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC_4_FILE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PC_4_FILE</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PHYSICAL_NAME</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type for directories or files</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PHYSICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_PHYSICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_SERVER</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type for directories or files</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_SERVER</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>F4_BROWSE_SERVER</CMPNAME>
+     <SCONAME>ZCX_CA_UI</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: UI interaction messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FIELD_VALUE</CMPNAME>
+     <SCONAME>EV_VALUE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FIELD_VALUE</CMPNAME>
+     <SCONAME>IV_FIELDNAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Fieldname of requested value</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FIELD_VALUE</CMPNAME>
+     <SCONAME>ZCX_CA_CONV</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Conversion failed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FIELD_VALUE</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>IV_MASK_DISP_ONLY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Mask to set selection fields to display only</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>IV_MASK_HIDING</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Mask to hide selection fields</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>IV_USE_F4_HELP_ONLY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Hide all parameter fields</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <SCONAME>RS_SELSCR_PARAM_VALS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parameter values</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <SCONAME>ZCX_CA_CONV</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Conversion failed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_LOGICAL_FILE_NAMES</CMPNAME>
+     <SCONAME>RT_LOG_FILE_NAMES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selected logical file names</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_LOGICAL_FILE_NAMES</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_LOGICAL_PATH_NAMES</CMPNAME>
+     <SCONAME>RT_LOG_PATH_NAMES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selected logical file names</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_LOGICAL_PATH_NAMES</CMPNAME>
+     <SCONAME>ZCX_CA_DBACC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Database access</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
+     <SCONAME>IV_SEL_PATH_N_FILENAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Chosen path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type for directories or files</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

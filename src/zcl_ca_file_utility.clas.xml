@@ -1,0 +1,920 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_FILE_UTILITY</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: File utility for server + client/PC</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>File name for INPUT (reading) ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Number of read records ..........................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S03</KEY>
+     <ENTRY>File name for OUTPUT (transfering) ..............:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S04</KEY>
+     <ENTRY>Number of transferred records ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S05</KEY>
+     <ENTRY>Number of records read over all .................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S06</KEY>
+     <ENTRY>Number of transferred records over all ..........:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S07</KEY>
+     <ENTRY>Number of opened files for ...</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S08</KEY>
+     <ENTRY>... action INPUT ................................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S09</KEY>
+     <ENTRY>... action OUTPUT ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S10</KEY>
+     <ENTRY>... action APPEND ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S11</KEY>
+     <ENTRY>... action UPDATE ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check authority of path and file</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check result of OPEN DATASET and raise exception</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Close dataset</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Delete</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DETERMINE_LOCATION_PARAMETERS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determine several location depending parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Download a file to the PC/client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get file (READ from server / UPLOAD from client PC)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get file OR directory list in the given directory</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FILE_LIST_OF_AS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get file list of directory on application server</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FILE_LIST_OF_PC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get file list of directory on PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get physical path and file name to a logical filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get physical path and file name to a logical filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determine structure / field length of a record</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_PATH_FILE_AVAILABLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check if any path and filename is available</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_FILE_OPTIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constants for File Utility</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_PATH_HDLR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File System Paths</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_CNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Counters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_CNT_ALL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Record counters over all</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_DATASET_CNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Dataset counters depending on operation type</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_CODEPAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Current codepage of either the app. server or the client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_LOCATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Location: A = server / P = client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_OPSYS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>OS of location (conform for logical filename)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_PATH_FILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete path and file name for dataset access</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_PATH_SEP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>OS specific path separator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Open dataset</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PRINT_LOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Print simple log with statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PRINT_LOG_OVER_ALL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Print simple log with statistics over all activities</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Read data from file and write statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RESET_STATISTICS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Reset statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PHYSICAL_PATH_FILENAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set physical path and file name (see docu in method)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transfer data to file and write statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_CNTS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Counters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_DATASET_CNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Dataset counter</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_FILE_LIST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File infos from directory (copied from program RSWATCH0)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Upload a file from the PC/client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file (TRANSFER to server / DOWNLOAD on client/PC)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file from application server</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (FILE_OPTIONS-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_MSG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message string of OPEN DATASET statement</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_SUBRC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Return code of OPEN DATASET statement</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>IV_LOCATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Location: server or client (FILE_OPTIONS-&gt;LOCATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DETERMINE_LOCATION_PARAMETERS</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>CT_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_CONFIRM_OVERWRITE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Confirm overwriting file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (FILE_OPTIONS-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file of this length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of CHAR fields</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS_EOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of the last column</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_WRITE_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Separate fields by horizontal tabulator</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_WRITE_LF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Add CR/LF at end of CHAR lines</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>ET_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_HAS_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Fields are TAB separ. - result table needs corresp. cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <SCONAME>IV_FILTER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generic filename (may end with *)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <SCONAME>IV_PATH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path, may incl. file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <SCONAME>IV_SORT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Sort file list (use const MO_FILE_OPTIONS-&gt;LIST_SORTING-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type (use const MO_FILE_OPTIONS-&gt;VALUE_HELP-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <SCONAME>RT_FILE_LIST</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Content of directory / file list</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_AS</CMPNAME>
+     <SCONAME>IV_FILTER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generic filename (may end with *)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_AS</CMPNAME>
+     <SCONAME>IV_PATH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Directory name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_AS</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type (use const MO_FILE_OPTIONS-&gt;VALUE_HELP-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_AS</CMPNAME>
+     <SCONAME>RT_FILE_LIST</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Content of directory / file list</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_AS</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_PC</CMPNAME>
+     <SCONAME>IV_FILTER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generic filename (may end with *)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_PC</CMPNAME>
+     <SCONAME>IV_PATH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Directory name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_PC</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type (use const MO_FILE_OPTIONS-&gt;VALUE_HELP-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_PC</CMPNAME>
+     <SCONAME>RT_FILE_LIST</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Content of directory / file list</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_LIST_OF_PC</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_INCL_DIR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Expecting / return a physical path</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_LOGICAL_FILENAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Logical file name defined in TA FILE</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_PARAM_1</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Replacement parameter 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_PARAM_2</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Replacement parameter 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_PARAM_3</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Replacement parameter 3</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_USE_BUFFER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Use buffer to avoid recurring data access and checks</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_WITH_FILE_EXT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Append internal file extension to file name ..e. g. BIN</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>RV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Physical path and/or file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <SCONAME>RO_PATH_HDLR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File System Paths</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>IS_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Data object to determine length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>RV_REC_LEN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_PATH_FILE_AVAILABLE</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_PATH_FILE_AVAILABLE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (FILE_OPTIONS-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Physical path and/or file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>ES_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Record for file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Actual length of last record</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>EV_NO_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = No more records available (leave loop)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Expected length (lower 0 = complete file)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PHYSICAL_PATH_FILENAME</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get handler for physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <SCONAME>IS_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Record for file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <SCONAME>IV_REC_LEN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Length of single record (lower eq 0 = normal behaviour)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>ET_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>IV_HAS_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Field are TAB separated, result table needs corresp cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>CT_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_CONFIRM_OVERWRITE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Confirm overwriting file (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (FILE_OPTIONS-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file of this length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of CHAR fields (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS_EOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Trunc. trailing blanks at end of the last col. (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_WRITE_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Separate fields by horizontal tabulator (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_WRITE_LF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Add CR/LF at end of CHAR lines (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>IT_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

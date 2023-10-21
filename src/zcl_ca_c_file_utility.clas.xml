@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_C_FILE_UTILITY</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_AGAINST_FIXED_VALUES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check value against fixed_values</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_LIST_SORTING_VALID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Valid list_sorting option passed?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_LOCATION_VALID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Valid file location passed?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_MODE_VALID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Valid file mode passed?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_OPERATION_VALID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Valid file operation passed?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_PATH_TYPE_VALID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Valid path / file type passed?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_VALUE_HELP_TYPE_VALID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Valid value help switch option passed?</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LIST_SORTING</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Sorting order options for file list</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOCATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File location</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MODE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File modes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>OPERATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operations</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PATH_TYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Path / file types</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SELECTION_FIELDS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selection fields for file x</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SINGLETON_INSTANCE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Instance of the class itself</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>VALUE_HELP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type: For directories or files</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_AGAINST_FIXED_VALUES</CMPNAME>
+     <SCONAME>PARAM_NAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Name of field/parameter for output in error message</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_AGAINST_FIXED_VALUES</CMPNAME>
+     <SCONAME>VALUE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value under test</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_AGAINST_FIXED_VALUES</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Class instance</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_LIST_SORTING_VALID</CMPNAME>
+     <SCONAME>LIST_SORTING</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>List sorting option</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_LIST_SORTING_VALID</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_LOCATION_VALID</CMPNAME>
+     <SCONAME>LOCATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File location</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_LOCATION_VALID</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_MODE_VALID</CMPNAME>
+     <SCONAME>FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File mode</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_MODE_VALID</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_OPERATION_VALID</CMPNAME>
+     <SCONAME>OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_OPERATION_VALID</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_PATH_TYPE_VALID</CMPNAME>
+     <SCONAME>PATH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Path / file type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_PATH_TYPE_VALID</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_VALUE_HELP_TYPE_VALID</CMPNAME>
+     <SCONAME>VALUE_HELP_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_VALUE_HELP_TYPE_VALID</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
