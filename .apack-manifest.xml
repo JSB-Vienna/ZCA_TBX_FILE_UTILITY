@@ -3,7 +3,7 @@
  <asx:values>
   <DATA>
    <GROUP_ID>itinere.at</GROUP_ID>
-   <ARTIFACT_ID>zca_tbx_file_utility</ARTIFACT_ID>
+   <ARTIFACT_ID>zcl_ca_file_utility_apm</ARTIFACT_ID>
    <VERSION>1.0.0</VERSION>
    <REPOSITORY_TYPE>abapGit</REPOSITORY_TYPE>
    <GIT_URL>https://github.com/JSB-Vienna/zca_file_utility.git</GIT_URL>
