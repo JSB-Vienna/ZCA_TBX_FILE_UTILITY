@@ -125,7 +125,7 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
   PUBLIC SECTION.
 *   l o c a l   t y p e   d e f i n i t i o n
     TYPES:
-      "! <p class="shorttext synchronized" lang="en">Values of the selection parameters</p>
+      "! <p class="shorttext synchronized" lang="en">Selection parameter values to this file handler</p>
       BEGIN OF ty_s_sel_par_values,
         location  TYPE dxlocation,
         path_type TYPE dxfiletyp,
@@ -135,6 +135,24 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
         operation TYPE dsetactype,
         mode      TYPE swr_filetype,
       END   OF ty_s_sel_par_values,
+
+      "! <p class="shorttext synchronized" lang="en">Names to all parts of a selection parameter</p>
+      BEGIN OF ty_s_sel_param_names,
+        field_name   TYPE fieldname,
+        user_command TYPE ptc_command,
+        memory_id    TYPE rsscr_spgp,
+        modif_id     TYPE scrfgrp1,
+      END   OF ty_s_sel_param_names,
+
+      "! <p class="shorttext synchronized" lang="en">Names/Commands to selection fields</p>
+      BEGIN OF ty_s_sel_field_names,
+        location  TYPE ty_s_sel_param_names,
+        path_type TYPE ty_s_sel_param_names,
+        path      TYPE ty_s_sel_param_names,
+        file_name TYPE ty_s_sel_param_names,
+        operation TYPE ty_s_sel_param_names,
+        mode      TYPE ty_s_sel_param_names,
+      END   OF ty_s_sel_field_names,
 
       "! <p class="shorttext synchronized" lang="en">Logical path names to selected location</p>
       BEGIN OF ty_s_log_path_name,
@@ -162,6 +180,12 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
 
 *   i n s t a n c e   a t t r i b u t e s
     DATA:
+*     s t r u c t u r e s
+      "! <p class="shorttext synchronized" lang="en">All the names to each selection field</p>
+      "!
+      "! <p>Fields of the structure without a value have either no command or no memory id defined.</p>
+      sel_field_names    TYPE ty_s_sel_field_names READ-ONLY,
+
 *     s i n g l e   v a l u e s
       "! <p class="shorttext synchronized" lang="en">This instance is assigned to the selection fields n</p>
       mv_scrflds_file_no TYPE num1 READ-ONLY.
@@ -220,14 +244,12 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Provide (hidden) selection screen parameter values</p>
       "!
       "! @parameter rs_selscr_param_vals | <p class="shorttext synchronized" lang="en">Parameter values</p>
-      "! @raising   zcx_ca_vh_tool       | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
-      "! @raising   zcx_ca_conv          | <p class="shorttext synchronized" lang="en">CA-TBX exception: Conversion failed</p>
+      "! @raising   zcx_ca_file_utility  | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       provide_selscreen_param_values
         RETURNING
           VALUE(rs_selscr_param_vals) TYPE ty_s_sel_par_values
         RAISING
-          zcx_ca_vh_tool
-          zcx_ca_conv.
+          zcx_ca_file_utility.
 
 
 * P R O T E C T E D   S E C T I O N
@@ -236,22 +258,11 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
     DATA:
 *     o b j e c t   r e f e r e n c e s
       "! <p class="shorttext synchronized" lang="en">CA-TBX: Screen field attributes (usage with table SCREEN)</p>
-      mo_scr_fld_attr    TYPE REF TO zcl_ca_c_screen_field_attr,
+      mo_scr_fld_attr     TYPE REF TO zcl_ca_c_screen_field_attr,
       "! <p class="shorttext synchronized" lang="en">CA-TBX: Constants and value checks for value help tool</p>
-      mo_vh_options      TYPE REF TO zcl_ca_c_vh_tool,
+      mo_vh_options       TYPE REF TO zcl_ca_c_vh_tool,
       "! <p class="shorttext synchronized" lang="en">CA-TBX: Value help supporting tool</p>
-      mo_value_help_tool TYPE REF TO zcl_ca_vh_tool,
-
-*     s t r u c t u r e s
-      "! <p class="shorttext synchronized" lang="en">Parameter names of corresponding file (set in CONSTRUCTOR)</p>
-      BEGIN OF ms_sel_param_name,
-        location  TYPE fieldname,
-        path_type TYPE fieldname,
-        path      TYPE fieldname,
-        file_name TYPE fieldname,
-        operation TYPE fieldname,
-        mode      TYPE fieldname,
-      END   OF ms_sel_param_name,
+      mo_value_help_tool  TYPE REF TO zcl_ca_vh_tool,
 
 *     s i n g l e   v a l u e s
       "! <p class="shorttext synchronized" lang="en">Selected path in F4_BROWSE</p>
@@ -277,6 +288,10 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
         RAISING
           zcx_ca_vh_tool
           zcx_ca_ui,
+
+
+      "! <p class="shorttext synchronized" lang="en">Compile all names / commands / Ids for each selection field</p>
+      compile_sel_screen_names,
 
       "! <p class="shorttext synchronized" lang="en">Create value help for requested path parameter</p>
       "!
@@ -484,6 +499,42 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
   ENDMETHOD.                    "call_value_help_4_logical_name
 
 
+  METHOD compile_sel_screen_names.
+    "-----------------------------------------------------------------*
+    "   Compile all names / commands / Ids for each selection field
+    "-----------------------------------------------------------------*
+    sel_field_names-location-field_name   = |P_FL{ mv_scrflds_file_no }LOC| ##no_text.
+*    sel_field_names-location-memory_id    = |ZCA_FL{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-location-modif_id     = |FL{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-location-user_command = |LOCATION_{ mv_scrflds_file_no }_CHANGED| ##no_text.
+
+    sel_field_names-path_type-field_name   = |P_FL{ mv_scrflds_file_no }TYP| ##no_text.
+*    ms_selscr_names-path_type-memory_id    = |ZCA_FT{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-path_type-modif_id     = |FT{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-path_type-user_command = |PATHTYPE_{ mv_scrflds_file_no }_CHANGED| ##no_text.
+
+    sel_field_names-path-field_name   = |P_FL{ mv_scrflds_file_no }PTH| ##no_text.
+    sel_field_names-path-memory_id    = |ZCA_PATH_{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-path-modif_id     = |FP{ mv_scrflds_file_no }| ##no_text.
+*    ms_selscr_names-path-user_command = |PATH_{ mv_scrflds_file_no }_CHANGED| ##no_text.
+
+    sel_field_names-file_name-field_name   = |P_FL{ mv_scrflds_file_no }NAM| ##no_text.
+    sel_field_names-file_name-memory_id    = |ZCA_FILE_NAME_{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-file_name-modif_id     = |FN{ mv_scrflds_file_no }| ##no_text.
+*    ms_selscr_names-file_name-user_command = |FILE_NAME_{ mv_scrflds_file_no }_CHANGED| ##no_text.
+
+    sel_field_names-operation-field_name   = |P_FL{ mv_scrflds_file_no }OP| ##no_text.
+*    ms_selscr_names-operation-memory_id    = |ZCA_FO{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-operation-modif_id     = |FO{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-operation-user_command = |OPERATION_{ mv_scrflds_file_no }_CHANGED| ##no_text.
+
+    sel_field_names-mode-field_name   = |P_FL{ mv_scrflds_file_no }MOD| ##no_text.
+*    ms_selscr_names-mode-memory_id    = |ZCA_FM{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-mode-modif_id     = |FM{ mv_scrflds_file_no }| ##no_text.
+    sel_field_names-mode-user_command = |MODE_{ mv_scrflds_file_no }_CHANGED| ##no_text.
+  ENDMETHOD.                    "compile_sel_screen_names
+
+
   METHOD constructor.
     "-----------------------------------------------------------------*
     "   Constructor
@@ -494,6 +545,7 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
     mo_vh_options   = zcl_ca_c_vh_tool=>get_instance( ).
 
     mv_scrflds_file_no = iv_scrflds_file_no.
+    compile_sel_screen_names( ).
 
     create_value_help_n_reg_fields( iv_progname  = iv_progname
                                     iv_screen_no = iv_screen_no ).
@@ -504,13 +556,6 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Create value help for requested path parameter
     "-----------------------------------------------------------------*
-    "Assemble field names
-    ms_sel_param_name-location        = CONV fieldname( |P_FL{ mv_scrflds_file_no }LOC| ) ##no_text.
-    ms_sel_param_name-path_type       = CONV fieldname( |P_FL{ mv_scrflds_file_no }TYP| ) ##no_text.
-    ms_sel_param_name-path            = CONV fieldname( |P_FL{ mv_scrflds_file_no }PTH| ) ##no_text.
-    ms_sel_param_name-file_name       = CONV fieldname( |P_FL{ mv_scrflds_file_no }NAM| ) ##no_text.
-    ms_sel_param_name-operation       = CONV fieldname( |P_FL{ mv_scrflds_file_no }OP| ) ##no_text.
-    ms_sel_param_name-mode            = CONV fieldname( |P_FL{ mv_scrflds_file_no }MOD| ) ##no_text.
 
     "Get selected values from selection screen
     mo_value_help_tool = NEW zcl_ca_vh_tool( iv_progname  = iv_progname
@@ -518,12 +563,12 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
                                              iv_vh_type   = mo_vh_options->vh_type-internal_table ).
 
     "Register field names to catch up there values from screen
-    mo_value_help_tool->register_screen_field( ms_sel_param_name-location ).
-    mo_value_help_tool->register_screen_field( ms_sel_param_name-path_type ).
-    mo_value_help_tool->register_screen_field( ms_sel_param_name-path ).
-    mo_value_help_tool->register_screen_field( ms_sel_param_name-file_name ).
-    mo_value_help_tool->register_screen_field( ms_sel_param_name-operation ).
-    mo_value_help_tool->register_screen_field( ms_sel_param_name-mode ).
+    mo_value_help_tool->register_screen_field( sel_field_names-location-field_name ).
+    mo_value_help_tool->register_screen_field( sel_field_names-path_type-field_name ).
+    mo_value_help_tool->register_screen_field( sel_field_names-path-field_name ).
+    mo_value_help_tool->register_screen_field( sel_field_names-file_name-field_name ).
+    mo_value_help_tool->register_screen_field( sel_field_names-operation-field_name ).
+    mo_value_help_tool->register_screen_field( sel_field_names-mode-field_name ).
   ENDMETHOD.                    "create_value_help_n_reg_fields
 
 
@@ -537,7 +582,8 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
 
     TRY.
         "Get selection screen values -> reads only the visible fields
-        mo_value_help_tool->read_field_values_from_screen( iv_selection_type = mo_vh_options->selection_type-all_screen_fields ).
+        mo_value_help_tool->read_field_values_from_screen(
+                                        iv_selection_type = mo_vh_options->selection_type-all_screen_fields ).
         DATA(ls_selscr_params) = provide_selscreen_param_values( ).
 
         "Get selected value help type, path type, operation type and may be a file name pattern
@@ -554,13 +600,13 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
 
         mo_value_help_tool->get_screen_field_value(
                                               EXPORTING
-                                                 iv_scr_field_name  = ms_sel_param_name-path
+                                                 iv_scr_field_name  = sel_field_names-path-field_name
                                               IMPORTING
                                                  ev_scr_field_value = mv_f4_sel_path ).
 
         mo_value_help_tool->get_screen_field_value(
                                               EXPORTING
-                                                 iv_scr_field_name  = ms_sel_param_name-file_name
+                                                 iv_scr_field_name  = sel_field_names-file_name-field_name
                                               IMPORTING
                                                  ev_scr_field_value = mv_f4_sel_file_name ).
 
@@ -574,9 +620,9 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
         ENDCASE.
 
         "Set selected value into screen field
-        mo_value_help_tool->set_screen_field_value( iv_scr_field_name  = ms_sel_param_name-path
+        mo_value_help_tool->set_screen_field_value( iv_scr_field_name  = sel_field_names-path-field_name
                                                     iv_scr_field_value = mv_f4_sel_path ).
-        mo_value_help_tool->set_screen_field_value( iv_scr_field_name  = ms_sel_param_name-file_name
+        mo_value_help_tool->set_screen_field_value( iv_scr_field_name  = sel_field_names-file_name-field_name
                                                     iv_scr_field_value = mv_f4_sel_file_name ).
 
         mo_value_help_tool->write_values_into_scr_fields( iv_convert_to_ext = abap_false ).
@@ -782,29 +828,27 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
       IMPORTING
         ev_serverfile    = lv_server_file
       EXCEPTIONS
-        canceled_by_user = 1
+        canceled_by_user = 1    "<== is not set by the FM -> therefore checking the result
         OTHERS           = 2.
+    IF sy-subrc NE 0.
+      DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+                                                     iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
+                                                     iv_function = '/SAPDMC/LSM_F4_SERVER_FILE'
+                                                     iv_subrc    = sy-subrc ) ) ##no_text.
+      IF lx_error IS BOUND.
+        RAISE EXCEPTION lx_error.
+      ENDIF.
+    ENDIF.
 
-    CASE sy-subrc.
-      WHEN 0.
-        separate_file_name_from_sel( iv_sel_path_n_filename = lv_server_file
-                                     iv_vh_type             = iv_vh_type ).
+    IF lv_server_file IS INITIAL.
+      RAISE EXCEPTION TYPE zcx_ca_ui
+        EXPORTING
+          textid   = zcx_ca_ui=>action_cancelled
+          mv_msgty = c_msgty_w.
+    ENDIF.
 
-      WHEN 1.
-        RAISE EXCEPTION TYPE zcx_ca_ui
-          EXPORTING
-            textid   = zcx_ca_ui=>action_cancelled
-            mv_msgty = c_msgty_w.
-
-      WHEN OTHERS.
-        DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
-                                                       iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
-                                                       iv_function = '/SAPDMC/LSM_F4_SERVER_FILE'
-                                                       iv_subrc    = sy-subrc ) ) ##no_text.
-        IF lx_error IS BOUND.
-          RAISE EXCEPTION lx_error.
-        ENDIF.
-    ENDCASE.
+    separate_file_name_from_sel( iv_sel_path_n_filename = lv_server_file
+                                 iv_vh_type             = iv_vh_type ).
   ENDMETHOD.                    "f4_browse_server
 
 
@@ -827,6 +871,12 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+    "If a field is hidden or inactive the method before is not able to read the value from the screen.
+    "Therefore try to get the value from the field itself.
+    "ATTENTION!! This can lead to an unintentional behavior. E. g. the file name had a default value which was
+    "erased just before executing the value help for the path without hitting the ENTER key. After the path
+    "selection the file will reappear although it was erased.
+    "A possible solution for this is.
     DATA(lv_program_field_name) = CONV seocpdname( |({ mo_value_help_tool->mv_progname }){ iv_fieldname }| ).
     ASSIGN (lv_program_field_name) TO <lv_value>.
     ASSERT sy-subrc EQ 0.
@@ -879,56 +929,69 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Provide (hidden) selection screen parameter values
     "-----------------------------------------------------------------*
-    get_field_value(
-                EXPORTING
-                  iv_fieldname = ms_sel_param_name-location
-                IMPORTING
-                  ev_value     = rs_selscr_param_vals-location ).
+    TRY.
+        get_field_value(
+                    EXPORTING
+                      iv_fieldname = sel_field_names-location-field_name
+                    IMPORTING
+                      ev_value     = rs_selscr_param_vals-location ).
 
-    get_field_value(
-                EXPORTING
-                  iv_fieldname = ms_sel_param_name-path_type
-                IMPORTING
-                  ev_value     = rs_selscr_param_vals-path_type ).
+        get_field_value(
+                    EXPORTING
+                      iv_fieldname = sel_field_names-path_type-field_name
+                    IMPORTING
+                      ev_value     = rs_selscr_param_vals-path_type ).
 
-    get_field_value(
-                EXPORTING
-                  iv_fieldname = ms_sel_param_name-path
-                IMPORTING
-                  ev_value     = rs_selscr_param_vals-path ).
+        get_field_value(
+                    EXPORTING
+                      iv_fieldname = sel_field_names-path-field_name
+                    IMPORTING
+                      ev_value     = rs_selscr_param_vals-path ).
 
-    "Clean up directory delimiter for a uniform / consistent path + file name handling
-    IF rs_selscr_param_vals-path IS NOT INITIAL.
-      DATA(lv_offset) = strlen( rs_selscr_param_vals-path ) - 1.
-      IF rs_selscr_param_vals-path+lv_offset(1) EQ mv_path_sep.
-        rs_selscr_param_vals-path+lv_offset(1) = space.
-      ENDIF.
+        "Clean up directory delimiter for a uniform / consistent path + file name handling
+        IF rs_selscr_param_vals-path IS NOT INITIAL.
+          DATA(lv_offset) = strlen( rs_selscr_param_vals-path ) - 1.
+          IF rs_selscr_param_vals-path+lv_offset(1) EQ mv_path_sep.
+            rs_selscr_param_vals-path+lv_offset(1) = space.
+          ENDIF.
 
-      rs_selscr_param_vals-path_file = rs_selscr_param_vals-path.
-    ENDIF.
+          rs_selscr_param_vals-path_file = rs_selscr_param_vals-path.
+        ENDIF.
 
-    get_field_value(
-                EXPORTING
-                  iv_fieldname = ms_sel_param_name-file_name
-                IMPORTING
-                  ev_value     = rs_selscr_param_vals-file_name ).
+        get_field_value(
+                    EXPORTING
+                      iv_fieldname = sel_field_names-file_name-field_name
+                    IMPORTING
+                      ev_value     = rs_selscr_param_vals-file_name ).
 
-    IF rs_selscr_param_vals-file_name IS NOT INITIAL.
-      rs_selscr_param_vals-path_file =
-                       |{ rs_selscr_param_vals-path_file }{ mv_path_sep }{ rs_selscr_param_vals-file_name }|.
-    ENDIF.
+        IF rs_selscr_param_vals-file_name IS NOT INITIAL.
+          rs_selscr_param_vals-path_file =
+                           |{ rs_selscr_param_vals-path_file }{ mv_path_sep }{ rs_selscr_param_vals-file_name }|.
+        ENDIF.
 
-    get_field_value(
-                EXPORTING
-                  iv_fieldname = ms_sel_param_name-operation
-                IMPORTING
-                  ev_value     = rs_selscr_param_vals-operation ).
+        get_field_value(
+                    EXPORTING
+                      iv_fieldname = sel_field_names-operation-field_name
+                    IMPORTING
+                      ev_value     = rs_selscr_param_vals-operation ).
 
-    get_field_value(
-                EXPORTING
-                  iv_fieldname = ms_sel_param_name-mode
-                IMPORTING
-                  ev_value     = rs_selscr_param_vals-mode ).
+        get_field_value(
+                    EXPORTING
+                      iv_fieldname = sel_field_names-mode-field_name
+                    IMPORTING
+                      ev_value     = rs_selscr_param_vals-mode ).
+
+      CATCH zcx_ca_conv
+            zcx_ca_vh_tool INTO DATA(lx_catched).
+        DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+                                                       iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
+                                                       iv_class    = 'ZCL_CA_FILE_UTILITY'
+                                                       iv_method   = 'PROVIDE_SELSCREEN_PARAM_VALUES'
+                                                       ix_error    = lx_catched ) ) ##no_text.
+        IF lx_error IS BOUND.
+          RAISE EXCEPTION lx_error.
+        ENDIF.
+    ENDTRY.
   ENDMETHOD.                    "provide_selscreen_param_values
 
 
@@ -1040,10 +1103,10 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
 
       CATCH cx_smart_path_syntax INTO DATA(lx_catched).
         DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
-                                                           iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
-                                                           iv_class    = 'CL_FS_PATH'
-                                                           iv_method   = 'CREATE'
-                                                           ix_error    = lx_catched ) ) ##no_text.
+                                                       iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
+                                                       iv_class    = 'CL_FS_PATH'
+                                                       iv_method   = 'CREATE'
+                                                       ix_error    = lx_catched ) ) ##no_text.
         IF lx_error IS BOUND.
           RAISE EXCEPTION lx_error.
         ENDIF.

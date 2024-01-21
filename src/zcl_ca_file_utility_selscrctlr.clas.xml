@@ -32,6 +32,11 @@
      <DESCRIPT>Call table value help for a logical name</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>COMPILE_SEL_SCREEN_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Compile all names / commands / Ids for each selection field</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Constructor</DESCRIPT>
@@ -112,11 +117,6 @@
      <DESCRIPT>CA-TBX: Constants and value checks for value help tool</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>MS_SEL_PARAM_NAME</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Parameter names of corresponding file (set in CONSTRUCTOR)</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
      <CMPNAME>MV_F4_SEL_FILE_NAME</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Selected file name in F4_BROWSE</DESCRIPT>
@@ -147,6 +147,11 @@
      <DESCRIPT>Read logical path names for value help request</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>SEL_FIELD_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>All the names to each selection field</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Separate path and file name into attributes of it</DESCRIPT>
@@ -162,9 +167,19 @@
      <DESCRIPT>Logical path names to selected location</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>TY_S_SEL_FIELD_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Names/Commands to selection fields</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_SEL_PARAM_NAMES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Names to all parts of a selection parameter</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>TY_S_SEL_PAR_VALUES</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Values of the selection parameters</DESCRIPT>
+     <DESCRIPT>Selection parameter values to this file handler</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TY_TT_LOG_FILE_NAMES</CMPNAME>
@@ -462,15 +477,9 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
-     <SCONAME>ZCX_CA_CONV</SCONAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>CA-TBX exception: Conversion failed</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
-     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>READ_LOGICAL_FILE_NAMES</CMPNAME>

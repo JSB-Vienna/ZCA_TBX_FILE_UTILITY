@@ -79,7 +79,7 @@ CLASS zcl_ca_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Complete path and file name for dataset access</p>
       mv_path_file    TYPE string READ-ONLY,
       "! <p class="shorttext synchronized" lang="en">OS specific path separator</p>
-      mv_path_sep     TYPE dmc_mds_path_separator READ-ONLY,
+      mv_path_sep     TYPE zca_d_path_separator READ-ONLY,
       "! <p class="shorttext synchronized" lang="en">Location: A = server / P = client/PC</p>
       mv_location     TYPE dxlocation READ-ONLY.
 
@@ -286,7 +286,7 @@ CLASS zcl_ca_file_utility DEFINITION PUBLIC
           iv_trunc_trail_blanks     TYPE abap_bool    DEFAULT abap_true
           iv_trunc_trail_blanks_eol TYPE abap_bool    DEFAULT abap_true
           iv_file_operation         TYPE dsetactype   DEFAULT zcl_ca_c_file_utility=>operation-output
-          iv_codepage               TYPE cpcodepage   OPTIONAL
+          iv_codepage               TYPE cpcodepage   DEFAULT '4110'   "equates to UTF-8 which is recommended for outbound
           iv_length                 TYPE i            OPTIONAL
         EXPORTING
           ev_length                 TYPE i
@@ -483,7 +483,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_CA_FILE_UTILITY IMPLEMENTATION.
+CLASS zcl_ca_file_utility IMPLEMENTATION.
 
   METHOD authority_check.
     "---------------------------------------------------------------------*
@@ -905,6 +905,11 @@ CLASS ZCL_CA_FILE_UTILITY IMPLEMENTATION.
         RAISE EXCEPTION lx_error.
       ENDIF.
     ENDIF.
+
+    ADD 1 TO zcl_ca_file_utility=>ms_dataset_cnt-input.
+    DATA(lv_lines) = lines( ct_file ).
+    ADD lv_lines TO: ms_cnt-transfer,
+                     zcl_ca_file_utility=>ms_cnt_all-transfer.
   ENDMETHOD.                    "download
 
 
@@ -1316,10 +1321,10 @@ CLASS ZCL_CA_FILE_UTILITY IMPLEMENTATION.
 
     CASE iv_file_mode.
       WHEN mo_file_options->mode-binary.
-        DESCRIBE FIELD is_record LENGTH rv_rec_len IN BYTE MODE.
+        rv_rec_len = xstrlen( is_record ).
 
       WHEN mo_file_options->mode-text.
-        DESCRIBE FIELD is_record LENGTH rv_rec_len IN CHARACTER MODE.
+        rv_rec_len = strlen( is_record ).
     ENDCASE.
   ENDMETHOD.                    "get_records_length
 
@@ -1814,7 +1819,7 @@ CLASS ZCL_CA_FILE_UTILITY IMPLEMENTATION.
 
     "Get length of structure
     lv_rec_len = get_records_length( iv_file_mode = iv_file_mode
-                                         is_record    = <ls_record> ).
+                                     is_record    = <ls_record> ).
 
     "In binary mode the it is insufficient
     IF iv_file_mode EQ mo_file_options->mode-binary.
