@@ -116,11 +116,6 @@
      <DESCRIPT>Download a file to the PC/client</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>GET</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Get file (READ from server / UPLOAD from client PC)</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
      <CMPNAME>GET_FILE_LIST</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Get file OR directory list in the given directory</DESCRIPT>
@@ -219,6 +214,11 @@
      <CMPNAME>PRINT_LOG_OVER_ALL</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Print simple log with statistics over all activities</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get file (READ from server / UPLOAD from client PC)</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>READ_DATASET</CMPNAME>
@@ -424,54 +424,6 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
-     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>ET_FILE</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>File as table</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>EV_LENGTH</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>File length</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>IV_CHECK_AUTH</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>IV_CODEPAGE</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>IV_FILE_MODE</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>IV_HAS_FIELD_SEPARATOR</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>X = Fields are TAB separ. - result table needs corresp. cols</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
-     <SCONAME>IV_PATH_FILE</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Complete physical path and file name</DESCRIPT>
-    </SEOSUBCOTX>
-    <SEOSUBCOTX>
-     <CMPNAME>GET</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Common exception: File handling errors</DESCRIPT>
@@ -712,6 +664,54 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>ET_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_HAS_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Fields are TAB separ. - result table needs corresp. cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Common exception: File handling errors</DESCRIPT>

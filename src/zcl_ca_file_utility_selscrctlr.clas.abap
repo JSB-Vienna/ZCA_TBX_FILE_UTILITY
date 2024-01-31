@@ -125,17 +125,6 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
   PUBLIC SECTION.
 *   l o c a l   t y p e   d e f i n i t i o n
     TYPES:
-      "! <p class="shorttext synchronized" lang="en">Selection parameter values to this file handler</p>
-      BEGIN OF ty_s_sel_par_values,
-        location  TYPE dxlocation,
-        path_type TYPE dxfiletyp,
-        path      TYPE dxlpath,
-        file_name TYPE dxfilename,
-        path_file TYPE string,
-        operation TYPE dsetactype,
-        mode      TYPE swr_filetype,
-      END   OF ty_s_sel_par_values,
-
       "! <p class="shorttext synchronized" lang="en">Names to all parts of a selection parameter</p>
       BEGIN OF ty_s_sel_param_names,
         field_name   TYPE fieldname,
@@ -217,7 +206,7 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
       "!
       "! <p>Call this method for each file you have a selection screen include. Use masks to hide or display
       "! only selection fields that are needed. Concatenate several  modification Ids delimited by a semicolon,
-      "! e. g. like this: FM;FM;FO</p>
+      "! e. g. like this: FM;FO;FT</p>
       "! Possible values are (in the order as displayed at the selection screen):<br>
       "!
       "! <ul>
@@ -247,7 +236,7 @@ CLASS zcl_ca_file_utility_selscrctlr DEFINITION PUBLIC
       "! @raising   zcx_ca_file_utility  | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       provide_selscreen_param_values
         RETURNING
-          VALUE(rs_selscr_param_vals) TYPE ty_s_sel_par_values
+          VALUE(rs_selscr_param_vals) TYPE zca_s_file_util_sel_params
         RAISING
           zcx_ca_file_utility.
 
@@ -611,11 +600,11 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
                                                  ev_scr_field_value = mv_f4_sel_file_name ).
 
         "Start dialog in dependence of path type
-        CASE ls_selscr_params-path_type.   "lv_file_type.
-          WHEN mo_file_options->path_type-logical.
+        CASE ls_selscr_params-type.
+          WHEN mo_file_options->type-logical.
             f4_browse_logical_name( lv_vh_type ).
 
-          WHEN mo_file_options->path_type-physical.
+          WHEN mo_file_options->type-physical.
             f4_browse_physical_name( lv_vh_type ).
         ENDCASE.
 
@@ -940,7 +929,7 @@ CLASS zcl_ca_file_utility_selscrctlr IMPLEMENTATION.
                     EXPORTING
                       iv_fieldname = sel_field_names-path_type-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-path_type ).
+                      ev_value     = rs_selscr_param_vals-type ).
 
         get_field_value(
                     EXPORTING

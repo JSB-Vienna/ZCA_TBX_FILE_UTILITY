@@ -122,29 +122,6 @@ CLASS zcl_ca_file_utility DEFINITION PUBLIC
         RAISING
           zcx_ca_file_utility,
 
-      "! <p class="shorttext synchronized" lang="en">Get file (READ from server / UPLOAD from client PC)</p>
-      "!
-      "! @parameter iv_path_file           | <p class="shorttext synchronized" lang="en">Complete physical path and file name</p>
-      "! @parameter iv_file_mode           | <p class="shorttext synchronized" lang="en">Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</p>
-      "! @parameter iv_codepage            | <p class="shorttext synchronized" lang="en">Codepage (can use MV_CODEPAGE as default, see TCP00)</p>
-      "! @parameter iv_has_field_separator | <p class="shorttext synchronized" lang="en">X = Fields are TAB separ. - result table needs corresp. cols</p>
-      "! @parameter iv_check_auth          | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
-      "! @parameter et_file                | <p class="shorttext synchronized" lang="en">File as table</p>
-      "! @parameter ev_length              | <p class="shorttext synchronized" lang="en">File length</p>
-      "! @raising   zcx_ca_file_utility    | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
-      get
-        IMPORTING
-          iv_path_file           TYPE string       OPTIONAL      "is may be already availabe via e. g. GET_LOGICAL_FILENAME
-          iv_file_mode           TYPE swr_filetype DEFAULT zcl_ca_c_file_utility=>mode-binary
-          iv_codepage            TYPE cpcodepage   OPTIONAL
-          iv_check_auth          TYPE abap_bool    DEFAULT abap_true
-          iv_has_field_separator TYPE abap_bool    DEFAULT abap_false
-        EXPORTING
-          et_file                TYPE STANDARD TABLE
-          ev_length              TYPE i
-        RAISING
-          zcx_ca_file_utility,
-
       "! <p class="shorttext synchronized" lang="en">Get file OR directory list in the given directory</p>
       "!
       "! @parameter iv_path             | <p class="shorttext synchronized" lang="en">Complete physical path, may incl. file name</p>
@@ -222,6 +199,29 @@ CLASS zcl_ca_file_utility DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Print simple log with statistics</p>
       print_log,
+
+      "! <p class="shorttext synchronized" lang="en">Get file (READ from server / UPLOAD from client PC)</p>
+      "!
+      "! @parameter iv_path_file           | <p class="shorttext synchronized" lang="en">Complete physical path and file name</p>
+      "! @parameter iv_file_mode           | <p class="shorttext synchronized" lang="en">Binary or character mode (FILE_OPTIONS-&gt;MODE-*)</p>
+      "! @parameter iv_codepage            | <p class="shorttext synchronized" lang="en">Codepage (can use MV_CODEPAGE as default, see TCP00)</p>
+      "! @parameter iv_has_field_separator | <p class="shorttext synchronized" lang="en">X = Fields are TAB separ. - result table needs corresp. cols</p>
+      "! @parameter iv_check_auth          | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
+      "! @parameter et_file                | <p class="shorttext synchronized" lang="en">File as table</p>
+      "! @parameter ev_length              | <p class="shorttext synchronized" lang="en">File length</p>
+      "! @raising   zcx_ca_file_utility    | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      read
+        IMPORTING
+          iv_path_file           TYPE string       OPTIONAL      "is may be already availabe via e. g. GET_LOGICAL_FILENAME
+          iv_file_mode           TYPE swr_filetype DEFAULT zcl_ca_c_file_utility=>mode-binary
+          iv_codepage            TYPE cpcodepage   OPTIONAL
+          iv_check_auth          TYPE abap_bool    DEFAULT abap_true
+          iv_has_field_separator TYPE abap_bool    DEFAULT abap_false
+        EXPORTING
+          et_file                TYPE STANDARD TABLE
+          ev_length              TYPE i
+        RAISING
+          zcx_ca_file_utility,
 
       "! <p class="shorttext synchronized" lang="en">Read data from file and write statistics</p>
       "!
@@ -913,69 +913,6 @@ CLASS zcl_ca_file_utility IMPLEMENTATION.
   ENDMETHOD.                    "download
 
 
-  METHOD get.
-    "---------------------------------------------------------------------*
-    "     Get file (READ from server / UPLOAD from client PC)
-    "---------------------------------------------------------------------*
-    "Local data definitions
-    DATA:
-      lr_s_record    TYPE REF TO data.
-
-    FIELD-SYMBOLS:
-      <ls_record>    TYPE data.
-
-    mo_file_options->is_mode_valid( iv_file_mode ).
-
-    is_path_file_available( iv_path_file ).
-
-    CASE mv_location.
-      WHEN mo_file_options->location-pc.
-        "P r e s e n t a t i o n   s e r v e r   /   c l i e n t / P C
-        upload(
-            EXPORTING
-              iv_file_mode           = iv_file_mode
-              iv_codepage            = iv_codepage
-              iv_has_field_separator = iv_has_field_separator
-            IMPORTING
-              et_file                = et_file
-              ev_length              = ev_length ).
-
-      WHEN mo_file_options->location-server.
-        "A p p l i c a t i o n   s e r v e r
-        open_dataset( iv_file_mode      = iv_file_mode
-                      iv_file_operation = mo_file_options->operation-input
-                      iv_codepage       = iv_codepage
-                      iv_check_auth     = iv_check_auth ).
-
-        "Create workarea for outbound table
-        CREATE DATA lr_s_record LIKE LINE OF et_file.
-        ASSIGN lr_s_record->* TO <ls_record>.
-
-        "Read complete file for return
-        CLEAR: et_file,
-               ev_length.
-        DO.
-          read_dataset(
-                  IMPORTING
-                    es_record    = <ls_record>
-                    ev_no_record = DATA(lv_no_record)
-                    ev_length    = DATA(lv_act_length) ).
-
-          "Add actual length to complete length
-          ev_length = ev_length + lv_act_length.
-          "Append line of file to internal table
-          APPEND <ls_record> TO et_file.
-
-          IF lv_no_record EQ abap_true.
-            EXIT.
-          ENDIF.
-        ENDDO.
-
-        close_dataset( ).
-    ENDCASE.
-  ENDMETHOD.                    "get
-
-
   METHOD get_file_list.
     "-----------------------------------------------------------------*
     "   Get file list of directory
@@ -1567,6 +1504,69 @@ CLASS zcl_ca_file_utility IMPLEMENTATION.
     ENDIF.
     SKIP 2.
   ENDMETHOD.                    "print_log_over_all
+
+
+  METHOD read.
+    "---------------------------------------------------------------------*
+    "     Get file (READ from server / UPLOAD from client PC)
+    "---------------------------------------------------------------------*
+    "Local data definitions
+    DATA:
+      lr_s_record    TYPE REF TO data.
+
+    FIELD-SYMBOLS:
+      <ls_record>    TYPE data.
+
+    mo_file_options->is_mode_valid( iv_file_mode ).
+
+    is_path_file_available( iv_path_file ).
+
+    CASE mv_location.
+      WHEN mo_file_options->location-pc.
+        "P r e s e n t a t i o n   s e r v e r   /   c l i e n t / P C
+        upload(
+            EXPORTING
+              iv_file_mode           = iv_file_mode
+              iv_codepage            = iv_codepage
+              iv_has_field_separator = iv_has_field_separator
+            IMPORTING
+              et_file                = et_file
+              ev_length              = ev_length ).
+
+      WHEN mo_file_options->location-server.
+        "A p p l i c a t i o n   s e r v e r
+        open_dataset( iv_file_mode      = iv_file_mode
+                      iv_file_operation = mo_file_options->operation-input
+                      iv_codepage       = iv_codepage
+                      iv_check_auth     = iv_check_auth ).
+
+        "Create workarea for outbound table
+        CREATE DATA lr_s_record LIKE LINE OF et_file.
+        ASSIGN lr_s_record->* TO <ls_record>.
+
+        "Read complete file for return
+        CLEAR: et_file,
+               ev_length.
+        DO.
+          read_dataset(
+                  IMPORTING
+                    es_record    = <ls_record>
+                    ev_no_record = DATA(lv_no_record)
+                    ev_length    = DATA(lv_act_length) ).
+
+          "Add actual length to complete length
+          ev_length = ev_length + lv_act_length.
+          "Append line of file to internal table
+          APPEND <ls_record> TO et_file.
+
+          IF lv_no_record EQ abap_true.
+            EXIT.
+          ENDIF.
+        ENDDO.
+
+        close_dataset( ).
+    ENDCASE.
+  ENDMETHOD.                    "read
 
 
   METHOD read_dataset.

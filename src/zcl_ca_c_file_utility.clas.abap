@@ -13,13 +13,13 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
         pc     TYPE dxlocation   VALUE 'P' ##no_text,
       END OF location,
 
-      "! <p class="shorttext synchronized" lang="en">Path / file types</p>
-      BEGIN OF path_type,
+      "! <p class="shorttext synchronized" lang="en">Path / file type</p>
+      BEGIN OF type,
         "! <p class="shorttext synchronized" lang="en">Path / file type: Physically</p>
         physical TYPE dxfiletyp    VALUE 'P',
         "! <p class="shorttext synchronized" lang="en">Path / file type: Logically</p>
         logical  TYPE dxfiletyp    VALUE 'L',
-      END OF path_type,
+      END OF type,
 
       "! <p class="shorttext synchronized" lang="en">File modes</p>
       BEGIN OF mode,
@@ -60,27 +60,81 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       END OF value_help,
 
       "! <p class="shorttext synchronized" lang="en">Selection fields for file x</p>
+      BEGIN OF selscr_user_command,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 0</p>
+        location_0_changed  TYPE syst_ucomm VALUE 'LOCATION_0_CHANGED'  ##NO_TEXT,
+        type_0_changed      TYPE syst_ucomm VALUE 'TYPE_0_CHANGED'  ##NO_TEXT,
+        operation_0_changed TYPE syst_ucomm VALUE 'OPERATION_0_CHANGED'  ##NO_TEXT,
+        mode_0_changed      TYPE syst_ucomm VALUE 'MODE_0_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 1</p>
+        location_1_changed  TYPE syst_ucomm VALUE 'LOCATION_1_CHANGED'  ##NO_TEXT,
+        type_1_changed      TYPE syst_ucomm VALUE 'TYPE_1_CHANGED'  ##NO_TEXT,
+        operation_1_changed TYPE syst_ucomm VALUE 'OPERATION_1_CHANGED'  ##NO_TEXT,
+        mode_1_changed      TYPE syst_ucomm VALUE 'MODE_1_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 2</p>
+        location_2_changed  TYPE syst_ucomm VALUE 'LOCATION_2_CHANGED'  ##NO_TEXT,
+        type_2_changed      TYPE syst_ucomm VALUE 'TYPE_2_CHANGED'  ##NO_TEXT,
+        operation_2_changed TYPE syst_ucomm VALUE 'OPERATION_2_CHANGED'  ##NO_TEXT,
+        mode_2_changed      TYPE syst_ucomm VALUE 'MODE_2_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 3</p>
+        location_3_changed  TYPE syst_ucomm VALUE 'LOCATION_3_CHANGED'  ##NO_TEXT,
+        type_3_changed      TYPE syst_ucomm VALUE 'TYPE_3_CHANGED'  ##NO_TEXT,
+        operation_3_changed TYPE syst_ucomm VALUE 'OPERATION_3_CHANGED'  ##NO_TEXT,
+        mode_3_changed      TYPE syst_ucomm VALUE 'MODE_3_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 4</p>
+        location_4_changed  TYPE syst_ucomm VALUE 'LOCATION_4_CHANGED'  ##NO_TEXT,
+        type_4_changed      TYPE syst_ucomm VALUE 'TYPE_4_CHANGED'  ##NO_TEXT,
+        operation_4_changed TYPE syst_ucomm VALUE 'OPERATION_4_CHANGED'  ##NO_TEXT,
+        mode_4_changed      TYPE syst_ucomm VALUE 'MODE_4_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 5</p>
+        location_5_changed  TYPE syst_ucomm VALUE 'LOCATION_5_CHANGED'  ##NO_TEXT,
+        type_5_changed      TYPE syst_ucomm VALUE 'TYPE_5_CHANGED'  ##NO_TEXT,
+        operation_5_changed TYPE syst_ucomm VALUE 'OPERATION_5_CHANGED'  ##NO_TEXT,
+        mode_5_changed      TYPE syst_ucomm VALUE 'MODE_5_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 6</p>
+        location_6_changed  TYPE syst_ucomm VALUE 'LOCATION_6_CHANGED'  ##NO_TEXT,
+        type_6_changed      TYPE syst_ucomm VALUE 'TYPE_6_CHANGED'  ##NO_TEXT,
+        operation_6_changed TYPE syst_ucomm VALUE 'OPERATION_6_CHANGED'  ##NO_TEXT,
+        mode_6_changed      TYPE syst_ucomm VALUE 'MODE_6_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 7</p>
+        location_7_changed  TYPE syst_ucomm VALUE 'LOCATION_7_CHANGED'  ##NO_TEXT,
+        type_7_changed      TYPE syst_ucomm VALUE 'TYPE_7_CHANGED'  ##NO_TEXT,
+        operation_7_changed TYPE syst_ucomm VALUE 'OPERATION_7_CHANGED'  ##NO_TEXT,
+        mode_7_changed      TYPE syst_ucomm VALUE 'MODE_7_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 8</p>
+        location_8_changed  TYPE syst_ucomm VALUE 'LOCATION_8_CHANGED'  ##NO_TEXT,
+        type_8_changed      TYPE syst_ucomm VALUE 'TYPE_8_CHANGED'  ##NO_TEXT,
+        operation_8_changed TYPE syst_ucomm VALUE 'OPERATION_8_CHANGED'  ##NO_TEXT,
+        mode_8_changed      TYPE syst_ucomm VALUE 'MODE_8_CHANGED'  ##NO_TEXT,
+        "! <p class="shorttext synchronized" lang="en">User commands for file 9</p>
+        location_9_changed  TYPE syst_ucomm VALUE 'LOCATION_9_CHANGED'  ##NO_TEXT,
+        type_9_changed      TYPE syst_ucomm VALUE 'TYPE_9_CHANGED'  ##NO_TEXT,
+        operation_9_changed TYPE syst_ucomm VALUE 'OPERATION_9_CHANGED'  ##NO_TEXT,
+        mode_9_changed      TYPE syst_ucomm VALUE 'MODE_9_CHANGED'  ##NO_TEXT,
+      END OF selscr_user_command,
+
+      "! <p class="shorttext synchronized" lang="en">Selection fields for file x</p>
       BEGIN OF selection_fields,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 0</p>
-        for_file_0 TYPE num1         VALUE '0'  ##no_text,
+        for_file_0 TYPE num1 VALUE '0'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 1</p>
-        for_file_1 TYPE num1         VALUE '1'  ##no_text,
+        for_file_1 TYPE num1 VALUE '1'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 2</p>
-        for_file_2 TYPE num1         VALUE '2'  ##no_text,
+        for_file_2 TYPE num1 VALUE '2'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 3</p>
-        for_file_3 TYPE num1         VALUE '3'  ##no_text,
+        for_file_3 TYPE num1 VALUE '3'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 4</p>
-        for_file_4 TYPE num1         VALUE '4'  ##no_text,
+        for_file_4 TYPE num1 VALUE '4'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 5</p>
-        for_file_5 TYPE num1         VALUE '5'  ##no_text,
+        for_file_5 TYPE num1 VALUE '5'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 6</p>
-        for_file_6 TYPE num1         VALUE '6'  ##no_text,
+        for_file_6 TYPE num1 VALUE '6'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 7</p>
-        for_file_7 TYPE num1         VALUE '7'  ##no_text,
+        for_file_7 TYPE num1 VALUE '7'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 8</p>
-        for_file_8 TYPE num1         VALUE '8'  ##no_text,
+        for_file_8 TYPE num1 VALUE '8'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 9</p>
-        for_file_9 TYPE num1         VALUE '9'  ##no_text,
+        for_file_9 TYPE num1 VALUE '9'  ##no_text,
       END OF selection_fields.
 
 *   s t a t i c   m e t h o d s
@@ -106,11 +160,11 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Valid path / file type passed?</p>
       "!
-      "! @parameter path_type           | <p class="shorttext synchronized" lang="en">Path / file type</p>
+      "! @parameter type                | <p class="shorttext synchronized" lang="en">Path / file type</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
-      is_path_type_valid FINAL
+      is_type_valid FINAL
         IMPORTING
-          path_type TYPE dxfiletyp
+          type TYPE dxfiletyp
         RAISING
           zcx_ca_file_utility,
 
@@ -207,11 +261,11 @@ CLASS zcl_ca_c_file_utility IMPLEMENTATION.
   ENDMETHOD.                    "is_location_valid
 
 
-  METHOD is_path_type_valid.
+  METHOD is_type_valid.
     "-----------------------------------------------------------------*
     "   Valid path / file type passed?
     "-----------------------------------------------------------------*
-    check_against_fixed_values( value      = path_type
+    check_against_fixed_values( value      = type
                                 param_name = 'PATH_TYPE' ) ##no_text.
   ENDMETHOD.                    "is_path_type_valid
 

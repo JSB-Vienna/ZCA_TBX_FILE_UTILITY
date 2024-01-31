@@ -30,7 +30,7 @@ SELECTION-SCREEN END OF BLOCK sce.
 
 "! <p>Please transfer text elements mentioned in the documentation of the global
 "! class {@link ZCL_CA_FILE_UTILITY_SELSCRCTLR} into your report.</p>
-INCLUDE zca_file_util_selscr_fl1.
+INCLUDE zca_demo_file_utilityfl1.
 
 
 
@@ -47,7 +47,7 @@ SELECTION-SCREEN END OF BLOCK caf.
 
 "! <p>Please transfer text elements mentioned in the documentation of the global
 "! class {@link ZCL_CA_FILE_UTILITY_SELSCRCTLR} into your report.</p>
-INCLUDE zca_file_util_selscr_fl2.
+INCLUDE zca_demo_file_utilityfl2.
 
 
 
@@ -147,7 +147,7 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
     "-----------------------------------------------------------------*
     TRY.
         p_fl1loc = mo_file_options->location-server.
-        p_fl1typ = mo_file_options->path_type-physical.
+        p_fl1typ = mo_file_options->type-physical.
         p_fl1op  = mo_file_options->operation-output.
         p_fl1mod = mo_file_options->mode-binary.
 
@@ -333,7 +333,7 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
                 "Copy file from local documents folder to appl. server
                 mo_file_1 = NEW #( mo_file_options->location-pc ).
                 "Set default values for hidden fields
-                p_fl1typ = mo_file_options->path_type-physical.
+                p_fl1typ = mo_file_options->type-physical.
                 p_fl1nam = '%homepath%\documents' ##no_text.
                 p_fl1op  = mo_file_options->operation-input.
                 p_fl1mod = mo_file_options->mode-binary.

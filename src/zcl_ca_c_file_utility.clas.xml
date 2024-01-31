@@ -43,7 +43,7 @@
      <DESCRIPT>Valid file operation passed?</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>IS_PATH_TYPE_VALID</CMPNAME>
+     <CMPNAME>IS_TYPE_VALID</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Valid path / file type passed?</DESCRIPT>
     </SEOCOMPOTX>
@@ -73,12 +73,12 @@
      <DESCRIPT>File operations</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>PATH_TYPE</CMPNAME>
+     <CMPNAME>SELECTION_FIELDS</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Path / file types</DESCRIPT>
+     <DESCRIPT>Selection fields for file x</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>SELECTION_FIELDS</CMPNAME>
+     <CMPNAME>SELSCR_USER_COMMAND</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Selection fields for file x</DESCRIPT>
     </SEOCOMPOTX>
@@ -86,6 +86,11 @@
      <CMPNAME>SINGLETON_INSTANCE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Instance of the class itself</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Path / file type</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>VALUE_HELP</CMPNAME>
@@ -167,13 +172,13 @@
      <DESCRIPT>Common exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
-     <CMPNAME>IS_PATH_TYPE_VALID</CMPNAME>
-     <SCONAME>PATH_TYPE</SCONAME>
+     <CMPNAME>IS_TYPE_VALID</CMPNAME>
+     <SCONAME>TYPE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Path / file type</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
-     <CMPNAME>IS_PATH_TYPE_VALID</CMPNAME>
+     <CMPNAME>IS_TYPE_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Common exception: File handling errors</DESCRIPT>

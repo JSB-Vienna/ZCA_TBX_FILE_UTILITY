@@ -177,11 +177,6 @@
      <DESCRIPT>Names to all parts of a selection parameter</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>TY_S_SEL_PAR_VALUES</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Selection parameter values to this file handler</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
      <CMPNAME>TY_TT_LOG_FILE_NAMES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>All found logical file names to selected location</DESCRIPT>
