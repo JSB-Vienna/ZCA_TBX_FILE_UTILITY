@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_FILE_HANDLER</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: File utility for application server OR client/PC</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>File name for INPUT (reading) ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Number of read records ..........................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S03</KEY>
+     <ENTRY>File name for OUTPUT (transfering) ..............:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S04</KEY>
+     <ENTRY>Number of transferred records ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S05</KEY>
+     <ENTRY>Number of records read over all .................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S06</KEY>
+     <ENTRY>Number of transferred records over all ..........:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S07</KEY>
+     <ENTRY>Number of opened files for ...</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S08</KEY>
+     <ENTRY>... action INPUT ................................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S09</KEY>
+     <ENTRY>... action OUTPUT ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S10</KEY>
+     <ENTRY>... action APPEND ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S11</KEY>
+     <ENTRY>... action UPDATE ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DATASET_COUNTER_PER_OPERATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Dataset counters depending on operation type</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Current codepage of either the app. server or the client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get physical path and file name to a logical filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_OPSYS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>OS of location (conform for logical filename)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PRINT_LOG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Print simple log with statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PRINT_LOG_OVER_ALL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Print simple log with statistics over all activities</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RECORD_CNT_OVER_ALL_OPERATIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Record counters over all</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RECORD_CNT_PER_FILE_OPERATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File System Paths</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RESET_STATISTICS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Reset statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_CNT_PER_OPERATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Counters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_DATASET_CNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Dataset counter</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>IV_LOCATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: File utility for server OR client/PC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_INCL_DIR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Expecting / return a physical path</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_LOGICAL_FILENAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Logical file name defined in TA FILE</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_PARAM_1</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Replacement parameter 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_PARAM_2</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Replacement parameter 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_PARAM_3</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Replacement parameter 3</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_USE_BUFFER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Use buffer to avoid recurring data access and checks</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>IV_WITH_FILE_EXT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Append internal file extension to file name ..e. g. BIN</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>RV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PATHFILE_FROM_LOGICAL_NAME</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

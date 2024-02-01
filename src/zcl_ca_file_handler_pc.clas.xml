@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_FILE_HANDLER_PC</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: File utility for client/PC</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>File name for INPUT (reading) ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Number of read records ..........................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S03</KEY>
+     <ENTRY>File name for OUTPUT (transfering) ..............:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S04</KEY>
+     <ENTRY>Number of transferred records ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S05</KEY>
+     <ENTRY>Number of records read over all .................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S06</KEY>
+     <ENTRY>Number of transferred records over all ..........:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S07</KEY>
+     <ENTRY>Number of opened files for ...</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S08</KEY>
+     <ENTRY>... action INPUT ................................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S09</KEY>
+     <ENTRY>... action OUTPUT ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S10</KEY>
+     <ENTRY>... action APPEND ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S11</KEY>
+     <ENTRY>... action UPDATE ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Download a file to the PC/client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Upload a file from the PC/client</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>CT_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_CONFIRM_OVERWRITE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Confirm overwriting file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (CVC_FILE_HDLR-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file of this length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of CHAR fields</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS_EOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of the last column</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_WRITE_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Separate fields by horizontal tabulator</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>IV_WRITE_LF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Add CR/LF at end of CHAR lines</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>ET_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>IV_HAS_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Field are TAB separated, result table needs corresp cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

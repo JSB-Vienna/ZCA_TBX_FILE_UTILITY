@@ -11,8 +11,8 @@
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>CA-TBX: Sel. screen part for 8. file using ZCL_CA_FILE_UTIL</ENTRY>
-     <LENGTH>62</LENGTH>
+     <ENTRY>CA-TBX: Sel. screen part for 8. file supported by ZCL_CA_FILE_UTIL_SE</ENTRY>
+     <LENGTH>69</LENGTH>
     </item>
    </TPOOL>
   </asx:values>

@@ -11,16 +11,16 @@ TABLES:
 SELECTION-SCREEN BEGIN OF BLOCK sce WITH FRAME TITLE TEXT-sce.
   SELECTION-SCREEN  BEGIN OF LINE.
     PARAMETERS
-      "Copy archived file to appl. server or PC
+      "! <p class="shorttext synchronized" lang="en">Scenario: Copy archived file to appl. server or PC</p>
       p_rbcaas       RADIOBUTTON GROUP sce  DEFAULT 'X'
-                                            USER-COMMAND sce_sel.
+                                            USER-COMMAND scenario_changed.
     SELECTION-SCREEN COMMENT 03(70) TEXT-cas.
   SELECTION-SCREEN END OF LINE.
 
 
   SELECTION-SCREEN BEGIN OF LINE.
     PARAMETERS
-      "Copy file from local documents folder to appl. server
+      "! <p class="shorttext synchronized" lang="en">Scenario: Copy file from local documents folder to appl. server</p>
       p_rbcdas       RADIOBUTTON GROUP sce.
     SELECTION-SCREEN COMMENT 03(70) TEXT-cda.
   SELECTION-SCREEN END OF LINE.
@@ -29,7 +29,7 @@ SELECTION-SCREEN END OF BLOCK sce.
 
 
 "! <p>Please transfer text elements mentioned in the documentation of the global
-"! class {@link ZCL_CA_FILE_UTILITY_SELSCRCTLR} into your report.</p>
+"! class {@link zcl_ca_file_util_selscr_ctlr} into your report.</p>
 INCLUDE zca_demo_file_utilityfl1.
 
 
@@ -46,7 +46,7 @@ SELECTION-SCREEN END OF BLOCK caf.
 
 
 "! <p>Please transfer text elements mentioned in the documentation of the global
-"! class {@link ZCL_CA_FILE_UTILITY_SELSCRCTLR} into your report.</p>
+"! class {@link zcl_ca_file_util_selscr_ctlr} into your report.</p>
 INCLUDE zca_demo_file_utilityfl2.
 
 
@@ -62,11 +62,8 @@ CLASS demo_usage_file_utility DEFINITION FINAL
 
 *   i n s t a n c e   m e t h o d s
     METHODS:
-      "! <p class="shorttext synchronized" lang="en">Initialization of report data / selections</p>
-      constructor,
-
-      "! <p class="shorttext synchronized" lang="en">Control / adjust selection screen fields</p>
-      at_sel_screen_output,
+      "! <p class="shorttext synchronized" lang="en">Check selection values</p>
+      at_sel_screen,
 
       "! <p class="shorttext synchronized" lang="en">Execute value help for parameter P_FL1NAM</p>
       at_sel_screen_on_vr_p_fl1nam,
@@ -83,8 +80,14 @@ CLASS demo_usage_file_utility DEFINITION FINAL
       "! <p class="shorttext synchronized" lang="en">Execute value help for parameter P_INSTID</p>
       at_sel_screen_on_vr_p_instid,
 
-      "! <p class="shorttext synchronized" lang="en">Check selection values</p>
-      at_sel_screen,
+      "! <p class="shorttext synchronized" lang="en">Control / adjust selection screen fields</p>
+      at_sel_screen_output,
+
+      "! <p class="shorttext synchronized" lang="en">Constructor</p>
+      constructor,
+
+      "! <p class="shorttext synchronized" lang="en">Initialization of report data / selections</p>
+      initialization,
 
       "! <p class="shorttext synchronized" lang="en">Main method, that controls the entire processing</p>
       main.
@@ -103,15 +106,15 @@ CLASS demo_usage_file_utility DEFINITION FINAL
     DATA:
 *     o b j e c t   r e f e r e n c e s
       "! <p class="shorttext synchronized" lang="en">File 1 - upper selection fields</p>
-      mo_file_1       TYPE REF TO zcl_ca_file_utility_selscrctlr,
+      mo_file_1        TYPE REF TO zif_ca_file_util_selscr_ctlr,
       "! <p class="shorttext synchronized" lang="en">File 2 - lower selection fields</p>
-      mo_file_2       TYPE REF TO zcl_ca_file_utility_selscrctlr,
+      mo_file_2        TYPE REF TO zif_ca_file_util_selscr_ctlr,
       "! <p class="shorttext synchronized" lang="en">Screen field attributes (usage with table SCREEN)</p>
-      mo_scr_fld_attr TYPE REF TO zcl_ca_c_screen_field_attr,
+      cvc_scr_fld_attr TYPE REF TO zcl_ca_c_screen_field_attr,
       "! <p class="shorttext synchronized" lang="en">Constants and value checks for file utility</p>
-      mo_file_options TYPE REF TO zcl_ca_c_file_utility,
+      cvc_file_util    TYPE REF TO zcl_ca_c_file_utility,
       "! <p class="shorttext synchronized" lang="en">BC ArchiveLink + DMS: Content of a business object</p>
-      mo_al_cont      TYPE REF TO zcl_ca_archive_content.
+      mo_al_cont       TYPE REF TO zcl_ca_archive_content.
 
 *   i n s t a n c e   m e t h o d s
     METHODS:
@@ -134,10 +137,8 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Constructor
     "-----------------------------------------------------------------*
-    mo_scr_fld_attr = zcl_ca_c_screen_field_attr=>get_instance( ).
-    mo_file_options = zcl_ca_c_file_utility=>get_instance( ).
-
-    initialize_first_option( ).
+    cvc_scr_fld_attr = zcl_ca_c_screen_field_attr=>get_instance( ).
+    cvc_file_util = zcl_ca_c_file_utility=>get_instance( ).
   ENDMETHOD.                    "constructor
 
 
@@ -146,18 +147,14 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
     "   Instanciate file 1 and set corresponding default values
     "-----------------------------------------------------------------*
     TRY.
-        p_fl1loc = mo_file_options->location-server.
-        p_fl1typ = mo_file_options->type-physical.
-        p_fl1op  = mo_file_options->operation-output.
-        p_fl1mod = mo_file_options->mode-binary.
+        mo_file_1 ?= NEW zcl_ca_file_util_selscr_ctlr(
+                                         iv_location         = p_fl1loc
+                                         iv_id_selscr_fields = cvc_file_util->selection_field_id-for_file_1 ).
 
-        mo_file_1 = NEW #( iv_location        = p_fl1loc
-                           iv_scrflds_file_no = mo_file_options->selection_fields-for_file_1 ).
-
-        "Create instance for first option only to be able to hide the corresponding
-        "block from the selection screen.
-        mo_file_2 = NEW #( iv_location        = mo_file_options->location-server
-                           iv_scrflds_file_no = mo_file_options->selection_fields-for_file_2 ).
+        "Create instance for first option only to demonstrate how to hide the corresponding selection screen block.
+        mo_file_2 ?= NEW zcl_ca_file_util_selscr_ctlr(
+                                         iv_location         = cvc_file_util->location-server
+                                         iv_id_selscr_fields = cvc_file_util->selection_field_id-for_file_2 ).
 
       CATCH zcx_ca_error INTO DATA(lx_catched).
         MESSAGE lx_catched TYPE lx_catched->c_msgty_s DISPLAY LIKE lx_catched->mv_msgty.
@@ -194,7 +191,7 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
             "Hide the complete block with all fields
             mo_file_2->modify_selection_fields( iv_mask_hiding = 'FL;FT;FP;FN;FO;FM' ) ##no_text.
 
-            lv_screen_flag = mo_scr_fld_attr->switch-on.
+            lv_screen_flag = cvc_scr_fld_attr->switch-on.
 
           WHEN p_rbcdas.
             "Copy file from local documents folder to appl. server - both files are relevant.
@@ -205,7 +202,7 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
             mo_file_2->modify_selection_fields( iv_mask_hiding     = 'FL;FM'
                                                 iv_mask_disp_only  = 'FO' ) ##no_text.
 
-            lv_screen_flag = mo_scr_fld_attr->switch-off.
+            lv_screen_flag = cvc_scr_fld_attr->switch-off.
         ENDCASE.
 
         LOOP AT SCREEN INTO ls_screen.
@@ -322,7 +319,7 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
     "-----------------------------------------------------------------*
     TRY.
         CASE sscrfields-ucomm.
-          WHEN 'SCE_SEL' ##no_text.
+          WHEN 'SCENARIO_CHANGED' ##no_text.
             CASE abap_true.
               WHEN p_rbcaas.
                 "Copy archived file to appl. server or PC
@@ -331,17 +328,17 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
 
               WHEN p_rbcdas.
                 "Copy file from local documents folder to appl. server
-                mo_file_1 = NEW #( mo_file_options->location-pc ).
+                mo_file_1 = NEW zcl_ca_file_util_selscr_ctlr( cvc_file_util->location-pc ).
                 "Set default values for hidden fields
-                p_fl1typ = mo_file_options->type-physical.
+                p_fl1typ = cvc_file_util->type-physical.
                 p_fl1nam = '%homepath%\documents' ##no_text.
-                p_fl1op  = mo_file_options->operation-input.
-                p_fl1mod = mo_file_options->mode-binary.
+                p_fl1op  = cvc_file_util->operation-input.
+                p_fl1mod = cvc_file_util->mode-binary.
 
-                mo_file_2 = NEW #( mo_file_options->location-server ).
+                mo_file_2 = NEW zcl_ca_file_util_selscr_ctlr( cvc_file_util->location-server ).
                 "Set default values for hidden fields
-                p_fl2op  = mo_file_options->operation-output.
-                p_fl2mod = mo_file_options->mode-binary.
+                p_fl2op  = cvc_file_util->operation-output.
+                p_fl2mod = cvc_file_util->mode-binary.
             ENDCASE.
 
             IF mo_al_cont IS BOUND.    "only relevant for first option
@@ -349,9 +346,9 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
               FREE mo_al_cont.
             ENDIF.
 
-          WHEN 'FL1' ##no_text.
+          WHEN cvc_file_util->selscr_user_command-location_1_changed.
             "Location changed for file 1 -> create a new instance and clear path and file name
-            mo_file_1 = NEW #( p_fl1loc ).
+            mo_file_1 = NEW zcl_ca_file_util_selscr_ctlr( p_fl1loc ).
             CLEAR: p_fl1pth, p_fl1nam.
 
           WHEN OTHERS.
@@ -422,6 +419,19 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
   ENDMETHOD.                    "check_input_for_execution
 
 
+  METHOD initialization.
+    "-----------------------------------------------------------------*
+    "   Initialization of report data / selections
+    "-----------------------------------------------------------------*
+    p_fl1loc = cvc_file_util->location-server.
+    p_fl1typ = cvc_file_util->type-physical.
+    p_fl1op  = cvc_file_util->operation-output.
+    p_fl1mod = cvc_file_util->mode-binary.
+
+    initialize_first_option( ).
+  ENDMETHOD.                    "initialization
+
+
   METHOD main.
     "-----------------------------------------------------------------*
     "   Main method, that controls the entire processing
@@ -450,6 +460,7 @@ ENDCLASS.                     "demo_usage_file_utility  IMPLEMENTATION
 *---------------------------------------------------------------------*
 INITIALIZATION.
   DATA(lo_demo_file_utility) = NEW demo_usage_file_utility( ).
+  lo_demo_file_utility->initialization( ).
 
 
 *---------------------------------------------------------------------*

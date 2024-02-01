@@ -73,7 +73,7 @@
      <DESCRIPT>File operations</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>SELECTION_FIELDS</CMPNAME>
+     <CMPNAME>SELECTION_FIELD_ID</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Selection fields for file x</DESCRIPT>
     </SEOCOMPOTX>
@@ -115,7 +115,7 @@
      <CMPNAME>CHECK_AGAINST_FIXED_VALUES</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
@@ -133,7 +133,7 @@
      <CMPNAME>IS_LIST_SORTING_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_LOCATION_VALID</CMPNAME>
@@ -145,7 +145,7 @@
      <CMPNAME>IS_LOCATION_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_MODE_VALID</CMPNAME>
@@ -157,7 +157,7 @@
      <CMPNAME>IS_MODE_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_OPERATION_VALID</CMPNAME>
@@ -169,7 +169,7 @@
      <CMPNAME>IS_OPERATION_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_TYPE_VALID</CMPNAME>
@@ -181,7 +181,7 @@
      <CMPNAME>IS_TYPE_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_VALUE_HELP_TYPE_VALID</CMPNAME>
@@ -193,7 +193,7 @@
      <CMPNAME>IS_VALUE_HELP_TYPE_VALID</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Common exception: File handling errors</DESCRIPT>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>

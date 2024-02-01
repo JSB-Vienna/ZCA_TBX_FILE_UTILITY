@@ -114,7 +114,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       END OF selscr_user_command,
 
       "! <p class="shorttext synchronized" lang="en">Selection fields for file x</p>
-      BEGIN OF selection_fields,
+      BEGIN OF selection_field_id,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 0</p>
         for_file_0 TYPE num1 VALUE '0'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 1</p>
@@ -135,7 +135,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
         for_file_8 TYPE num1 VALUE '8'  ##no_text,
         "! <p class="shorttext synchronized" lang="en">Use selection fields for file 9</p>
         for_file_9 TYPE num1 VALUE '9'  ##no_text,
-      END OF selection_fields.
+      END OF selection_field_id.
 
 *   s t a t i c   m e t h o d s
     CLASS-METHODS:
@@ -151,7 +151,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Valid file location passed?</p>
       "!
       "! @parameter location            | <p class="shorttext synchronized" lang="en">File location</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_location_valid FINAL
         IMPORTING
           location TYPE dxlocation
@@ -161,7 +161,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Valid path / file type passed?</p>
       "!
       "! @parameter type                | <p class="shorttext synchronized" lang="en">Path / file type</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_type_valid FINAL
         IMPORTING
           type TYPE dxfiletyp
@@ -171,7 +171,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Valid file mode passed?</p>
       "!
       "! @parameter file_mode           | <p class="shorttext synchronized" lang="en">File mode</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_mode_valid FINAL
         IMPORTING
           file_mode TYPE swr_filetype
@@ -181,7 +181,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Valid file operation passed?</p>
       "!
       "! @parameter operation           | <p class="shorttext synchronized" lang="en">File operation</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_operation_valid FINAL
         IMPORTING
           operation TYPE dsetactype
@@ -191,7 +191,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Valid list_sorting option passed?</p>
       "!
       "! @parameter list_sorting        | <p class="shorttext synchronized" lang="en">List sorting option</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_list_sorting_valid FINAL
         IMPORTING
           list_sorting TYPE char1
@@ -201,7 +201,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Valid value help switch option passed?</p>
       "!
       "! @parameter value_help_type     | <p class="shorttext synchronized" lang="en">Value help type</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_value_help_type_valid FINAL
         IMPORTING
           value_help_type TYPE zca_d_vht_dirs_files
@@ -217,7 +217,7 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "!
       "! @parameter value               | <p class="shorttext synchronized" lang="en">Value under test</p>
       "! @parameter param_name          | <p class="shorttext synchronized" lang="en">Name of field/parameter for output in error message</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">Common exception: File handling errors</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       check_against_fixed_values
         IMPORTING
           value      TYPE simple

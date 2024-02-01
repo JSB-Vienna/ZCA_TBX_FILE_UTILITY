@@ -1,8 +1,8 @@
 *&---------------------------------------------------------------------*
-*&  Include           ZCA_FILE_UTIL_SELSCR_FL1
+*&  Include           ZCA_FILE_UTIL_SLSCR_4_REUSEFL1
 *&---------------------------------------------------------------------*
 
-"!  For details how to use it, please refer to the help of the global class {@link ZCL_CA_FILE_UTILITY_SELSCRCTLR}.
+"!  For details how to use it, please refer to the help of the global class {@link ZCL_CA_FILE_UTIL_SELSCR_CTLR}.
 "!  The prepared text elements can also be found there.
 
 * s e l e c t i o n   f i e l d s

@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_CA_FILE_HANDLER_AS</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: File utility for application server</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>S01</KEY>
+     <ENTRY>File name for INPUT (reading) ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S02</KEY>
+     <ENTRY>Number of read records ..........................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S03</KEY>
+     <ENTRY>File name for OUTPUT (transfering) ..............:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S04</KEY>
+     <ENTRY>Number of transferred records ...................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S05</KEY>
+     <ENTRY>Number of records read over all .................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S06</KEY>
+     <ENTRY>Number of transferred records over all ..........:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S07</KEY>
+     <ENTRY>Number of opened files for ...</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S08</KEY>
+     <ENTRY>... action INPUT ................................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S09</KEY>
+     <ENTRY>... action OUTPUT ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S10</KEY>
+     <ENTRY>... action APPEND ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>S11</KEY>
+     <ENTRY>... action UPDATE ...............................:</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check authority of path and file</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check result of OPEN DATASET and raise exception</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Close dataset</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determine structure / field length of a record</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Open dataset</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Read data from file and write statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transfer data to file and write statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file from application server</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (CVC_FILE_HDLR-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>AUTHORITY_CHECK</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_MSG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message string of OPEN DATASET statement</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_SUBRC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Return code of OPEN DATASET statement</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CHECK_RESULT_OF_OPEN_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CLOSE_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>IS_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Data object to determine length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>RV_REC_LEN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RECORDS_LENGTH</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (CVC_FILE_HDLR-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Physical path and/or file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>OPEN_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>ES_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Record for file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>EV_ACTUAL_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Actual length of last record</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>EV_NO_MORE_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = No more records available (leave loop)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>IV_READ_WITH_MAX_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Expected length (lower 0 = complete file)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <SCONAME>IS_RECORD</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Record for file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <SCONAME>IV_REC_LEN</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Length of single record (lower eq 0 = normal behaviour)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TRANSFER_DATASET</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>IT_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE_FILE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

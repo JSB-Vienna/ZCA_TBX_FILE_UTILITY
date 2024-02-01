@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_CA_FILE_HANDLER</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: File handler for applic. server OR client/PC</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CVC_FILE_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Delete</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIRECTORY_HDLR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Directory handler for applic. server OR client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_LOCATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get file (READ from server / UPLOAD from client PC)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file (TRANSFER to server / DOWNLOAD on client/PC)</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>ET_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_HAS_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Fields are TAB separ. - result table needs corresp. cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>CT_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>EV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_CHECK_AUTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_CONFIRM_OVERWRITE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Confirm overwriting file (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_FILE_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_FILE_OPERATION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File operation type (CVC_FILE_HDLR-&gt;OPERATION-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_LENGTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write file of this length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of CHAR fields (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_TRUNC_TRAIL_BLANKS_EOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Trunc. trailing blanks at end of the last col. (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_WRITE_FIELD_SEPARATOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Separate fields by horizontal tabulator (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_WRITE_LF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Add CR/LF at end of CHAR lines (PC only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

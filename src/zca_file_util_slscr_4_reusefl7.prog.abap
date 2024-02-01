@@ -1,8 +1,8 @@
 *&---------------------------------------------------------------------*
-*&  Include           ZCA_FILE_UTIL_SELSCR_FL7
+*&  Include           ZCA_FILE_UTIL_SLSCR_4_REUSEFL7
 *&---------------------------------------------------------------------*
 
-"!  For details how to use it, please refer to the help of the global class {@link ZCL_CA_FILE_UTILITY_SELSCRCTLR}.
+"!  For details how to use it, please refer to the help of the global class {@link ZCL_CA_FILE_UTIL_SELSCR_CTLR}.
 "!  The prepared text elements can also be found there.
 
 *- Specifications for file 7 -----------------------------------------*

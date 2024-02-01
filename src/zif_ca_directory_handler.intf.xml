@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_CA_DIRECTORY_HANDLER</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>CA-TBX: Directory handler for applic. server OR client/PC</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CODEPAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CVC_FILE_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIRECTORY_CONTENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Description</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DIRECTORY_CONTENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get directory content to the given path</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get physical path and file name to a logical filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_PATH_FILE_AVAILABLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check if any path and filename is available</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LOCATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Location: A = server / P = client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>OPERATION_SYSTEM</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>OS of location (conform for logical filename)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PATH_FILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Path, file name and extension</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PATH_HANDLER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File System Path handler</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PATH_SEPARATOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>OS specific path separator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PHYSICAL_PATH_FILENAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set physical path and file name (see docu in method)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_DIRECTORY_ENTRY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File infos from directory (copied from program RSWATCH0)</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DIRECTORY_CONTENT</CMPNAME>
+     <SCONAME>IV_FILTER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generic filename (may end with *)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DIRECTORY_CONTENT</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path, may incl. file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DIRECTORY_CONTENT</CMPNAME>
+     <SCONAME>IV_SORT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Sort file list (use const CVC_FILE_HDLR-&gt;LIST_SORTING-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DIRECTORY_CONTENT</CMPNAME>
+     <SCONAME>IV_VH_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Value help for Dirs or Files (CVC_FILE_HDLR-&gt;VALUE_HELP-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DIRECTORY_CONTENT</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Physical path and/or file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PHYSICAL_FILENAME_HANDLER</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_PATH_FILE_AVAILABLE</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_PATH_FILE_AVAILABLE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PHYSICAL_PATH_FILENAME</CMPNAME>
+     <SCONAME>IV_PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get handler for physical path and file name</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
