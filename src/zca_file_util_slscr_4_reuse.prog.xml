@@ -12,6 +12,66 @@
    </PROGDIR>
    <TPOOL>
     <item>
+     <ID>I</ID>
+     <KEY>FL0</KEY>
+     <ENTRY>Specifications for file 0</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL1</KEY>
+     <ENTRY>Specifications for file 1</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL2</KEY>
+     <ENTRY>Specifications for file 2</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL3</KEY>
+     <ENTRY>Specifications for file 3</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL4</KEY>
+     <ENTRY>Specifications for file 4</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL5</KEY>
+     <ENTRY>Specifications for file 5</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL6</KEY>
+     <ENTRY>Specifications for file 6</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL7</KEY>
+     <ENTRY>Specifications for file 7</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL8</KEY>
+     <ENTRY>Specifications for file 8</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>FL9</KEY>
+     <ENTRY>Specifications for file 9</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
      <ID>R</ID>
      <ENTRY>CA-TBX: Definition of sel. screen block for reuse</ENTRY>
      <LENGTH>49</LENGTH>

@@ -7,7 +7,7 @@
    PUBLIC SECTION.
 *    i n s t a n c e   m e t h o d s
      METHODS:
-       zif_ca_directory_handler~get_directory_content REDEFINITION.
+       zif_ca_directory_handler~read_content REDEFINITION.
 
 
 *  P R O T E C T E D   S E C T I O N
@@ -23,7 +23,7 @@
 
        determine_location_parameters REDEFINITION,
 
-       get_content REDEFINITION.
+       get_content_from_location REDEFINITION.
 
 
 *  P R I V A T E   S E C T I O N
@@ -72,7 +72,7 @@
    ENDMETHOD.                    "determine_location_parameters
 
 
-   METHOD get_content.
+   METHOD get_content_from_location.
      "-----------------------------------------------------------------*
      "   This method is a slightly adapted copy of FORM FILL_FILE_LIST of
      "   program RSWATCH0 (= TA AL11)
@@ -82,11 +82,12 @@
        _filter          TYPE RANGE OF string,
        _directory_entry TYPE ty_s_directory_entry,
        _error_count     TYPE p LENGTH 2 DECIMALS 0 VALUE 0,
-       _error_id        TYPE ty_s_directory_entry-errno,
-       _error_message   TYPE ty_s_directory_entry-errmsg.
+       _error_id        TYPE ty_s_directory_entry-error_no,
+       _error_message   TYPE ty_s_directory_entry-error_message,
+       _mod_time        TYPE c LENGTH 8.      "hh:mm:ss
 
      "Directory must be set
-     IF iv_path IS INITIAL.
+     IF path IS INITIAL.
        "Directory name &1 is empty or does not exist
        RAISE EXCEPTION TYPE zcx_ca_file_utility
          EXPORTING
@@ -94,16 +95,16 @@
            mv_msgv1 = space.
      ENDIF.
 
-     cvc_file_util->is_value_help_type_valid( iv_vh_type ).
+     cvc_file_util->is_content_type_valid( content_type ).
 
-     DATA(_path) = CONV dirname_al11( iv_path ).
+     DATA(_path) = CONV dirname_al11( path ).
 
      DATA(_cvc_sel_options) = zcl_ca_c_sel_options=>get_instance( ).
      _filter = VALUE #( sign   = _cvc_sel_options->sign-incl
                         option = _cvc_sel_options->option-cp
-                      ( low    = iv_filter )
-                      ( low    = |{ iv_filter CASE = LOWER }| )
-                      ( low    = |{ iv_filter CASE = UPPER }| ) ).
+                      ( low    = filter )
+                      ( low    = |{ filter CASE = LOWER }| )
+                      ( low    = |{ filter CASE = UPPER }| ) ).
 
      "Just to be sure
      CALL 'C_DIR_READ_FINISH' ID 'ERRNO'  FIELD _error_id
@@ -111,8 +112,8 @@
 
      CALL 'C_DIR_READ_START' ID 'DIR'    FIELD _path
                              ID 'FILE'   FIELD '*'
-                             ID 'ERRNO'  FIELD _directory_entry-errno
-                             ID 'ERRMSG' FIELD _directory_entry-errmsg. "#EC CI_CCALL
+                             ID 'ERRNO'  FIELD _directory_entry-error_no
+                             ID 'ERRMSG' FIELD _directory_entry-error_message. "#EC CI_CCALL
      IF sy-subrc NE 0.
        "& <- CALL &(&,&,..)
        RAISE EXCEPTION TYPE zcx_ca_file_utility
@@ -121,53 +122,53 @@
            mv_msgty = zcx_ca_file_utility=>c_msgty_e
            mv_msgv1 = CONV #( _error_message )
            mv_msgv2 = 'C_DIR_READ_START'
-           mv_msgv3 = CONV #( _directory_entry-errno )
-           mv_msgv4 = CONV #( _directory_entry-errmsg ) ##no_text.
+           mv_msgv3 = CONV #( _directory_entry-error_no )
+           mv_msgv4 = CONV #( _directory_entry-error_message ) ##no_text.
      ENDIF.
 
      DO.
        CLEAR _directory_entry.
-       CALL 'C_DIR_READ_NEXT' ID 'TYPE'   FIELD _directory_entry-type
-                              ID 'NAME'   FIELD _directory_entry-name
-                              ID 'LEN'    FIELD _directory_entry-len
+       CALL 'C_DIR_READ_NEXT' ID 'TYPE'   FIELD _directory_entry-techn_type
+                              ID 'NAME'   FIELD _directory_entry-file_name
+                              ID 'LEN'    FIELD _directory_entry-length
                               ID 'OWNER'  FIELD _directory_entry-owner
-                              ID 'MTIME'  FIELD _directory_entry-mtime
-                              ID 'MODE'   FIELD _directory_entry-mode
-                              ID 'ERRNO'  FIELD _directory_entry-errno
-                              ID 'ERRMSG' FIELD _directory_entry-errmsg. "#EC CI_CCALL
+                              ID 'MTIME'  FIELD _directory_entry-date_time_changed
+                              ID 'MODE'   FIELD _directory_entry-protection_mode
+                              ID 'ERRNO'  FIELD _directory_entry-error_no
+                              ID 'ERRMSG' FIELD _directory_entry-error_message. "#EC CI_CCALL
 
-       _directory_entry-dirname = iv_path.
-       _directory_entry-subrc   = sy-subrc.
+       _directory_entry-directory_name = path.
+       _directory_entry-subrc          = sy-subrc.
 
        CASE sy-subrc.
          WHEN 0.
-           CLEAR: _directory_entry-errno,
-                  _directory_entry-errmsg.
-           IF _directory_entry-type(1) CO 'Ff' ##no_text.      "= normal file
-             _directory_entry-useable = xsdbool( _directory_entry-name(4) NE 'core' ) ##no_text.
+           CLEAR: _directory_entry-error_no,
+                  _directory_entry-error_message.
+           IF _directory_entry-techn_type(1) CO 'Ff' ##no_text.      "= normal file
+             _directory_entry-useable = xsdbool( _directory_entry-file_name(4) NE 'core' ) ##no_text.
            ELSE.
              " directory, device, fifo, socket,...
              _directory_entry-useable = abap_false.
            ENDIF.
 
-           IF _directory_entry-len EQ 0.
+           IF _directory_entry-length EQ 0.
              _directory_entry-useable = abap_false.
            ENDIF.
 
            "Skip all entries that are not requested
-           IF _directory_entry-name NOT IN _filter.
+           IF _directory_entry-file_name NOT IN _filter.
              CONTINUE.
            ENDIF.
 
-           IF ( iv_vh_type            EQ cvc_file_util->value_help-for_directories AND
-                _directory_entry-type NE 'directory'      )                         OR
+           IF ( content_type                EQ cvc_file_util->content_type-directories AND
+                _directory_entry-techn_type NE 'directory' )                            OR
 
-              ( iv_vh_type            EQ cvc_file_util->value_help-for_files       AND
-                _directory_entry-type EQ 'directory'      )                         OR
+              ( content_type                EQ cvc_file_util->content_type-files       AND
+                _directory_entry-techn_type EQ 'directory' )                            OR
 
               "Don't offer anything that is no file and no directory
-              ( _directory_entry-useable EQ abap_false                             AND
-                _directory_entry-type    NE 'directory' ) ##no_text.
+              ( _directory_entry-useable    EQ abap_false                              AND
+                _directory_entry-techn_type NE 'directory' ) ##no_text.
              CONTINUE.
            ENDIF.
 
@@ -176,9 +177,10 @@
            EXIT.
 
          WHEN 5.
-           "Only NAME is valid due to internal error.
-           CLEAR: _directory_entry-type,  _directory_entry-len,    _directory_entry-owner,  _directory_entry-mtime,
-                  _directory_entry-mode,  _directory_entry-errno,  _directory_entry-errmsg.
+           "Only FILE_NAME is valid due to internal error.
+           CLEAR: _directory_entry-techn_type,         _directory_entry-length,           _directory_entry-owner,
+                  _directory_entry-date_time_changed,  _directory_entry-protection_mode,  _directory_entry-error_no,
+                  _directory_entry-error_message.
            _directory_entry-useable = abap_false.
 
          WHEN OTHERS.                     " SY-SUBRC >= 2
@@ -194,30 +196,31 @@
        ENDCASE.
 
        PERFORM p6_to_date_time_tz IN PROGRAM rstr0400
-                                       USING _directory_entry-mtime
-                                             _directory_entry-mod_time
+                                       USING _directory_entry-date_time_changed
+                                             _mod_time      "in format hh:mm:ss
                                              _directory_entry-mod_date.
+       _directory_entry-mod_time = condense( replace( val = _mod_time  sub = ':'  with = ' ' ) ).
 
        "Set extension and name without extension
-       IF _directory_entry-type CS 'file' ##no_text.
+       IF _directory_entry-techn_type CS 'file' ##no_text.
          TRY.
-             DATA(_path_handler) = cl_fs_path=>create( name      = path_file && path_separator && _directory_entry-name
+             DATA(_path_handler) = cl_fs_path=>create( name      = path_file && path_separator && _directory_entry-file_name
                                                        path_kind = cl_fs_path=>path_kind_from_opsys( operation_system ) ).
 
-             _directory_entry-name_wo_ext = _path_handler->get_file_base_name( ).
-             _directory_entry-ext         = shift_left( val    = |{ _path_handler->get_file_extension( ) CASE = UPPER }|
-                                                        places = 1 ).
+             _directory_entry-file_name_wo_ext = _path_handler->get_file_base_name( ).
+             _directory_entry-extension = shift_left( val    = |{ _path_handler->get_file_extension( ) CASE = UPPER }|
+                                                      places = 1 ).
 
            CATCH cx_sy_range_out_of_bounds.
              "File has no extension
-             CLEAR _directory_entry-ext.
+             CLEAR _directory_entry-extension.
 
            CATCH cx_smart_path_syntax INTO DATA(lx_catched).
-             _directory_entry-name_wo_ext = lx_catched->get_text( ).
+             _directory_entry-file_name_wo_ext = lx_catched->get_text( ).
          ENDTRY.
        ENDIF.
 
-       APPEND _directory_entry TO directory_content.
+       APPEND _directory_entry TO content.
      ENDDO.
 
      CALL 'C_DIR_READ_FINISH' ID 'ERRNO'  FIELD _error_id
@@ -229,25 +232,25 @@
      IF _error_count GT 0.
        MESSAGE s217(s1) WITH _error_count.
      ENDIF.
-   ENDMETHOD.                    "get_content
+   ENDMETHOD.                    "get_content_from_location
 
 
-   METHOD zif_ca_directory_handler~get_directory_content.
+   METHOD zif_ca_directory_handler~read_content.
      "-----------------------------------------------------------------*
      "   Get file OR directory list in the given directory
      "-----------------------------------------------------------------*
-     super->get_directory_content( iv_path_file = iv_path_file
-                                   iv_filter    = iv_filter
-                                   iv_sort      = iv_sort
-                                   iv_vh_type   = iv_vh_type ).
+     super->read_content( path_file    = path_file
+                          filter       = filter
+                          sort_by      = sort_by
+                          content_type = content_type ).
 
      DATA(_path) = path_handler->get_path_name( ).
 
-     get_content( iv_path    = path_handler->get_path_name( )
-                  iv_filter  = iv_filter
-                  iv_vh_type = iv_vh_type ).
+     get_content_from_location( path         = path_handler->get_path_name( )
+                                filter       = filter
+                                content_type = content_type ).
 
-     IF directory_content IS INITIAL.
+     IF content IS INITIAL.
        "No files found in directory &1
        RAISE EXCEPTION TYPE zcx_ca_file_utility
          EXPORTING
@@ -256,14 +259,14 @@
            mv_msgv1 = CONV #( _path ).
      ENDIF.
 
-     CASE iv_sort.
-       WHEN cvc_file_util->list_sorting-by_time.
-         SORT directory_content BY mtime DESCENDING name ASCENDING.
+     CASE sort_by.
+       WHEN cvc_file_util->list_sorting-by_date_time_changed.
+         SORT content BY mod_date mod_time file_name.
 
-       WHEN cvc_file_util->list_sorting-by_name.
-         SORT directory_content BY name ASCENDING mtime DESCENDING.
+       WHEN cvc_file_util->list_sorting-by_file_name.
+         SORT content BY file_name.
      ENDCASE.
-   ENDMETHOD.                    "zif_ca_directory_hdlr~get_directory_content
+   ENDMETHOD.                    "zif_ca_directory_hdlr~read_content
 
  ENDCLASS.
 

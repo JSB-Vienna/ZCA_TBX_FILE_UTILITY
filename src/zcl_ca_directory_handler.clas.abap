@@ -15,14 +15,14 @@ CLASS zcl_ca_directory_handler DEFINITION PUBLIC
 *     Attributes
       cvc_file_util                 FOR zif_ca_directory_handler~cvc_file_util,
       codepage                      FOR zif_ca_directory_handler~codepage,
-      directory_content             FOR zif_ca_directory_handler~directory_content,
+      content                       FOR zif_ca_directory_handler~content,
       location                      FOR zif_ca_directory_handler~location,
       operation_system              FOR zif_ca_directory_handler~operation_system,
       path_handler                  FOR zif_ca_directory_handler~path_handler,
       path_file                     FOR zif_ca_directory_handler~path_file,
       path_separator                FOR zif_ca_directory_handler~path_separator,
 *     Methods
-      get_directory_content         FOR zif_ca_directory_handler~get_directory_content,
+      read_content                  FOR zif_ca_directory_handler~read_content,
       get_physical_filename_handler FOR zif_ca_directory_handler~get_physical_filename_handler,
       is_path_file_available        FOR zif_ca_directory_handler~is_path_file_available,
       set_physical_path_filename    FOR zif_ca_directory_handler~set_physical_path_filename.
@@ -31,12 +31,12 @@ CLASS zcl_ca_directory_handler DEFINITION PUBLIC
     CLASS-METHODS:
       "! <p class="shorttext synchronized" lang="en">Get instance</p>
       "!
-      "! @parameter iv_location         | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
+      "! @parameter location            | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
       "! @parameter result              | <p class="shorttext synchronized" lang="en">CA-TBX: Directory / file listing</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       get_instance
         IMPORTING
-          iv_location   TYPE dxlocation
+          location      TYPE dxlocation
         RETURNING
           VALUE(result) TYPE REF TO zif_ca_directory_handler
         RAISING
@@ -45,28 +45,6 @@ CLASS zcl_ca_directory_handler DEFINITION PUBLIC
 
 * P R O T E C T E D   S E C T I O N
   PROTECTED SECTION.
-**   i n s t a n c e   a t t r i b u t e s
-*    DATA:
-***     o b j e c t   r e f e r e n c e s
-**      "! <p class="shorttext synchronized" lang="en">Description</p>
-**      mo_...               TYPE REF TO x..
-**
-***     d a t a   r e f e r e n c e s
-**      "! <p class="shorttext synchronized" lang="en">Description</p>
-**      mr_...               TYPE REF TO x..
-**
-***     t a b l e s
-**      "! <p class="shorttext synchronized" lang="en">Description</p>
-**      mt_...               TYPE x..
-**
-***     s t r u c t u r e s
-**      "! <p class="shorttext synchronized" lang="en">Description</p>
-**      ms_...               TYPE x..
-*
-**     s i n g l e   v a l u e s
-*      "! <p class="shorttext synchronized" lang="en">Complete path and file name for dataset access</p>
-*      path_file    TYPE string.
-
 *   i n s t a n c e   m e t h o d s
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
@@ -83,17 +61,17 @@ CLASS zcl_ca_directory_handler DEFINITION PUBLIC
         RAISING
           zcx_ca_file_utility,
 
-      "! <p class="shorttext synchronized" lang="en">Get file list of directory</p>
+      "! <p class="shorttext synchronized" lang="en">Get content of directory from location</p>
       "!
-      "! @parameter iv_path             | <p class="shorttext synchronized" lang="en">Directory name</p>
-      "! @parameter iv_filter           | <p class="shorttext synchronized" lang="en">Generic path or file name (using *)</p>
-      "! @parameter iv_vh_type          | <p class="shorttext synchronized" lang="en">Value help type (use const CVC_FILE_HDLR-&gt;VALUE_HELP-*)</p>
+      "! @parameter path                | <p class="shorttext synchronized" lang="en">Directory name</p>
+      "! @parameter filter              | <p class="shorttext synchronized" lang="en">Generic path or file name (using *)</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;VALUE_HELP-*)</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
-      get_content ABSTRACT
+      get_content_from_location ABSTRACT
         IMPORTING
-          iv_path    TYPE string
-          iv_filter  TYPE string
-          iv_vh_type TYPE zca_d_vht_dirs_files
+          path         TYPE string
+          filter       TYPE string
+          content_type TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility.
 
@@ -121,9 +99,9 @@ CLASS zcl_ca_directory_handler IMPLEMENTATION.
     "   Get instance
     "-----------------------------------------------------------------*
     DATA(_cvc_file_util) = zcl_ca_c_file_utility=>get_instance( ).
-    _cvc_file_util->is_location_valid( iv_location ).
+    _cvc_file_util->is_location_valid( location ).
 
-    CASE iv_location.
+    CASE location.
       WHEN _cvc_file_util->location-pc.
         result ?= NEW zcl_ca_directory_handler_pc( ).
 
@@ -133,23 +111,12 @@ CLASS zcl_ca_directory_handler IMPLEMENTATION.
   ENDMETHOD.                    "get_instance
 
 
-  METHOD zif_ca_directory_handler~get_directory_content.
-    "-----------------------------------------------------------------*
-    "   Get file OR directory list in the given directory
-    "-----------------------------------------------------------------*
-    cvc_file_util->is_list_sorting_valid( iv_sort ).
-    cvc_file_util->is_value_help_type_valid( iv_vh_type ).
-
-    get_physical_filename_handler( iv_path_file ).
-  ENDMETHOD.                    "zif_ca_directory_hdlr~get_directory_content
-
-
   METHOD zif_ca_directory_handler~get_physical_filename_handler.
     "---------------------------------------------------------------------*
     "     Get handler for physical path and file name
     "---------------------------------------------------------------------*
     TRY.
-        is_path_file_available( iv_path_file ).
+        is_path_file_available( path_file ).
 
         IF path_handler IS NOT BOUND.
           path_handler = cl_fs_path=>create( name      = path_file
@@ -171,23 +138,34 @@ CLASS zcl_ca_directory_handler IMPLEMENTATION.
     "---------------------------------------------------------------------*
     "     Check if any path and filename is available
     "---------------------------------------------------------------------*
-    IF iv_path_file IS INITIAL AND
-       path_file    IS INITIAL.
+    IF path_file     IS INITIAL AND
+       me->path_file IS INITIAL.
       "At least one of the following parameters must be passed: &1 &2 &3 &4
       RAISE EXCEPTION TYPE zcx_ca_file_utility
         EXPORTING
           textid   = zcx_ca_file_utility=>at_least_one
           mv_msgty = zcx_ca_file_utility=>c_msgty_e
-          mv_msgv1 = 'IV_PATH_FILE'
-          mv_msgv2 = 'PATH_FILE' ##no_text.
+          mv_msgv1 = 'PATH_FILE'
+          mv_msgv2 = 'ME->PATH_FILE' ##no_text.
 
-    ELSEIF iv_path_file IS NOT INITIAL AND
-           path_file    NE iv_path_file.
+    ELSEIF path_file     IS NOT INITIAL AND
+           me->path_file NE path_file.
       "Set new path
-      path_file = iv_path_file.
+      me->path_file = path_file.
       CLEAR path_handler.
     ENDIF.
   ENDMETHOD.                    "zif_ca_directory_handler~is_path_file_available
+
+
+  METHOD zif_ca_directory_handler~read_content.
+    "-----------------------------------------------------------------*
+    "   Get file OR directory list in the given directory
+    "-----------------------------------------------------------------*
+    cvc_file_util->is_list_sorting_valid( sort_by ).
+    cvc_file_util->is_content_type_valid( content_type ).
+
+    get_physical_filename_handler( path_file ).
+  ENDMETHOD.                    "zif_ca_directory_hdlr~read_content
 
 
   METHOD zif_ca_directory_handler~set_physical_path_filename.
@@ -197,7 +175,7 @@ CLASS zcl_ca_directory_handler IMPLEMENTATION.
     "     Use this method after you got the physical_filename_handler
     "     and changed the path with the help of it.
     "---------------------------------------------------------------------*
-    path_file = iv_path_file.
+    me->path_file = path_file.
   ENDMETHOD.                    "zif_ca_directory_handler~set_physical_path_filename
 
 ENDCLASS.

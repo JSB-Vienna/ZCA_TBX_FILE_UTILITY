@@ -46,20 +46,35 @@ INTERFACE zif_ca_file_util_selscr_ctlr PUBLIC.
 
 * i n s t a n c e   a t t r i b u t e s
   DATA:
+*   o b j e c t   r e f e r e n c e s
+    "! <p class="shorttext synchronized" lang="en">CA-TBX: Directory handler for applic. server OR client/PC</p>
+    directory_hdlr  TYPE REF TO zif_ca_directory_handler READ-ONLY,
+    "! <p class="shorttext synchronized" lang="en">CA-TBX: File handler for applic. server OR client/PC</p>
+    file_hdlr       TYPE REF TO zif_ca_file_handler READ-ONLY,
+    "! <p class="shorttext synchronized" lang="en">CA-TBX: Constants and value checks for file utility</p>
+    cvc_file_util   TYPE REF TO zcl_ca_c_file_utility READ-ONLY,
+
 *   s t r u c t u r e s
     "! <p class="shorttext synchronized" lang="en">All the names to each selection field</p>
     "!
     "! <p>Fields of the structure without a value have either no command or no memory id defined.</p>
-    sel_field_names    TYPE ty_s_sel_field_names READ-ONLY,
+    sel_field_names TYPE ty_s_sel_field_names READ-ONLY,
 
 *   s i n g l e   v a l u e s
     "! <p class="shorttext synchronized" lang="en">This instance is assigned to the selection fields n</p>
-    id_selscr_fields TYPE num1 READ-ONLY.
+    sel_field_id    TYPE num1 READ-ONLY.
 
 * i n s t a n c e   m e t h o d s
   METHODS:
     "! <p class="shorttext synchronized" lang="en">Browsing for logical or physical path / filename</p>
     f4_browse,
+
+    "! <p class="shorttext synchronized" lang="en">Get file handler for selected file (attribute FILE_HDLR)</p>
+    "!
+    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    get_file_handler
+      RAISING
+        zcx_ca_file_utility,
 
     "! <p class="shorttext synchronized" lang="en">Modifying / adjusting selection screen fields</p>
     "!
@@ -77,25 +92,28 @@ INTERFACE zif_ca_file_util_selscr_ctlr PUBLIC.
     "! <li>FM - Text or binary mode</li>
     "! </ul>
     "!
-    "! @parameter iv_use_f4_help_only | <p class="shorttext synchronized" lang="en">X = Hide all parameter fields</p>
-    "! @parameter iv_mask_hiding      | <p class="shorttext synchronized" lang="en">Mask to hide selection fields</p>
-    "! @parameter iv_mask_disp_only   | <p class="shorttext synchronized" lang="en">Mask to set selection fields to display only</p>
-    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    "! @parameter use_for_value_help_only     | <p class="shorttext synchronized" lang="en">X = Hide all selection parameters</p>
+    "! @parameter mask_2_hide_sel_params      | <p class="shorttext synchronized" lang="en">Mask to hide selection parameters</p>
+    "! @parameter mask_2_set_params_disp_only | <p class="shorttext synchronized" lang="en">Mask to set selection parameters to display only</p>
+    "! @raising   zcx_ca_file_utility         | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     modify_selection_fields
       IMPORTING
-        iv_use_f4_help_only TYPE abap_bool DEFAULT abap_false
-        iv_mask_hiding      TYPE char100   DEFAULT space
-        iv_mask_disp_only   TYPE char100   DEFAULT space
+        use_for_value_help_only     TYPE abap_boolean DEFAULT abap_false
+        mask_2_hide_sel_params      TYPE char30   DEFAULT space
+        mask_2_set_params_disp_only TYPE char30   DEFAULT space
       RAISING
         zcx_ca_file_utility,
 
     "! <p class="shorttext synchronized" lang="en">Provide (hidden) selection screen parameter values</p>
     "!
-    "! @parameter rs_selscr_param_vals | <p class="shorttext synchronized" lang="en">Parameter values</p>
-    "! @raising   zcx_ca_file_utility  | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    "! <p>Reads the values of the parameters, if necessary from the screen, concatenates path and file name
+    "! delimited by the required operating system delimiter.</p>
+    "!
+    "! @parameter result              | <p class="shorttext synchronized" lang="en">Parameter values</p>
+    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     provide_selscreen_param_values
       RETURNING
-        VALUE(rs_selscr_param_vals) TYPE zca_s_file_util_sel_params
+        VALUE(result) TYPE zca_s_file_util_sel_params
       RAISING
         zcx_ca_file_utility.
 

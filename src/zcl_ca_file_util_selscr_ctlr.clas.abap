@@ -143,10 +143,14 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 *      ty_s_log_file_name             FOR zif_ca_file_util_selscr_ctlr~ty_s_log_file_name,
 *      ty_tt_log_file_names           FOR zif_ca_file_util_selscr_ctlr~ty_tt_log_file_names,
 *     Attributes
+      cvc_file_util                  FOR zif_ca_file_util_selscr_ctlr~cvc_file_util,
+      directory_hdlr                 FOR zif_ca_file_util_selscr_ctlr~directory_hdlr,
+      file_hdlr                      FOR zif_ca_file_util_selscr_ctlr~file_hdlr,
       sel_field_names                FOR zif_ca_file_util_selscr_ctlr~sel_field_names,
-      id_selscr_fields               FOR zif_ca_file_util_selscr_ctlr~id_selscr_fields,
+      sel_field_id                   FOR zif_ca_file_util_selscr_ctlr~sel_field_id,
 *     Methods
       f4_browse                      FOR zif_ca_file_util_selscr_ctlr~f4_browse,
+      get_file_handler               FOR zif_ca_file_util_selscr_ctlr~get_file_handler,
       modify_selection_fields        FOR zif_ca_file_util_selscr_ctlr~modify_selection_fields,
       provide_selscreen_param_values FOR zif_ca_file_util_selscr_ctlr~provide_selscreen_param_values.
 
@@ -154,18 +158,18 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
       "!
-      "! @parameter iv_location          | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
-      "! @parameter iv_id_selscr_fields  | <p class="shorttext synchronized" lang="en">Id of assigned selection fields (CVC_FILE_HDLR-&gt;SELEC...</p>
-      "! @parameter iv_progname          | <p class="shorttext synchronized" lang="en">ABAP Program Name were the sel.screen include is used</p>
-      "! @parameter iv_screen_no         | <p class="shorttext synchronized" lang="en">Selection screen number</p>
-      "! @raising   zcx_ca_file_utility  | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
-      "! @raising   zcx_ca_vh_tool       | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
+      "! @parameter location            | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
+      "! @parameter sel_field_id        | <p class="shorttext synchronized" lang="en">Selection field Id as assignment to a file/directory</p>
+      "! @parameter program_name        | <p class="shorttext synchronized" lang="en">ABAP Program Name were the sel.screen include is used</p>
+      "! @parameter screen_no           | <p class="shorttext synchronized" lang="en">Selection screen number</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+      "! @raising   zcx_ca_vh_tool      | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
       constructor
         IMPORTING
-          iv_location         TYPE dxlocation
-          iv_id_selscr_fields TYPE num1 DEFAULT zcl_ca_c_file_utility=>selection_field_id-for_file_1
-          iv_progname         TYPE progname DEFAULT sy-cprog
-          iv_screen_no        TYPE sydynnr DEFAULT sy-dynnr
+          location     TYPE dxlocation
+          sel_field_id TYPE num1 DEFAULT zcl_ca_c_file_utility=>selection_field_id-for_file_1
+          program_name TYPE progname DEFAULT sy-cprog
+          screen_no    TYPE sydynnr DEFAULT sy-dynnr
         RAISING
           zcx_ca_file_utility
           zcx_ca_vh_tool.
@@ -220,10 +224,6 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 *   i n s t a n c e   a t t r i b u t e s
     DATA:
 *     o b j e c t   r e f e r e n c e s
-      "! <p class="shorttext synchronized" lang="en">CA-TBX: Directory handler for applic. server OR client/PC</p>
-      directory_hdlr             TYPE REF TO zif_ca_directory_handler,
-      "! <p class="shorttext synchronized" lang="en">CA-TBX: Constants and value checks for file utility</p>
-      cvc_file_util              TYPE REF TO zcl_ca_c_file_utility,
       "! <p class="shorttext synchronized" lang="en">CA-TBX: Screen field attributes (usage with table SCREEN)</p>
       cvc_scr_fld_attr           TYPE REF TO zcl_ca_c_screen_field_attr,
       "! <p class="shorttext synchronized" lang="en">CA-TBX: Constants and value checks for value help tool</p>
@@ -241,17 +241,17 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Call table value help for a logical name</p>
       "!
-      "! @parameter iv_return_field_name | <p class="shorttext synchronized" lang="en">Name of column to be returned</p>
-      "! @parameter it_value_list        | <p class="shorttext synchronized" lang="en">Selection value list</p>
-      "! @parameter rt_selected_values   | <p class="shorttext synchronized" lang="en">List with selected values</p>
-      "! @raising   zcx_ca_vh_tool       | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
-      "! @raising   zcx_ca_ui            | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
+      "! @parameter return_field_name | <p class="shorttext synchronized" lang="en">Name of column to be returned</p>
+      "! @parameter value_help_list   | <p class="shorttext synchronized" lang="en">Selection value list</p>
+      "! @parameter result            | <p class="shorttext synchronized" lang="en">List with selected values</p>
+      "! @raising   zcx_ca_vh_tool    | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
+      "! @raising   zcx_ca_ui         | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
       call_value_help_4_logical_name
         IMPORTING
-          iv_return_field_name      TYPE fieldname
-          it_value_list             TYPE STANDARD TABLE
+          return_field_name TYPE fieldname
+          value_help_list   TYPE STANDARD TABLE
         RETURNING
-          VALUE(rt_selected_values) TYPE rsdm_f4_return_values
+          VALUE(result)     TYPE rsdm_f4_return_values
         RAISING
           zcx_ca_vh_tool
           zcx_ca_ui,
@@ -261,13 +261,13 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Create value help for requested path parameter</p>
       "!
-      "! @parameter iv_progname    | <p class="shorttext synchronized" lang="en">ABAP Program Name were the sel.screen include is used</p>
-      "! @parameter iv_screen_no   | <p class="shorttext synchronized" lang="en">Selection screen number</p>
+      "! @parameter program_name   | <p class="shorttext synchronized" lang="en">ABAP Program Name were the sel.screen include is used</p>
+      "! @parameter screen_no      | <p class="shorttext synchronized" lang="en">Selection screen number</p>
       "! @raising   zcx_ca_vh_tool | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
       create_value_help_n_reg_fields
         IMPORTING
-          iv_progname  TYPE progname DEFAULT sy-cprog
-          iv_screen_no TYPE sydynnr DEFAULT sy-dynnr
+          program_name TYPE progname DEFAULT sy-cprog
+          screen_no    TYPE sydynnr DEFAULT sy-dynnr
         RAISING
           zcx_ca_vh_tool,
 
@@ -284,15 +284,15 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Browsing for logical path / filename</p>
       "!
-      "! @parameter iv_vh_type          | <p class="shorttext synchronized" lang="en">Value help type for directories or files</p>
-      "! <p>Use the constants of cvc_file_util-&gt;VALUE_HELP-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
+      "! <p>Use the constants of CVC_FILE_UTIL-&gt;CONTENT_TYPE-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       "! @raising   zcx_ca_vh_tool      | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
       "! @raising   zcx_ca_dbacc        | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       "! @raising   zcx_ca_ui           | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
       f4_browse_logical_name
         IMPORTING
-          iv_vh_type TYPE zca_d_vht_dirs_files
+          content_type TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility
           zcx_ca_vh_tool
@@ -312,13 +312,13 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Browsing for physical path / filename at the client PC</p>
       "!
-      "! @parameter iv_vh_type          | <p class="shorttext synchronized" lang="en">Value help type for directories or files</p>
-      "! <p>Use the constants of cvc_file_util-&gt;VALUE_HELP-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
+      "! <p>Use the constants of CVC_FILE_UTIL-&gt;CONTENT_TYPE-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       "! @raising   zcx_ca_ui           | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
       f4_browse_pc
         IMPORTING
-          iv_vh_type TYPE zca_d_vht_dirs_files
+          content_type TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility
           zcx_ca_ui,
@@ -343,26 +343,26 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Browsing for physical path / filename</p>
       "!
-      "! @parameter iv_vh_type          | <p class="shorttext synchronized" lang="en">Value help type for directories or files</p>
-      "! <p>Use the constants of cvc_file_util-&gt;VALUE_HELP-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
+      "! <p>Use the constants of CVC_FILE_UTIL-&gt;CONTENT_TYPE-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       "! @raising   zcx_ca_ui           | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
       f4_browse_physical_name
         IMPORTING
-          iv_vh_type TYPE zca_d_vht_dirs_files
+          content_type TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility
           zcx_ca_ui,
 
       "! <p class="shorttext synchronized" lang="en">Browsing for physical path / filename at the server</p>
       "!
-      "! @parameter iv_vh_type          | <p class="shorttext synchronized" lang="en">Value help type for directories or files</p>
-      "! <p>Use the constants of cvc_file_util-&gt;VALUE_HELP-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
+      "! <p>Use the constants of CVC_FILE_UTIL-&gt;CONTENT_TYPE-* or ZCL_CA_C_FILE_UTILITY=>VALUE_HELP-*</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       "! @raising   zcx_ca_ui           | <p class="shorttext synchronized" lang="en">CA-TBX exception: UI interaction messages</p>
       f4_browse_server
         IMPORTING
-          iv_vh_type TYPE zca_d_vht_dirs_files
+          content_type TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility
           zcx_ca_ui,
@@ -372,48 +372,48 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
       "! To fetch the default values is necessary in cases of hidden fields. They can't be
       "! fetched as they are inactive. Therefore the programmer has to provide the values instead.
       "!
-      "! @parameter iv_fieldname   | <p class="shorttext synchronized" lang="en">Fieldname of requested value</p>
-      "! @parameter ev_value       | <p class="shorttext synchronized" lang="en">Value</p>
-      "! @raising   zcx_ca_vh_tool | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
-      "! @raising   zcx_ca_conv    | <p class="shorttext synchronized" lang="en">CA-TBX exception: Conversion failed</p>
+      "! @parameter field_name      | <p class="shorttext synchronized" lang="en">Field name of requested value</p>
+      "! @parameter parameter_value | <p class="shorttext synchronized" lang="en">Value of requested parameter</p>
+      "! @raising   zcx_ca_vh_tool  | <p class="shorttext synchronized" lang="en">CA-TBX exception: While calling / supporting value help</p>
+      "! @raising   zcx_ca_conv     | <p class="shorttext synchronized" lang="en">CA-TBX exception: Conversion failed</p>
       get_field_value
         IMPORTING
-          iv_fieldname TYPE fieldname
+          field_name      TYPE fieldname
         EXPORTING
-          ev_value     TYPE data
+          parameter_value TYPE data
         RAISING
           zcx_ca_vh_tool
           zcx_ca_conv,
 
       "! <p class="shorttext synchronized" lang="en">Read logical file names for value help request</p>
       "!
-      "! @parameter rt_log_file_names | <p class="shorttext synchronized" lang="en">Selected logical file names</p>
-      "! @raising   zcx_ca_dbacc      | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
+      "! @parameter result       | <p class="shorttext synchronized" lang="en">Selected logical file names</p>
+      "! @raising   zcx_ca_dbacc | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       read_logical_file_names
         RETURNING
-          VALUE(rt_log_file_names) TYPE ty_tt_log_file_names
+          VALUE(result) TYPE ty_tt_log_file_names
         RAISING
           zcx_ca_dbacc,
 
       "! <p class="shorttext synchronized" lang="en">Read logical path names for value help request</p>
       "!
-      "! @parameter rt_log_path_names | <p class="shorttext synchronized" lang="en">Selected logical file names</p>
-      "! @raising   zcx_ca_dbacc      | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
+      "! @parameter result       | <p class="shorttext synchronized" lang="en">Selected logical file names</p>
+      "! @raising   zcx_ca_dbacc | <p class="shorttext synchronized" lang="en">CA-TBX exception: Database access</p>
       read_logical_path_names
         RETURNING
-          VALUE(rt_log_path_names) TYPE ty_tt_log_path_names
+          VALUE(result) TYPE ty_tt_log_path_names
         RAISING
           zcx_ca_dbacc,
 
       "! <p class="shorttext synchronized" lang="en">Separate path and file name into attributes of it</p>
       "!
-      "! @parameter iv_sel_path_n_filename | <p class="shorttext synchronized" lang="en">Chosen path and file name</p>
-      "! @parameter iv_vh_type             | <p class="shorttext synchronized" lang="en">Value help type for directories or files</p>
-      "! @raising   zcx_ca_file_utility    | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+      "! @parameter sel_path_n_filename | <p class="shorttext synchronized" lang="en">Chosen path and file name</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       separate_file_name_from_sel
         IMPORTING
-          iv_sel_path_n_filename TYPE string
-          iv_vh_type             TYPE zca_d_vht_dirs_files
+          sel_path_n_filename TYPE string
+          content_type        TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility.
 
@@ -435,27 +435,27 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "Send pre-selected values as value-request-help
     CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
       EXPORTING
-        retfield        = iv_return_field_name
+        retfield        = return_field_name
         value_org       = 'S'      "= structured, but not in DDIC
         multiple_choice = space
       TABLES
-        value_tab       = it_value_list
-        return_tab      = rt_selected_values
+        value_tab       = value_help_list
+        return_tab      = result
       EXCEPTIONS
         parameter_error = 1
         no_values_found = 2
         OTHERS          = 3 ##no_text.
     IF sy-subrc NE 0.
-      DATA(lx_error) = CAST zcx_ca_vh_tool( zcx_ca_error=>create_exception(
+      DATA(_error) = CAST zcx_ca_vh_tool( zcx_ca_error=>create_exception(
                                                              iv_excp_cls = zcx_ca_vh_tool=>c_zcx_ca_vh_tool
                                                              iv_function = 'F4IF_INT_TABLE_VALUE_REQUEST'
                                                              iv_subrc    = sy-subrc ) ) ##no_text.
-      IF lx_error IS BOUND.
-        RAISE EXCEPTION lx_error.
+      IF _error IS BOUND.
+        RAISE EXCEPTION _error.
       ENDIF.
     ENDIF.
 
-    IF rt_selected_values IS INITIAL.
+    IF result IS INITIAL.
       "Action canceled
       RAISE EXCEPTION TYPE zcx_ca_ui
         EXPORTING
@@ -469,29 +469,29 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Compile all names / commands / Ids for each selection field
     "-----------------------------------------------------------------*
-    sel_field_names-location-field_name   = |P_FL{ id_selscr_fields }LOC| ##no_text.
-    sel_field_names-location-modif_id     = |FL{ id_selscr_fields }| ##no_text.
-    sel_field_names-location-user_command = |LOCATION_{ id_selscr_fields }_CHANGED| ##no_text.
+    sel_field_names-location-field_name   = |P_FL{ sel_field_id }LOC| ##no_text.
+    sel_field_names-location-modif_id     = |FL{ sel_field_id }| ##no_text.
+    sel_field_names-location-user_command = |LOCATION_{ sel_field_id }_CHANGED| ##no_text.
 
-    sel_field_names-path_type-field_name   = |P_FL{ id_selscr_fields }TYP| ##no_text.
-    sel_field_names-path_type-modif_id     = |FT{ id_selscr_fields }| ##no_text.
-    sel_field_names-path_type-user_command = |TYPE_{ id_selscr_fields }_CHANGED| ##no_text.
+    sel_field_names-path_type-field_name   = |P_FL{ sel_field_id }TYP| ##no_text.
+    sel_field_names-path_type-modif_id     = |FT{ sel_field_id }| ##no_text.
+    sel_field_names-path_type-user_command = |TYPE_{ sel_field_id }_CHANGED| ##no_text.
 
-    sel_field_names-path-field_name   = |P_FL{ id_selscr_fields }PTH| ##no_text.
-    sel_field_names-path-memory_id    = |ZCA_PATH_{ id_selscr_fields }| ##no_text.
-    sel_field_names-path-modif_id     = |FP{ id_selscr_fields }| ##no_text.
+    sel_field_names-path-field_name   = |P_FL{ sel_field_id }PTH| ##no_text.
+    sel_field_names-path-memory_id    = |ZCA_PATH_{ sel_field_id }| ##no_text.
+    sel_field_names-path-modif_id     = |FP{ sel_field_id }| ##no_text.
 
-    sel_field_names-file_name-field_name   = |P_FL{ id_selscr_fields }NAM| ##no_text.
-    sel_field_names-file_name-memory_id    = |ZCA_FILE_NAME_{ id_selscr_fields }| ##no_text.
-    sel_field_names-file_name-modif_id     = |FN{ id_selscr_fields }| ##no_text.
+    sel_field_names-file_name-field_name   = |P_FL{ sel_field_id }NAM| ##no_text.
+    sel_field_names-file_name-memory_id    = |ZCA_FILE_NAME_{ sel_field_id }| ##no_text.
+    sel_field_names-file_name-modif_id     = |FN{ sel_field_id }| ##no_text.
 
-    sel_field_names-operation-field_name   = |P_FL{ id_selscr_fields }OP| ##no_text.
-    sel_field_names-operation-modif_id     = |FO{ id_selscr_fields }| ##no_text.
-    sel_field_names-operation-user_command = |OPERATION_{ id_selscr_fields }_CHANGED| ##no_text.
+    sel_field_names-operation-field_name   = |P_FL{ sel_field_id }OP| ##no_text.
+    sel_field_names-operation-modif_id     = |FO{ sel_field_id }| ##no_text.
+    sel_field_names-operation-user_command = |OPERATION_{ sel_field_id }_CHANGED| ##no_text.
 
-    sel_field_names-mode-field_name   = |P_FL{ id_selscr_fields }MOD| ##no_text.
-    sel_field_names-mode-modif_id     = |FM{ id_selscr_fields }| ##no_text.
-    sel_field_names-mode-user_command = |MODE_{ id_selscr_fields }_CHANGED| ##no_text.
+    sel_field_names-mode-field_name   = |P_FL{ sel_field_id }MOD| ##no_text.
+    sel_field_names-mode-modif_id     = |FM{ sel_field_id }| ##no_text.
+    sel_field_names-mode-user_command = |MODE_{ sel_field_id }_CHANGED| ##no_text.
   ENDMETHOD.                    "compile_sel_screen_names
 
 
@@ -499,17 +499,17 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Constructor
     "-----------------------------------------------------------------*
-    directory_hdlr = zcl_ca_directory_handler=>get_instance( iv_location ).
+    directory_hdlr = zcl_ca_directory_handler=>get_instance( location ).
 
     cvc_file_util    = directory_hdlr->cvc_file_util.
     cvc_scr_fld_attr = zcl_ca_c_screen_field_attr=>get_instance( ).
     cvc_value_help   = zcl_ca_c_vh_tool=>get_instance( ).
 
-    id_selscr_fields = iv_id_selscr_fields.
+    me->sel_field_id = sel_field_id.
     compile_sel_screen_names( ).
 
-    create_value_help_n_reg_fields( iv_progname  = iv_progname
-                                    iv_screen_no = iv_screen_no ).
+    create_value_help_n_reg_fields( program_name = program_name
+                                    screen_no    = screen_no ).
   ENDMETHOD.                    "Constructor
 
 
@@ -518,8 +518,8 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "   Create value help for requested path parameter
     "-----------------------------------------------------------------*
     "Get selected values from selection screen
-    value_help_tool = NEW zcl_ca_vh_tool( iv_progname  = iv_progname
-                                          iv_screen_no = iv_screen_no
+    value_help_tool = NEW zcl_ca_vh_tool( iv_progname  = program_name
+                                          iv_screen_no = screen_no
                                           iv_vh_type   = cvc_value_help->vh_type-internal_table ).
 
     "Register field names to catch up there values from screen
@@ -536,11 +536,11 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Browsing for logical file name
     "-----------------------------------------------------------------*
-    DATA(lt_selected_values) =
-                 call_value_help_4_logical_name( iv_return_field_name = 'FILEINTERN'
-                                                 it_value_list        = read_logical_file_names( ) ) ##no_text.
+    DATA(_selected_values) =
+                 call_value_help_4_logical_name( return_field_name = 'FILEINTERN'
+                                                 value_help_list   = read_logical_file_names( ) ) ##no_text.
 
-    with_f4_selected_file_name = VALUE #( lt_selected_values[ 1 ]-fieldval OPTIONAL ).
+    with_f4_selected_file_name = VALUE #( _selected_values[ 1 ]-fieldval OPTIONAL ).
   ENDMETHOD.                    "f4_browse_logical_file_name
 
 
@@ -548,11 +548,11 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Browsing for logical path / filename
     "-----------------------------------------------------------------*
-    CASE iv_vh_type.
-      WHEN cvc_file_util->value_help-for_directories.
+    CASE content_type.
+      WHEN cvc_file_util->content_type-directories.
         f4_browse_logical_path( ).
 
-      WHEN cvc_file_util->value_help-for_files.
+      WHEN cvc_file_util->content_type-files.
         f4_browse_logical_file_name( ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_logical_name
@@ -562,11 +562,11 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Browsing for logical path name
     "-----------------------------------------------------------------*
-    DATA(lt_selected_values) =
-                 call_value_help_4_logical_name( iv_return_field_name = 'PATHINTERN'
-                                                 it_value_list        = read_logical_path_names( ) ) ##no_text.
+    DATA(_selected_values) =
+                 call_value_help_4_logical_name( return_field_name = 'PATHINTERN'
+                                                 value_help_list   = read_logical_path_names( ) ) ##no_text.
 
-    with_f4_selected_path = VALUE #( lt_selected_values[ 1 ]-fieldval OPTIONAL ).
+    with_f4_selected_path = VALUE #( _selected_values[ 1 ]-fieldval OPTIONAL ).
   ENDMETHOD.                    "f4_browse_logical_path
 
 
@@ -574,11 +574,11 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Browsing for physical path / filename at the client PC
     "-----------------------------------------------------------------*
-    CASE iv_vh_type.
-      WHEN cvc_file_util->value_help-for_directories.
+    CASE content_type.
+      WHEN cvc_file_util->content_type-directories.
         f4_browse_pc_4_directory( ).
 
-      WHEN cvc_file_util->value_help-for_files.
+      WHEN cvc_file_util->content_type-files.
         f4_browse_pc_4_file( ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_pc
@@ -590,30 +590,30 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      lv_path_pc           TYPE string.
+      _path_pc             TYPE string.
 
     cl_gui_frontend_services=>directory_browse(
                                           EXPORTING
                                             window_title         = CONV #( 'Select directory'(pt2) )
                                             initial_folder       = CONV #( with_f4_selected_path )
                                           CHANGING
-                                            selected_folder      = lv_path_pc
+                                            selected_folder      = _path_pc
                                           EXCEPTIONS
                                             cntl_error           = 1
                                             error_no_gui         = 2
                                             not_supported_by_gui = 3
                                             OTHERS               = 4 ).
     IF sy-subrc NE 0.
-      DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+      DATA(_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
                                                      iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
                                                      iv_class    = 'CL_GUI_FRONTEND_SERVICES'
                                                      iv_method   = 'DIRECTORY_BROWSE'
                                                      iv_subrc    = sy-subrc ) )  ##no_text.
-      IF lx_error IS BOUND.
-        RAISE EXCEPTION lx_error.
+      IF _error IS BOUND.
+        RAISE EXCEPTION _error.
       ENDIF.
 
-    ELSEIF lv_path_pc IS INITIAL.
+    ELSEIF _path_pc IS INITIAL.
       "Action canceled
       RAISE EXCEPTION TYPE zcx_ca_ui
         EXPORTING
@@ -621,7 +621,7 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
           mv_msgty = zcx_ca_ui=>c_msgty_w.
 
     ELSE.
-      with_f4_selected_path = CONV #( lv_path_pc ).
+      with_f4_selected_path = CONV #( _path_pc ).
     ENDIF.
   ENDMETHOD.                    "f4_browse_pc_4_directory
 
@@ -632,9 +632,9 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      lt_sel_files   TYPE filetable,
-      lv_subrc       TYPE i ##needed,
-      lv_user_action TYPE i.
+      _sel_files   TYPE filetable,
+      _subrc       TYPE i ##needed,
+      _user_action TYPE i.
 
     cl_gui_frontend_services=>file_open_dialog(
                                           EXPORTING
@@ -642,9 +642,9 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
                                             initial_directory       = CONV #( with_f4_selected_path )
                                             multiselection          = abap_false
                                           CHANGING
-                                            file_table              = lt_sel_files
-                                            rc                      = lv_subrc
-                                            user_action             = lv_user_action
+                                            file_table              = _sel_files
+                                            rc                      = _subrc
+                                            user_action             = _user_action
                                           EXCEPTIONS
                                             file_open_dialog_failed = 1
                                             cntl_error              = 2
@@ -652,19 +652,19 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
                                             not_supported_by_gui    = 4
                                             OTHERS                  = 5 ).
     IF sy-subrc NE 0.
-      DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+      DATA(_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
                                                      iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
                                                      iv_class    = 'CL_GUI_FRONTEND_SERVICES'
                                                      iv_method   = 'FILE_OPEN_DIALOG'
                                                      iv_subrc    = sy-subrc ) )  ##no_text.
-      IF lx_error IS BOUND.
-        RAISE EXCEPTION lx_error.
+      IF _error IS BOUND.
+        RAISE EXCEPTION _error.
       ENDIF.
     ENDIF.
 
-    DATA(lv_file_name_incl_path) = VALUE string( lt_sel_files[ 1 ]-filename OPTIONAL ).
-    IF lv_user_action         EQ cl_gui_frontend_services=>action_cancel OR
-       lv_file_name_incl_path IS INITIAL.
+    DATA(_file_name_incl_path) = VALUE string( _sel_files[ 1 ]-filename OPTIONAL ).
+    IF _user_action         EQ cl_gui_frontend_services=>action_cancel OR
+       _file_name_incl_path IS INITIAL.
       "Action canceled
       RAISE EXCEPTION TYPE zcx_ca_ui
         EXPORTING
@@ -672,8 +672,8 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
           mv_msgty = zcx_ca_ui=>c_msgty_w.
     ENDIF.
 
-    separate_file_name_from_sel( iv_sel_path_n_filename = lv_file_name_incl_path
-                                 iv_vh_type             = cvc_file_util->value_help-for_files ).
+    separate_file_name_from_sel( sel_path_n_filename = _file_name_incl_path
+                                 content_type        = cvc_file_util->content_type-files ).
   ENDMETHOD.                    "f4_browse_pc_4_file
 
 
@@ -683,10 +683,10 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     CASE directory_hdlr->location.
       WHEN cvc_file_util->location-pc.
-        f4_browse_pc( iv_vh_type ).
+        f4_browse_pc( content_type ).
 
       WHEN cvc_file_util->location-server.
-        f4_browse_server( iv_vh_type ).
+        f4_browse_server( content_type ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_physical_name
 
@@ -697,35 +697,35 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      lv_server_file  TYPE string,
-      lv_f4_file_name TYPE dxfilename.
+      _server_file  TYPE string,
+      _f4_file_name TYPE dxfilename.
 
     IF with_f4_selected_path IS INITIAL.
       TRY.
-          DATA(lo_path) = cl_fs_path=>get_current_working_dir( path_kind = cl_fs_path=>path_kind_smart ).
-          with_f4_selected_path = lo_path->get_path_name( ).
+          DATA(_path_handler) = cl_fs_path=>get_current_working_dir( path_kind = cl_fs_path=>path_kind_smart ).
+          with_f4_selected_path = _path_handler->get_path_name( ).
 
-        CATCH cx_fs_path_not_defined INTO DATA(lx_catched) ##needed.
+        CATCH cx_fs_path_not_defined INTO DATA(_catched) ##needed.
           CALL 'C_SAPGPARAM' ID 'NAME'  FIELD 'DIR_HOME'
                              ID 'VALUE' FIELD with_f4_selected_path. "#EC CI_CCALL
       ENDTRY.
 
     ELSE.
-      DATA(lv_dir_name) = CONV char30( |{ with_f4_selected_path CASE = UPPER }| ).
-      IF lv_dir_name(4) EQ 'DIR_' ##no_text.
-        CALL 'C_SAPGPARAM' ID 'NAME'  FIELD lv_dir_name
+      DATA(_directory_name) = CONV char30( |{ with_f4_selected_path CASE = UPPER }| ).
+      IF _directory_name(4) EQ 'DIR_' ##no_text.
+        CALL 'C_SAPGPARAM' ID 'NAME'  FIELD _directory_name
                            ID 'VALUE' FIELD with_f4_selected_path. "#EC CI_CCALL
       ENDIF.
     ENDIF.
 
     "Use standard file mask because the generic search does not work
-    lv_f4_file_name = '*'.       "If file name is specified and doesn't exist, no selection is possible
+    _f4_file_name = '*'.       "If file name is specified and doesn't exist, no selection is possible
     CALL FUNCTION 'CM_F4_SERVERFILE'
       EXPORTING
         iv_directory     = CONV string( with_f4_selected_path )
-        iv_filemask      = CONV string( lv_f4_file_name )
+        iv_filemask      = CONV string( _f4_file_name )
       IMPORTING
-        ev_serverfile    = lv_server_file
+        ev_serverfile    = _server_file
       EXCEPTIONS
         canceled_by_user = 1    "<== is not set by the FM -> therefore checking the result
         OTHERS           = 2.
@@ -739,15 +739,15 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
-    IF lv_server_file IS INITIAL.
+    IF _server_file IS INITIAL.
       RAISE EXCEPTION TYPE zcx_ca_ui
         EXPORTING
           textid   = zcx_ca_ui=>action_cancelled
           mv_msgty = zcx_ca_ui=>c_msgty_w.
     ENDIF.
 
-    separate_file_name_from_sel( iv_sel_path_n_filename = lv_server_file
-                                 iv_vh_type             = iv_vh_type ).
+    separate_file_name_from_sel( sel_path_n_filename = _server_file
+                                 content_type        = content_type ).
   ENDMETHOD.                    "f4_browse_server
 
 
@@ -757,16 +757,16 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     FIELD-SYMBOLS:
-      <lv_value>           TYPE data.
+      <_parameter_value>           TYPE data.
 
-    CLEAR ev_value.
+    CLEAR parameter_value.
     value_help_tool->get_screen_field_value(
                                         EXPORTING
-                                           iv_scr_field_name  = iv_fieldname
+                                           iv_scr_field_name  = field_name
                                         IMPORTING
-                                           ev_scr_field_value = ev_value ).
+                                           ev_scr_field_value = parameter_value ).
 
-    IF ev_value IS NOT INITIAL.
+    IF parameter_value IS NOT INITIAL.
       RETURN.
     ENDIF.
 
@@ -776,13 +776,13 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "erased just before executing the value help for the path without hitting the ENTER key. After the path
     "selection the file will reappear although it was erased.
     "A possible solution for this is.
-    DATA(lv_program_field_name) = CONV seocpdname( |({ value_help_tool->mv_progname }){ iv_fieldname }| ).
-    ASSIGN (lv_program_field_name) TO <lv_value>.
+    DATA(_program_field_name) = CONV seocpdname( |({ value_help_tool->mv_progname }){ field_name }| ).
+    ASSIGN (_program_field_name) TO <_parameter_value>.
     ASSERT sy-subrc EQ 0.
 
-    ev_value = <lv_value>.
-    value_help_tool->set_screen_field_value( iv_scr_field_name  = iv_fieldname
-                                             iv_scr_field_value = ev_value ).
+    parameter_value = <_parameter_value>.
+    value_help_tool->set_screen_field_value( iv_scr_field_name  = field_name
+                                             iv_scr_field_value = parameter_value ).
   ENDMETHOD.                    "get_field_value
 
 
@@ -790,10 +790,10 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Read logical file names for value help request
     "-----------------------------------------------------------------*
-    DATA(lv_file) = CONV fileintern( translate( val  = |{ with_f4_selected_file_name CASE = UPPER }|
-                                                from = '*+'   to = '%_' ) ).
-    IF lv_file IS INITIAL.
-      lv_file = '%'.
+    DATA(_file_name) = CONV fileintern( translate( val  = |{ with_f4_selected_file_name CASE = UPPER }|
+                                                   from = '*+'   to = '%_' ) ).
+    IF _file_name IS INITIAL.
+      _file_name = '%'.
     ENDIF.
 
     SELECT FROM filenameci AS fn                       "#EC CI_BUFFJOIN
@@ -811,9 +811,9 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
                 pa~pathintern,  pa~pathextern,  pa~filesys,
                 os~opsys
           WHERE os~opsys      EQ   @directory_hdlr->operation_system
-            AND fn~fileintern LIKE @lv_file
+            AND fn~fileintern LIKE @_file_name
                 ORDER BY fn~fileintern
-           INTO CORRESPONDING FIELDS OF TABLE @rt_log_file_names.
+           INTO CORRESPONDING FIELDS OF TABLE @result.
     IF sy-subrc NE 0.
       "No data was found for the specified selection criteria
       RAISE EXCEPTION TYPE zcx_ca_dbacc
@@ -828,10 +828,10 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Read logical path names for value help request
     "-----------------------------------------------------------------*
-    DATA(lv_path) = CONV pathintern( translate( val  = |{ with_f4_selected_path CASE = UPPER }|
-                                                from = '*+'   to = '%_' ) ).
-    IF lv_path IS INITIAL.
-      lv_path = '%'.
+    DATA(_path) = CONV pathintern( translate( val  = |{ with_f4_selected_path CASE = UPPER }|
+                                              from = '*+'   to = '%_' ) ).
+    IF _path IS INITIAL.
+      _path = '%'.
     ENDIF.
 
     SELECT FROM opsystem AS os                         "#EC CI_BUFFJOIN
@@ -842,9 +842,9 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
          FIELDS os~opsys,       fs~filesys,
                 pa~pathintern,  pa~pathextern
           WHERE os~opsys      EQ   @directory_hdlr->operation_system
-            AND pa~pathintern LIKE @lv_path
+            AND pa~pathintern LIKE @_path
                 ORDER BY pa~pathintern
-           INTO  CORRESPONDING FIELDS OF TABLE @rt_log_path_names.
+           INTO  CORRESPONDING FIELDS OF TABLE @result.
     IF sy-subrc NE 0.
       "No data was found for the specified selection criteria
       RAISE EXCEPTION TYPE zcx_ca_dbacc
@@ -862,44 +862,44 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     TRY.
         CASE directory_hdlr->location.
           WHEN cvc_file_util->location-server.
-            DATA(lo_path) = cl_fs_path=>create( name      = iv_sel_path_n_filename
-                                                path_kind = cl_fs_path=>path_kind_smart ).
+            DATA(_path_handler) = cl_fs_path=>create( name      = sel_path_n_filename
+                                                      path_kind = cl_fs_path=>path_kind_smart ).
 
-            CASE iv_vh_type.
-              WHEN cvc_file_util->value_help-for_directories.
-                with_f4_selected_path = lo_path->get_path_component( ).
+            CASE content_type.
+              WHEN cvc_file_util->content_type-directories.
+                with_f4_selected_path = _path_handler->get_path_component( ).
 
-              WHEN cvc_file_util->value_help-for_files.
-                with_f4_selected_path      = lo_path->get_path_component( ).
-                with_f4_selected_file_name = lo_path->get_file_name( ).
+              WHEN cvc_file_util->content_type-files.
+                with_f4_selected_path      = _path_handler->get_path_component( ).
+                with_f4_selected_file_name = _path_handler->get_file_name( ).
             ENDCASE.
 
           WHEN cvc_file_util->location-pc.
-            DATA(lv_path) = substring_before( val = iv_sel_path_n_filename
-                                              sub = directory_hdlr->path_separator
-                                              occ = -1 ).
-            DATA(lv_file_name) = substring_after( val = iv_sel_path_n_filename
-                                                  sub = directory_hdlr->path_separator
-                                                  occ = -1 ).
+            DATA(_path) = substring_before( val = sel_path_n_filename
+                                            sub = directory_hdlr->path_separator
+                                            occ = -1 ).
+            DATA(_file_name) = substring_after( val = sel_path_n_filename
+                                                sub = directory_hdlr->path_separator
+                                                occ = -1 ).
 
-            CASE iv_vh_type.
-              WHEN cvc_file_util->value_help-for_directories.
-                with_f4_selected_path = lv_path.
+            CASE content_type.
+              WHEN cvc_file_util->content_type-directories.
+                with_f4_selected_path = _path.
 
-              WHEN cvc_file_util->value_help-for_files.
-                with_f4_selected_path      = lv_path.
-                with_f4_selected_file_name = lv_file_name.
+              WHEN cvc_file_util->content_type-files.
+                with_f4_selected_path      = _path.
+                with_f4_selected_file_name = _file_name.
             ENDCASE.
         ENDCASE.
 
-      CATCH cx_smart_path_syntax INTO DATA(lx_catched).
-        DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+      CATCH cx_smart_path_syntax INTO DATA(_catched).
+        DATA(_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
                                                        iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
                                                        iv_class    = 'CL_FS_PATH'
                                                        iv_method   = 'CREATE'
-                                                       ix_error    = lx_catched ) ) ##no_text.
-        IF lx_error IS BOUND.
-          RAISE EXCEPTION lx_error.
+                                                       ix_error    = _catched ) ) ##no_text.
+        IF _error IS BOUND.
+          RAISE EXCEPTION _error.
         ENDIF.
     ENDTRY.
   ENDMETHOD.                    "separate_file_name_from_sel
@@ -911,25 +911,25 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      lv_cursor_field      TYPE fieldname.
+      _cursor_in_field      TYPE fieldname.
 
     TRY.
         "Get selection screen values -> reads only the visible fields
         value_help_tool->read_field_values_from_screen(
                                         iv_selection_type = cvc_value_help->selection_type-all_screen_fields ).
-        DATA(ls_selscr_params) = provide_selscreen_param_values( ).
+        DATA(_selscr_params) = provide_selscreen_param_values( ).
 
         "Get selected value help type, path type, operation type and may be a file name pattern
-        GET CURSOR FIELD lv_cursor_field.
+        GET CURSOR FIELD _cursor_in_field.
         ASSERT sy-subrc EQ 0.
 
-        DATA(lv_vh_type) = COND #( WHEN lv_cursor_field CP '*PTH' THEN cvc_file_util->value_help-for_directories
-                                   WHEN lv_cursor_field CP '*NAM' THEN cvc_file_util->value_help-for_files
-                                              "Parameter '&1' has invalid value '&2'
-                                   ELSE THROW zcx_ca_file_utility( textid   = zcx_ca_file_utility=>param_invalid
-                                                                   mv_msgty = 'E'
-                                                                   mv_msgv1 = 'LV_CURSOR_FIELD'
-                                                                   mv_msgv2 = CONV #( lv_cursor_field ) ) ) ##no_text.
+        DATA(_content_type) = COND #( WHEN _cursor_in_field CP '*PTH' THEN cvc_file_util->content_type-directories
+                                      WHEN _cursor_in_field CP '*NAM' THEN cvc_file_util->content_type-files
+                                                 "Parameter '&1' has invalid value '&2'
+                                      ELSE THROW zcx_ca_file_utility( textid   = zcx_ca_file_utility=>param_invalid
+                                                                      mv_msgty = 'E'
+                                                                      mv_msgv1 = 'LV_CURSOR_FIELD'
+                                                                      mv_msgv2 = CONV #( _cursor_in_field ) ) ) ##no_text.
 
         value_help_tool->get_screen_field_value(
                                             EXPORTING
@@ -943,13 +943,13 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
                                             IMPORTING
                                                ev_scr_field_value = with_f4_selected_file_name ).
 
-        "Start dialog in dependence of path type
-        CASE ls_selscr_params-type.
+        "Start dialog in dependence of content type
+        CASE _selscr_params-type.
           WHEN cvc_file_util->type-logical.
-            f4_browse_logical_name( lv_vh_type ).
+            f4_browse_logical_name( _content_type ).
 
           WHEN cvc_file_util->type-physical.
-            f4_browse_physical_name( lv_vh_type ).
+            f4_browse_physical_name( _content_type ).
         ENDCASE.
 
         "Set selected value into screen field
@@ -966,40 +966,49 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
   ENDMETHOD.                    "zif_ca_file_util_selscr_ctlr~f4_browse
 
 
+  METHOD zif_ca_file_util_selscr_ctlr~get_file_handler.
+    "-----------------------------------------------------------------*
+    "   Get file handler for selected file (attribute FILE_HDLR)
+    "-----------------------------------------------------------------*
+    file_hdlr = zcl_ca_file_handler=>get_instance( directory_hdlr->location ).
+    file_hdlr->set_processing_parameters( provide_selscreen_param_values( ) ).
+  ENDMETHOD.                    "zif_ca_file_util_selscr_ctlr~get_file_handler
+
+
   METHOD zif_ca_file_util_selscr_ctlr~modify_selection_fields.
     "-----------------------------------------------------------------*
     "   Modifying / adjusting selection screen fields
     "-----------------------------------------------------------------*
-    DATA(lv_lhide) = strlen( iv_mask_hiding ).
-    DATA(lv_ldo)   = strlen( iv_mask_disp_only ).
+    DATA(_len_mask_hiding)    = strlen( mask_2_hide_sel_params ).        "Length of hiding mask
+    DATA(_len_mask_disp_only) = strlen( mask_2_set_params_disp_only ).   "Length of display only mask
 
-    DATA(lv_name_pattern)   = CONV sychar132( |*FL{ id_selscr_fields }*BLOCK*| ) ##no_text.
-    DATA(lv_group1_pattern) = CONV char3( |F+{ id_selscr_fields }| ) ##no_text.
+    DATA(_name_pattern)   = CONV sychar132( |*FL{ sel_field_id }*BLOCK*| ) ##no_text.
+    DATA(_group1_pattern) = CONV char3( |F+{ sel_field_id }| ) ##no_text.
 
-    LOOP AT SCREEN INTO DATA(ls_screen).
-      IF ls_screen-name   NP lv_name_pattern   AND
-         ls_screen-group1 NP lv_group1_pattern ##no_text.
+    LOOP AT SCREEN INTO DATA(_screen).
+      IF _screen-name   NP _name_pattern   AND
+         _screen-group1 NP _group1_pattern ##no_text.
         CONTINUE.
       ENDIF.
 
-      IF   iv_use_f4_help_only EQ abap_true           AND
-           ls_screen-group3    EQ 'BLK'               AND
-         ( ls_screen-name      CP lv_name_pattern      OR
-           ls_screen-group1    CP lv_group1_pattern ) ##no_text.
-        ls_screen-active = cvc_scr_fld_attr->switch-off.
+      IF   use_for_value_help_only EQ abap_true   AND
+           _screen-group3    EQ 'BLK'             AND
+         ( _screen-name      CP _name_pattern      OR
+           _screen-group1    CP _group1_pattern ) ##no_text.
+        _screen-active = cvc_scr_fld_attr->switch-off.
 
-      ELSEIF ls_screen-group1         IS NOT INITIAL AND
-             iv_mask_hiding           IS NOT INITIAL AND
-             iv_mask_hiding(lv_lhide) CS ls_screen-group1(2).
-        ls_screen-active = cvc_scr_fld_attr->switch-off.
+      ELSEIF _screen-group1                           IS NOT INITIAL AND
+             mask_2_hide_sel_params                   IS NOT INITIAL AND
+             mask_2_hide_sel_params(_len_mask_hiding) CS _screen-group1(2).
+        _screen-active = cvc_scr_fld_attr->switch-off.
 
-      ELSEIF ls_screen-group1          IS NOT INITIAL AND
-             iv_mask_disp_only         IS NOT INITIAL AND
-             iv_mask_disp_only(lv_ldo) CS ls_screen-group1(2).
-        ls_screen-input = cvc_scr_fld_attr->switch-off.
+      ELSEIF _screen-group1                                   IS NOT INITIAL AND
+             mask_2_set_params_disp_only                      IS NOT INITIAL AND
+             mask_2_set_params_disp_only(_len_mask_disp_only) CS _screen-group1(2).
+        _screen-input = cvc_scr_fld_attr->switch-off.
       ENDIF.
 
-      MODIFY SCREEN FROM ls_screen.
+      MODIFY SCREEN FROM _screen.
     ENDLOOP.
   ENDMETHOD.                    "zif_ca_file_util_selscr_ctlr~modify_selection_fields
 
@@ -1011,65 +1020,63 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     TRY.
         get_field_value(
                     EXPORTING
-                      iv_fieldname = sel_field_names-location-field_name
+                      field_name = sel_field_names-location-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-location ).
+                      parameter_value     = result-location ).
 
         get_field_value(
                     EXPORTING
-                      iv_fieldname = sel_field_names-path_type-field_name
+                      field_name = sel_field_names-path_type-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-type ).
+                      parameter_value     = result-type ).
 
         get_field_value(
                     EXPORTING
-                      iv_fieldname = sel_field_names-path-field_name
+                      field_name = sel_field_names-path-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-path ).
+                      parameter_value     = result-path ).
 
-        "Clean up directory delimiter for a uniform / consistent path + file name handling
-        IF rs_selscr_param_vals-path IS NOT INITIAL.
-          DATA(lv_offset) = strlen( rs_selscr_param_vals-path ) - 1.
-          IF rs_selscr_param_vals-path+lv_offset(1) EQ directory_hdlr->path_separator.
-            rs_selscr_param_vals-path+lv_offset(1) = space.
-          ENDIF.
-
-          rs_selscr_param_vals-path_file = rs_selscr_param_vals-path.
-        ENDIF.
+*        "Clean up directory delimiter for a uniform / consistent path + file name handling
+*        IF result-path IS NOT INITIAL.
+*          DATA(lv_offset) = strlen( result-path ) - 1.
+*          IF result-path+lv_offset(1) EQ directory_hdlr->path_separator.
+*            result-path+lv_offset(1) = space.
+*          ENDIF.
+*
+*          result-path_file = result-path.
+*        ENDIF.
 
         get_field_value(
                     EXPORTING
-                      iv_fieldname = sel_field_names-file_name-field_name
+                      field_name = sel_field_names-file_name-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-file_name ).
+                      parameter_value     = result-file_name ).
 
-        IF rs_selscr_param_vals-file_name IS NOT INITIAL.
-          rs_selscr_param_vals-path_file =
-                           |{ rs_selscr_param_vals-path_file }{ directory_hdlr->path_separator }| &
-                           |{ rs_selscr_param_vals-file_name }|.
-        ENDIF.
+*        IF result-file_name IS NOT INITIAL.
+*          result-path_file = |{ result-path_file }{ directory_hdlr->path_separator }{ result-file_name }|.
+*        ENDIF.
 
         get_field_value(
                     EXPORTING
-                      iv_fieldname = sel_field_names-operation-field_name
+                      field_name = sel_field_names-operation-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-operation ).
+                      parameter_value     = result-operation ).
 
         get_field_value(
                     EXPORTING
-                      iv_fieldname = sel_field_names-mode-field_name
+                      field_name = sel_field_names-mode-field_name
                     IMPORTING
-                      ev_value     = rs_selscr_param_vals-mode ).
+                      parameter_value     = result-mode ).
 
       CATCH zcx_ca_conv
-            zcx_ca_vh_tool INTO DATA(lx_catched).
-        DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+            zcx_ca_vh_tool INTO DATA(_catched).
+        DATA(_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
                                                        iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
                                                        iv_class    = 'ZCL_CA_FILE_UTILITY'
                                                        iv_method   = 'PROVIDE_SELSCREEN_PARAM_VALUES'
-                                                       ix_error    = lx_catched ) ) ##no_text.
-        IF lx_error IS BOUND.
-          RAISE EXCEPTION lx_error.
+                                                       ix_error    = _catched ) ) ##no_text.
+        IF _error IS BOUND.
+          RAISE EXCEPTION _error.
         ENDIF.
     ENDTRY.
   ENDMETHOD.                    "zif_ca_file_util_selscr_ctlr~provide_selscreen_param_values

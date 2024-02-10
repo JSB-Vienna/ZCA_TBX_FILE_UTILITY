@@ -4,9 +4,9 @@ INTERFACE zif_ca_file_handler PUBLIC.
   DATA:
 *   o b j e c t   r e f e r e n c e s
     "! <p class="shorttext synchronized" lang="en">CA-TBX: Directory handler for applic. server OR client/PC</p>
-    directory_hdlr TYPE REF TO zif_ca_directory_handler READ-ONLY,
+    directory_hdlr    TYPE REF TO zif_ca_directory_handler READ-ONLY,
     "! <p class="shorttext synchronized" lang="en">CA-TBX: Constants and value checks for file utility</p>
-    cvc_file_util  TYPE REF TO zcl_ca_c_file_utility READ-ONLY,
+    cvc_file_util     TYPE REF TO zcl_ca_c_file_utility READ-ONLY,
 
 **   d a t a   r e f e r e n c e s
 *    "! <p class="shorttext synchronized" lang="en">Description</p>
@@ -15,87 +15,77 @@ INTERFACE zif_ca_file_handler PUBLIC.
 **   t a b l e s
 *    "! <p class="shorttext synchronized" lang="en">Description</p>
 *    mt_...               TYPE x..
-*
-**   s t r u c t u r e s
-*    "! <p class="shorttext synchronized" lang="en">Description</p>
-*    ms_...               TYPE x..
 
-*   s i n g l e   v a l u e s
-    "! <p class="shorttext synchronized" lang="en">Location: A = server / P = client/PC</p>
-    mv_location    TYPE dxlocation READ-ONLY.
+*   s t r u c t u r e s
+    "! <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
+    processing_params TYPE zca_s_file_util_sel_params READ-ONLY.
+
+**   s i n g l e   v a l u e s
+*    "! <p class="shorttext synchronized" lang="en">Location: A = server / P = client/PC</p>
+*    mv_location    TYPE dxlocation READ-ONLY.
 
 *   i n s t a n c e   m e t h o d s
   METHODS:
-    create,
-
-    "! <p class="shorttext synchronized" lang="en">Get file (READ from server / UPLOAD from client PC)</p>
+    "! <p class="shorttext synchronized" lang="en">Read entire file</p>
     "!
-    "! @parameter iv_path_file           | <p class="shorttext synchronized" lang="en">Complete physical path and file name</p>
-    "! @parameter iv_file_mode           | <p class="shorttext synchronized" lang="en">Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</p>
-    "! @parameter iv_codepage            | <p class="shorttext synchronized" lang="en">Codepage (can use MV_CODEPAGE as default, see TCP00)</p>
-    "! @parameter iv_has_field_separator | <p class="shorttext synchronized" lang="en">X = Fields are TAB separ. - result table needs corresp. cols</p>
-    "! @parameter iv_check_auth          | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
-    "! @parameter et_file                | <p class="shorttext synchronized" lang="en">File as table</p>
-    "! @parameter ev_length              | <p class="shorttext synchronized" lang="en">File length</p>
-    "! @raising   zcx_ca_file_utility    | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    "! @parameter codepage            | <p class="shorttext synchronized" lang="en">Codepage (can use MV_CODEPAGE as default, see TCP00)</p>
+    "! @parameter check_authority     | <p class="shorttext synchronized" lang="en">X = Check authority for path and file (appl. server only)</p>
+    "! @parameter file                | <p class="shorttext synchronized" lang="en">File as table</p>
+    "! @parameter length_of_file      | <p class="shorttext synchronized" lang="en">File length</p>
+    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     read
       IMPORTING
-        iv_path_file           TYPE string       OPTIONAL      "is may be already availabe via e. g. GET_LOGICAL_FILENAME
-        iv_file_mode           TYPE swr_filetype DEFAULT zcl_ca_c_file_utility=>mode-binary
-        iv_codepage            TYPE cpcodepage   OPTIONAL
-        iv_check_auth          TYPE abap_bool    DEFAULT abap_true
-        iv_has_field_separator TYPE abap_bool    DEFAULT abap_false
+        codepage        TYPE cpcodepage OPTIONAL
+        check_authority TYPE abap_boolean DEFAULT abap_true
       EXPORTING
-        et_file                TYPE STANDARD TABLE
-        ev_length              TYPE i
+        file            TYPE STANDARD TABLE
+        length_of_file  TYPE i
       RAISING
         zcx_ca_file_utility,
 
-    "! <p class="shorttext synchronized" lang="en">Delete</p>
+    "! <p class="shorttext synchronized" lang="en">Delete file</p>
     "!
-    "! @parameter iv_path_file        | <p class="shorttext synchronized" lang="en">Complete physical path and file name</p>
-    "! @parameter iv_check_auth       | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
+    "! @parameter check_authority     | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
     "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     delete
       IMPORTING
-        iv_path_file  TYPE string    OPTIONAL      "is may be already availabe via e. g. GET_LOGICAL_FILENAME
-        iv_check_auth TYPE abap_bool DEFAULT abap_true
+        check_authority TYPE abap_boolean DEFAULT abap_true
       RAISING
         zcx_ca_file_utility,
 
-    "! <p class="shorttext synchronized" lang="en">Write file (TRANSFER to server / DOWNLOAD on client/PC)</p>
+    "! <p class="shorttext synchronized" lang="en">Set parameters where and how the file should be proceeded</p>
     "!
-    "! @parameter iv_path_file              | <p class="shorttext synchronized" lang="en">Complete physical path and file name</p>
-    "! @parameter iv_file_mode              | <p class="shorttext synchronized" lang="en">Binary or character mode (CVC_FILE_HDLR-&gt;MODE-*)</p>
-    "! @parameter iv_check_auth             | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
-    "! @parameter iv_write_lf               | <p class="shorttext synchronized" lang="en">X = Add CR/LF at end of CHAR lines (PC only)</p>
-    "! @parameter iv_confirm_overwrite      | <p class="shorttext synchronized" lang="en">X = Confirm overwriting file (PC only)</p>
-    "! @parameter iv_write_field_separator  | <p class="shorttext synchronized" lang="en">X = Separate fields by horizontal tabulator (PC only)</p>
-    "! @parameter iv_trunc_trail_blanks     | <p class="shorttext synchronized" lang="en">X = Truncate trailing blanks at end of CHAR fields (PC only)</p>
-    "! @parameter iv_trunc_trail_blanks_eol | <p class="shorttext synchronized" lang="en">X = Trunc. trailing blanks at end of the last col. (PC only)</p>
-    "! @parameter iv_file_operation         | <p class="shorttext synchronized" lang="en">File operation type (CVC_FILE_HDLR-&gt;OPERATION-*)</p>
-    "! @parameter iv_codepage               | <p class="shorttext synchronized" lang="en">Codepage (can use MV_CODEPAGE as default, see TCP00)</p>
-    "! @parameter iv_length                 | <p class="shorttext synchronized" lang="en">Write file of this length</p>
-    "! @parameter ev_length                 | <p class="shorttext synchronized" lang="en">Transmitted length</p>
-    "! @parameter ct_file                   | <p class="shorttext synchronized" lang="en">File as table</p>
-    "! @raising   zcx_ca_file_utility       | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    "! <p><strong>This method has to be executed <em>BEFORE</em> you use any of the REST methods!!!</strong></p>
+    "!
+    "! <p>If you are using the class {@link zcl_ca_file_util_selscr_ctlr} (selection screen block controller)
+    "! then use method of <strong>class {@link zcl_ca_file_util_selscr_ctlr.METH:provide_selscreen_param_values}
+    "! </strong> to transfer the selection screen values into this instance.</p>
+    "!
+    "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
+    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    set_processing_parameters
+      IMPORTING
+        processing_params TYPE zca_s_file_util_sel_params
+      RAISING
+        zcx_ca_file_utility,
+
+    "! <p class="shorttext synchronized" lang="en">Write entire file</p>
+    "!
+    "! @parameter check_authority     | <p class="shorttext synchronized" lang="en">X = Check authority for path and file</p>
+    "! @parameter codepage            | <p class="shorttext synchronized" lang="en">Codepage (can use MV_CODEPAGE as default, see TCP00)</p>
+    "! @parameter max_file_length     | <p class="shorttext synchronized" lang="en">Max. length of the file to write (lower 0 = complete file)</p>
+    "! @parameter length_of_file      | <p class="shorttext synchronized" lang="en">Transmitted length</p>
+    "! @parameter file                | <p class="shorttext synchronized" lang="en">File as table</p>
+    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     write
       IMPORTING
-        iv_path_file              TYPE string       OPTIONAL      "is may be already availabe via e. g. GET_LOGICAL_FILENAME
-        iv_file_mode              TYPE swr_filetype DEFAULT zcl_ca_c_file_utility=>mode-binary
-        iv_check_auth             TYPE abap_bool    DEFAULT abap_true
-        iv_write_lf               TYPE abap_bool    DEFAULT abap_true
-        iv_confirm_overwrite      TYPE abap_bool    DEFAULT abap_false
-        iv_write_field_separator  TYPE abap_bool    DEFAULT abap_false
-        iv_trunc_trail_blanks     TYPE abap_bool    DEFAULT abap_true
-        iv_trunc_trail_blanks_eol TYPE abap_bool    DEFAULT abap_true
-        iv_file_operation         TYPE dsetactype   DEFAULT zcl_ca_c_file_utility=>operation-output
-        iv_codepage               TYPE cpcodepage   DEFAULT '4110'   "equates to UTF-8 which is recommended for outbound
-        iv_length                 TYPE i            OPTIONAL
+        check_authority TYPE abap_boolean DEFAULT abap_true
+        codepage        TYPE cpcodepage   DEFAULT '4110'   "equates to UTF-8 which is recommended for outbound
+        max_file_length TYPE i            OPTIONAL
       EXPORTING
-        ev_length                 TYPE i
+        length_of_file  TYPE i
       CHANGING
-        !ct_file                  TYPE STANDARD TABLE
+        file            TYPE STANDARD TABLE
       RAISING
         zcx_ca_file_utility.
 

@@ -32,15 +32,15 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
 
 *   a l i a s e s
     ALIASES:
-*     Types
-*      ty_s_directory_entry FOR zif_ca_file_handler~directory_hdlr
 *     Attributes
-      directory_hdlr FOR zif_ca_file_handler~directory_hdlr,
-      cvc_file_util  FOR zif_ca_file_handler~cvc_file_util,
+      directory_hdlr            FOR zif_ca_file_handler~directory_hdlr,
+      cvc_file_util             FOR zif_ca_file_handler~cvc_file_util,
+      processing_params         FOR zif_ca_file_handler~processing_params,
 *     Method
-      delete         FOR zif_ca_file_handler~delete,
-      read           FOR zif_ca_file_handler~read,
-      write          FOR zif_ca_file_handler~write.
+      delete                    FOR zif_ca_file_handler~delete,
+      read                      FOR zif_ca_file_handler~read,
+      set_processing_parameters FOR zif_ca_file_handler~set_processing_parameters,
+      write                     FOR zif_ca_file_handler~write.
 
 *   s t a t i c   a t t r i b u t e s
     CLASS-DATA:
@@ -76,12 +76,12 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
     CLASS-METHODS:
       "! <p class="shorttext synchronized" lang="en">Get instance</p>
       "!
-      "! @parameter iv_location         | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
+      "! @parameter location            | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
       "! @parameter result              | <p class="shorttext synchronized" lang="en">CA-TBX: File utility for server OR client/PC</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       get_instance
         IMPORTING
-          iv_location   TYPE dxlocation
+          location      TYPE dxlocation
         RETURNING
           VALUE(result) TYPE REF TO zif_ca_file_handler
         RAISING
@@ -97,26 +97,33 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Get physical path and file name to a logical filename</p>
       "!
-      "! @parameter iv_logical_filename | <p class="shorttext synchronized" lang="en">Logical file name defined in TA FILE</p>
-      "! @parameter iv_param_1          | <p class="shorttext synchronized" lang="en">Replacement parameter 1</p>
-      "! @parameter iv_param_2          | <p class="shorttext synchronized" lang="en">Replacement parameter 2</p>
-      "! @parameter iv_param_3          | <p class="shorttext synchronized" lang="en">Replacement parameter 3</p>
-      "! @parameter iv_incl_dir         | <p class="shorttext synchronized" lang="en">X = Expecting / return a physical path</p>
-      "! @parameter iv_with_file_ext    | <p class="shorttext synchronized" lang="en">X = Append internal file extension to file name ..e. g. BIN</p>
-      "! @parameter iv_use_buffer       | <p class="shorttext synchronized" lang="en">X = Use buffer to avoid recurring data access and checks</p>
-      "! @parameter rv_path_file        | <p class="shorttext synchronized" lang="en">Complete path and file name</p>
+      "! <p><strong>Attention!</strong> The parameters {@link .DATA:iv_including_dir} and {@link .DATA:iv_with_file_extension}
+      "! exclude each other, means you can either use one or the other with value ABAP_TRUE.</p>
+      "!
+      "! <p>Some more details about the parameters of this method you can find in the documentation of function
+      "! module {@link FUNC:file_get_name} which has the same parameters as the function module
+      "! {@link FUNC:file_get_name_and_validate} used in this method.</p>
+      "!
+      "! @parameter logical_filename    | <p class="shorttext synchronized" lang="en">Logical file name defined in TA FILE</p>
+      "! @parameter parameter_1         | <p class="shorttext synchronized" lang="en">Replacement parameter 1</p>
+      "! @parameter parameter_2         | <p class="shorttext synchronized" lang="en">Replacement parameter 2</p>
+      "! @parameter parameter_3         | <p class="shorttext synchronized" lang="en">Replacement parameter 3</p>
+      "! @parameter is_for_local_client | <p class="shorttext synchronized" lang="en">X = Location is the local client/PC</p>
+      "! @parameter including_dir       | <p class="shorttext synchronized" lang="en">X = Expecting / return a physical path</p>
+      "! @parameter with_file_extension | <p class="shorttext synchronized" lang="en">X = Append internal file extension to file name ..e. g. BIN</p>
+      "! @parameter result              | <p class="shorttext synchronized" lang="en">Complete path and file name</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       get_pathfile_from_logical_name
         IMPORTING
-          iv_logical_filename TYPE fileintern
-          iv_param_1          TYPE clike DEFAULT space
-          iv_param_2          TYPE clike DEFAULT space
-          iv_param_3          TYPE clike DEFAULT space
-          iv_incl_dir         TYPE abap_bool DEFAULT abap_true
-          iv_with_file_ext    TYPE abap_bool DEFAULT abap_false
-          iv_use_buffer       TYPE abap_bool DEFAULT abap_false
+          logical_filename    TYPE fileintern
+          parameter_1         TYPE text255 DEFAULT space
+          parameter_2         TYPE text255 DEFAULT space
+          parameter_3         TYPE text255 DEFAULT space
+          is_for_local_client TYPE abap_boolean DEFAULT abap_false
+          including_dir       TYPE abap_boolean DEFAULT abap_true
+          with_file_extension TYPE abap_boolean DEFAULT abap_false
         RETURNING
-          VALUE(rv_path_file) TYPE string
+          VALUE(result)       TYPE string
         RAISING
           zcx_ca_file_utility,
 
@@ -126,18 +133,35 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
 
 * P R O T E C T E D   S E C T I O N
   PROTECTED SECTION.
-*   i n s t a n c e   a t t r i b u t e s
-    DATA:
-*     s i n g l e   v a l u e s
-      "! <p class="shorttext synchronized" lang="en">OS of location (conform for logical filename)</p>
-      mv_opsys    TYPE syst_opsys.
-
 *   i n s t a n c e   m e t h o d s
     METHODS:
+      "! <p class="shorttext synchronized" lang="en">Assemble path and file name, after resolving logical names</p>
+      "!
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
+      "! @parameter result              | <p class="shorttext synchronized" lang="en">Processing parameters completed by path and file name</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+      assemble_path_n_file_name
+        IMPORTING
+          processing_params TYPE zca_s_file_util_sel_params
+        RETURNING
+          VALUE(result)     TYPE zca_s_file_util_sel_params
+        RAISING
+          zcx_ca_file_utility,
+
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
       "!
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       constructor
+        RAISING
+          zcx_ca_file_utility,
+
+      "! <p class="shorttext synchronized" lang="en">Check whether a file name is provided</p>
+      "!
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
+      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+      is_file_name_provided
+        IMPORTING
+          processing_params TYPE zca_s_file_util_sel_params
         RAISING
           zcx_ca_file_utility.
 
@@ -152,6 +176,46 @@ ENDCLASS.
 
 CLASS zcl_ca_file_handler IMPLEMENTATION.
 
+  METHOD assemble_path_n_file_name.
+    "---------------------------------------------------------------------*
+    "     Assemble path and file name, after resolving logical names if necessary
+    "---------------------------------------------------------------------*
+    result = processing_params.
+
+    CASE processing_params-type.
+      WHEN cvc_file_util->type-physical.
+        "Clean up directory delimiter for a uniform / consistent path + file name handling
+        IF result-path IS NOT INITIAL.
+          DATA(lv_offset) = strlen( result-path ) - 1.
+          IF result-path+lv_offset(1) EQ directory_hdlr->path_separator.
+            result-path+lv_offset(1) = space.
+          ENDIF.
+
+          result-path_file = result-path.
+        ENDIF.
+
+        IF result-file_name IS NOT INITIAL.
+          result-path_file = |{ result-path_file }{ directory_hdlr->path_separator }| &
+                             |{ result-file_name }|.
+        ENDIF.
+
+      WHEN cvc_file_util->type-logical.
+        result-path_file = get_pathfile_from_logical_name(
+                             logical_filename = CONV #( result-file_name )
+*                     USE_PRESENTATION_SERVER = xsdbool( result-location eq cvc_file_util->location-pc )
+*                     iv_param_1          = space
+*                     iv_param_2          = space
+*                     iv_param_3          = space
+*                     iv_incl_dir         = abap_true
+*                     iv_with_file_ext    = abap_false
+*                     iv_use_buffer       = abap_false
+                           ).
+    ENDCASE.
+
+    directory_hdlr->is_path_file_available( result-path_file ).
+  ENDMETHOD.                    "assemble_path_n_file_name
+
+
   METHOD constructor.
     "---------------------------------------------------------------------*
     "     Constructor
@@ -165,9 +229,9 @@ CLASS zcl_ca_file_handler IMPLEMENTATION.
     "     Get instance
     "---------------------------------------------------------------------*
     DATA(_cvc_file) = zcl_ca_c_file_utility=>get_instance( ).
-    _cvc_file->is_location_valid( iv_location ).
+    _cvc_file->is_location_valid( location ).
 
-    CASE iv_location.
+    CASE location.
       WHEN _cvc_file->location-pc.
         result ?= NEW zcl_ca_file_handler_pc( ).
 
@@ -177,51 +241,63 @@ CLASS zcl_ca_file_handler IMPLEMENTATION.
   ENDMETHOD.                    "download
 
 
-  METHOD zif_ca_file_handler~read.
-    "---------------------------------------------------------------------*
-    "     Get file (READ from server / UPLOAD from client PC)
-    "---------------------------------------------------------------------*
-    cvc_file_util->is_mode_valid( iv_file_mode ).
-    directory_hdlr->is_path_file_available( iv_path_file ).
-
-    "R e d e f i n e d   f r o m   h e r e
-  ENDMETHOD.                    "zif_ca_file_handler~read
-
-
   METHOD get_pathfile_from_logical_name.
     "---------------------------------------------------------------------*
     "     Get physical path and file name to a logical filename
     "---------------------------------------------------------------------*
     CALL FUNCTION 'FILE_GET_NAME_AND_VALIDATE'
       EXPORTING
-        logical_filename    = iv_logical_filename
-        operating_system    = mv_opsys
-        parameter_1         = iv_param_1
-        parameter_2         = iv_param_2
-        parameter_3         = iv_param_3
-        including_dir       = iv_incl_dir
-        with_file_extension = iv_with_file_ext
-        use_buffer          = iv_use_buffer
+        logical_filename    = logical_filename
+        operating_system    = directory_hdlr->operation_system
+        parameter_1         = parameter_1
+        parameter_2         = parameter_2
+        parameter_3         = parameter_3
+        including_dir       = abap_true
+        with_file_extension = abap_false
+        use_buffer          = abap_false
       IMPORTING
-        file_name           = rv_path_file
+        file_name           = result
       EXCEPTIONS
         file_not_found      = 1
         validation_failed   = 2
         incorrect_path      = 3
         OTHERS              = 4.
     IF sy-subrc NE 0.
-      DATA(lx_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
+      DATA(_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
                                                         iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
                                                         iv_function = 'FILE_GET_NAME_AND_VALIDATE'
                                                         iv_subrc    = sy-subrc ) )  ##no_text.
-      IF lx_error IS BOUND.
-        RAISE EXCEPTION lx_error.
+      IF _error IS BOUND.
+        RAISE EXCEPTION _error.
       ENDIF.
     ENDIF.
 
     "Create physical filename handler
-    directory_hdlr->get_physical_filename_handler( rv_path_file ).
+    directory_hdlr->get_physical_filename_handler( result ).
   ENDMETHOD.                    "get_pathfile_from_logical_name
+
+
+  METHOD is_file_name_provided.
+    "---------------------------------------------------------------------*
+    "     Check whether a file name is provided
+    "---------------------------------------------------------------------*
+    CASE processing_params-type.
+      WHEN cvc_file_util->type-physical.
+        IF processing_params-path      IS INITIAL OR
+           processing_params-file_name IS INITIAL.
+          "Please enter a valid path and/or filename
+          RAISE EXCEPTION TYPE zcx_ca_file_utility
+            MESSAGE ID 'DB6PM' TYPE zcx_ca_file_utility=>c_msgty_e NUMBER '113'.
+        ENDIF.
+
+      WHEN cvc_file_util->type-logical.
+        IF processing_params-file_name IS INITIAL.
+          "No logical filename provided
+          RAISE EXCEPTION TYPE zcx_ca_file_utility
+            MESSAGE ID 'HR3PRNA' TYPE zcx_ca_file_utility=>c_msgty_e NUMBER '716'.
+        ENDIF.
+    ENDCASE.
+  ENDMETHOD.                    "is_file_name_provided
 
 
   METHOD print_log.
@@ -306,5 +382,43 @@ CLASS zcl_ca_file_handler IMPLEMENTATION.
     CLEAR: zcl_ca_file_handler=>record_cnt_over_all_operations,
            zcl_ca_file_handler=>dataset_counter_per_operation.
   ENDMETHOD.                    "reset_statistics
+
+
+  METHOD zif_ca_file_handler~delete.
+    "---------------------------------------------------------------------*
+    "     Delete file
+    "---------------------------------------------------------------------*
+    "R e d e f i n e d
+  ENDMETHOD.                    "zif_ca_file_handler~delete
+
+
+  METHOD zif_ca_file_handler~read.
+    "---------------------------------------------------------------------*
+    "     Read entire file
+    "---------------------------------------------------------------------*
+    "R e d e f i n e d
+  ENDMETHOD.                    "zif_ca_file_handler~read
+
+
+  METHOD zif_ca_file_handler~set_processing_parameters.
+    "---------------------------------------------------------------------*
+    "     Set parameters where and how the file should be proceeded
+    "---------------------------------------------------------------------*
+    cvc_file_util->is_location_valid( processing_params-location ).
+    cvc_file_util->is_operation_valid( processing_params-operation ).
+    cvc_file_util->is_mode_valid( processing_params-mode ).
+    cvc_file_util->is_type_valid( processing_params-type ).
+
+    is_file_name_provided( processing_params ).
+    me->processing_params = assemble_path_n_file_name( processing_params ).
+  ENDMETHOD.                    "zif_ca_file_handler~set_processing_parameters
+
+
+  METHOD zif_ca_file_handler~write.
+    "---------------------------------------------------------------------*
+    "     Write entire file
+    "---------------------------------------------------------------------*
+    "R e d e f i n e d
+  ENDMETHOD.                    "zif_ca_file_handler~write
 
 ENDCLASS.

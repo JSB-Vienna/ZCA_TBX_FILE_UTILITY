@@ -148,13 +148,13 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
     "-----------------------------------------------------------------*
     TRY.
         mo_file_1 ?= NEW zcl_ca_file_util_selscr_ctlr(
-                                         iv_location         = p_fl1loc
-                                         iv_id_selscr_fields = cvc_file_util->selection_field_id-for_file_1 ).
+                                         location     = p_fl1loc
+                                         sel_field_id = cvc_file_util->selection_field_id-for_file_1 ).
 
         "Create instance for first option only to demonstrate how to hide the corresponding selection screen block.
         mo_file_2 ?= NEW zcl_ca_file_util_selscr_ctlr(
-                                         iv_location         = cvc_file_util->location-server
-                                         iv_id_selscr_fields = cvc_file_util->selection_field_id-for_file_2 ).
+                                         location     = cvc_file_util->location-server
+                                         sel_field_id = cvc_file_util->selection_field_id-for_file_2 ).
 
       CATCH zcx_ca_error INTO DATA(lx_catched).
         MESSAGE lx_catched TYPE lx_catched->c_msgty_s DISPLAY LIKE lx_catched->mv_msgty.
@@ -185,22 +185,22 @@ CLASS demo_usage_file_utility IMPLEMENTATION.
             "Parameter IV_USE_SECOND_FILE of method MODIFY_SELECTION_FIELDS has default abap_false,
             "so the second file will be automatically hidden.
             "Hide selection fields 'File mode' and make 'File type' and 'Operation' display only
-            mo_file_1->modify_selection_fields( iv_mask_hiding    = 'FM'
-                                                iv_mask_disp_only = 'FO' ) ##no_text.
+            mo_file_1->modify_selection_fields( mask_2_hide_sel_params      = 'FM'
+                                                mask_2_set_params_disp_only = 'FO' ) ##no_text.
 
             "Hide the complete block with all fields
-            mo_file_2->modify_selection_fields( iv_mask_hiding = 'FL;FT;FP;FN;FO;FM' ) ##no_text.
+            mo_file_2->modify_selection_fields( mask_2_hide_sel_params = 'FL;FT;FP;FN;FO;FM' ) ##no_text.
 
             lv_screen_flag = cvc_scr_fld_attr->switch-on.
 
           WHEN p_rbcdas.
             "Copy file from local documents folder to appl. server - both files are relevant.
             "Change the location is not allowed -> Hide locaton for both;
-            mo_file_1->modify_selection_fields( iv_mask_hiding     = 'FL;FM;FT'
-                                                iv_mask_disp_only  = 'FO' ) ##no_text.
+            mo_file_1->modify_selection_fields( mask_2_hide_sel_params      = 'FL;FM;FT'
+                                                mask_2_set_params_disp_only = 'FO' ) ##no_text.
 
-            mo_file_2->modify_selection_fields( iv_mask_hiding     = 'FL;FM'
-                                                iv_mask_disp_only  = 'FO' ) ##no_text.
+            mo_file_2->modify_selection_fields( mask_2_hide_sel_params      = 'FL;FM'
+                                                mask_2_set_params_disp_only = 'FO' ) ##no_text.
 
             lv_screen_flag = cvc_scr_fld_attr->switch-off.
         ENDCASE.

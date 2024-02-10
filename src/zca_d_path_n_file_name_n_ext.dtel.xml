@@ -16,7 +16,7 @@
     <SCRTEXT_L>Path + File name + Extension</SCRTEXT_L>
     <DTELMASTER>E</DTELMASTER>
     <DATATYPE>STRG</DATATYPE>
-    <LENG>004096</LENG>
+    <LENG>001024</LENG>
    </DD04V>
   </asx:values>
  </asx:abap>

@@ -46,18 +46,18 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
       "! <p class="shorttext synchronized" lang="en">Sorting order options for file list</p>
       BEGIN OF list_sorting,
         "! <p class="shorttext synchronized" lang="en">Sorting: By TIME descending and name ascending</p>
-        by_time TYPE char1        VALUE 'T'  ##no_text,
-        "! <p class="shorttext synchronized" lang="en">Sorting: By NAME ascending and time descending</p>
-        by_name TYPE char1        VALUE 'N'  ##no_text,
+        by_date_time_changed TYPE char1        VALUE 'T'  ##no_text,
+        "! <p class="shorttext synchronized" lang="en">Sorting: By FILE_NAME ascending and time descending</p>
+        by_file_name         TYPE char1        VALUE 'N'  ##no_text,
       END OF list_sorting,
 
-      "! <p class="shorttext synchronized" lang="en">Value help type: For directories or files</p>
-      BEGIN OF value_help,
-        "! <p class="shorttext synchronized" lang="en">Value help for directories</p>
-        for_directories TYPE zca_d_vht_dirs_files VALUE 'D'  ##no_text,
-        "! <p class="shorttext synchronized" lang="en">Value help for files</p>
-        for_files       TYPE zca_d_vht_dirs_files VALUE 'F'  ##no_text,
-      END OF value_help,
+      "! <p class="shorttext synchronized" lang="en">Content type: Find directories or files</p>
+      BEGIN OF content_type,
+        "! <p class="shorttext synchronized" lang="en">Value help with directories only</p>
+        directories TYPE zca_d_vht_dirs_files VALUE 'D'  ##no_text,
+        "! <p class="shorttext synchronized" lang="en">Value help with files only</p>
+        files       TYPE zca_d_vht_dirs_files VALUE 'F'  ##no_text,
+      END OF content_type,
 
       "! <p class="shorttext synchronized" lang="en">Selection fields for file x</p>
       BEGIN OF selscr_user_command,
@@ -198,13 +198,13 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
         RAISING
           zcx_ca_file_utility,
 
-      "! <p class="shorttext synchronized" lang="en">Valid value help switch option passed?</p>
+      "! <p class="shorttext synchronized" lang="en">Valid content type passed?</p>
       "!
-      "! @parameter value_help_type     | <p class="shorttext synchronized" lang="en">Value help type</p>
+      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
-      is_value_help_type_valid FINAL
+      is_content_type_valid FINAL
         IMPORTING
-          value_help_type TYPE zca_d_vht_dirs_files
+          content_type TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility.
 
@@ -313,12 +313,12 @@ CLASS zcl_ca_c_file_utility IMPLEMENTATION.
   ENDMETHOD.                    "is_list_sorting_valid
 
 
-  METHOD is_value_help_type_valid.
+  METHOD is_content_type_valid.
     "-----------------------------------------------------------------*
-    "   Valid value help switch option passed?
+    "   Valid content type passed?
     "-----------------------------------------------------------------*
-    check_against_fixed_values( value      = value_help_type
-                                param_name = 'VALUE_HELP_TYPE' ) ##no_text.
+    check_against_fixed_values( value      = content_type
+                                param_name = 'CONTENT_TYPE' ) ##no_text.
   ENDMETHOD.                    "is_value_help_type_valid
 
 
