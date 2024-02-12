@@ -25,12 +25,12 @@ SELECTION-SCREEN BEGIN OF BLOCK fl1 WITH FRAME TITLE TEXT-fl1.
                                  MODIF ID ft1,
     "Path name 1
     p_fl1pth TYPE dxlpath        LOWER CASE        "Don't make it obligatory here because of the functions!
-                                 VISIBLE LENGTH 120
+                                 VISIBLE LENGTH 120   "more than 45 can not be displayed, but the full length can be used
                                  MEMORY ID zca_path_1 ##exists
                                  MODIF ID fp1,
     "File name 1
     p_fl1nam TYPE dxfilename     LOWER CASE        "Don't make it obligatory here because of the functions!
-                                 VISIBLE LENGTH 120
+                                 VISIBLE LENGTH 120   "more than 45 can not be displayed, but the full length can be used
                                  MEMORY ID zca_file_name_1 ##exists
                                  MODIF ID fn1,
     "File operation type 1

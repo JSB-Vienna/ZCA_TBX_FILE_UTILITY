@@ -407,20 +407,30 @@ CLASS zcl_ca_file_util_selscr_ctlr DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Separate path and file name into attributes of it</p>
       "!
-      "! @parameter sel_path_n_filename | <p class="shorttext synchronized" lang="en">Chosen path and file name</p>
-      "! @parameter content_type        | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+      "! @parameter selected_path_n_file | <p class="shorttext synchronized" lang="en">Selected path and file name</p>
+      "! @parameter content_type         | <p class="shorttext synchronized" lang="en">Content type (Dirs or Files, CVC_FILE_HDLR-&gt;CONTENT_TYPE-*)</p>
+      "! @raising   zcx_ca_file_utility  | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       separate_file_name_from_sel
         IMPORTING
-          sel_path_n_filename TYPE string
-          content_type        TYPE zca_d_vht_dirs_files
+          selected_path_n_file TYPE string
+          content_type         TYPE zca_d_vht_dirs_files
         RAISING
           zcx_ca_file_utility.
 
 
 * P R I V A T E   S E C T I O N
   PRIVATE SECTION.
+*   t y p e   d e f i n i t i o n s
+    TYPES:
+      "! <p class="shorttext synchronized" lang="en">Screen modification groups from mask</p>
+      ty_tt_mod_groups TYPE STANDARD TABLE OF char2 WITH EMPTY KEY.
 
+*   c o n s t a n t s
+    CONSTANTS:
+      "! <p class="shorttext synchronized" lang="en">Mask for all selection parameters</p>
+      c_mask_4_all_sel_params TYPE char30 VALUE 'FL;FT;FP;FN;FO;FM'  ##no_text,
+      "! <p class="shorttext synchronized" lang="en">Max. mask length for all selection parameters</p>
+      c_max_mask_length       TYPE i VALUE 17  ##no_text.
 
 ENDCLASS.
 
@@ -549,10 +559,10 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "   Browsing for logical path / filename
     "-----------------------------------------------------------------*
     CASE content_type.
-      WHEN cvc_file_util->content_type-directories.
+      WHEN cvc_file_util->content_type-directory.
         f4_browse_logical_path( ).
 
-      WHEN cvc_file_util->content_type-files.
+      WHEN cvc_file_util->content_type-file.
         f4_browse_logical_file_name( ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_logical_name
@@ -575,10 +585,10 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "   Browsing for physical path / filename at the client PC
     "-----------------------------------------------------------------*
     CASE content_type.
-      WHEN cvc_file_util->content_type-directories.
+      WHEN cvc_file_util->content_type-directory.
         f4_browse_pc_4_directory( ).
 
-      WHEN cvc_file_util->content_type-files.
+      WHEN cvc_file_util->content_type-file.
         f4_browse_pc_4_file( ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_pc
@@ -590,14 +600,14 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "Local data definitions
     DATA:
-      _path_pc             TYPE string.
+      _selected_path_n_file TYPE string.
 
     cl_gui_frontend_services=>directory_browse(
                                           EXPORTING
                                             window_title         = CONV #( 'Select directory'(pt2) )
                                             initial_folder       = CONV #( with_f4_selected_path )
                                           CHANGING
-                                            selected_folder      = _path_pc
+                                            selected_folder      = _selected_path_n_file
                                           EXCEPTIONS
                                             cntl_error           = 1
                                             error_no_gui         = 2
@@ -613,7 +623,7 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
         RAISE EXCEPTION _error.
       ENDIF.
 
-    ELSEIF _path_pc IS INITIAL.
+    ELSEIF _selected_path_n_file IS INITIAL.
       "Action canceled
       RAISE EXCEPTION TYPE zcx_ca_ui
         EXPORTING
@@ -621,7 +631,8 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
           mv_msgty = zcx_ca_ui=>c_msgty_w.
 
     ELSE.
-      with_f4_selected_path = CONV #( _path_pc ).
+      separate_file_name_from_sel( selected_path_n_file = _selected_path_n_file
+                                   content_type         = cvc_file_util->content_type-directory ).
     ENDIF.
   ENDMETHOD.                    "f4_browse_pc_4_directory
 
@@ -662,9 +673,9 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
-    DATA(_file_name_incl_path) = VALUE string( _sel_files[ 1 ]-filename OPTIONAL ).
-    IF _user_action         EQ cl_gui_frontend_services=>action_cancel OR
-       _file_name_incl_path IS INITIAL.
+    DATA(_selected_path_n_file) = VALUE string( _sel_files[ 1 ]-filename OPTIONAL ).
+    IF _user_action        EQ cl_gui_frontend_services=>action_cancel OR
+       _selected_path_n_file IS INITIAL.
       "Action canceled
       RAISE EXCEPTION TYPE zcx_ca_ui
         EXPORTING
@@ -672,8 +683,8 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
           mv_msgty = zcx_ca_ui=>c_msgty_w.
     ENDIF.
 
-    separate_file_name_from_sel( sel_path_n_filename = _file_name_incl_path
-                                 content_type        = cvc_file_util->content_type-files ).
+    separate_file_name_from_sel( selected_path_n_file = _selected_path_n_file
+                                 content_type         = cvc_file_util->content_type-file ).
   ENDMETHOD.                    "f4_browse_pc_4_file
 
 
@@ -706,15 +717,13 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
           with_f4_selected_path = _path_handler->get_path_name( ).
 
         CATCH cx_fs_path_not_defined INTO DATA(_catched) ##needed.
-          CALL 'C_SAPGPARAM' ID 'NAME'  FIELD 'DIR_HOME'
-                             ID 'VALUE' FIELD with_f4_selected_path. "#EC CI_CCALL
+          with_f4_selected_path = directory_hdlr->resolve_dir_param_2_dir_path( ).
       ENDTRY.
 
     ELSE.
-      DATA(_directory_name) = CONV char30( |{ with_f4_selected_path CASE = UPPER }| ).
+      DATA(_directory_name) = CONV char30( to_upper( with_f4_selected_path ) ).
       IF _directory_name(4) EQ 'DIR_' ##no_text.
-        CALL 'C_SAPGPARAM' ID 'NAME'  FIELD _directory_name
-                           ID 'VALUE' FIELD with_f4_selected_path. "#EC CI_CCALL
+        with_f4_selected_path = directory_hdlr->resolve_dir_param_2_dir_path( _directory_name ).
       ENDIF.
     ENDIF.
 
@@ -746,8 +755,8 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
           mv_msgty = zcx_ca_ui=>c_msgty_w.
     ENDIF.
 
-    separate_file_name_from_sel( sel_path_n_filename = _server_file
-                                 content_type        = content_type ).
+    separate_file_name_from_sel( selected_path_n_file = _server_file
+                                 content_type         = content_type ).
   ENDMETHOD.                    "f4_browse_server
 
 
@@ -862,31 +871,31 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     TRY.
         CASE directory_hdlr->location.
           WHEN cvc_file_util->location-server.
-            DATA(_path_handler) = cl_fs_path=>create( name      = sel_path_n_filename
+            DATA(_path_handler) = cl_fs_path=>create( name      = selected_path_n_file
                                                       path_kind = cl_fs_path=>path_kind_smart ).
 
             CASE content_type.
-              WHEN cvc_file_util->content_type-directories.
+              WHEN cvc_file_util->content_type-directory.
                 with_f4_selected_path = _path_handler->get_path_component( ).
 
-              WHEN cvc_file_util->content_type-files.
+              WHEN cvc_file_util->content_type-file.
                 with_f4_selected_path      = _path_handler->get_path_component( ).
                 with_f4_selected_file_name = _path_handler->get_file_name( ).
             ENDCASE.
 
           WHEN cvc_file_util->location-pc.
-            DATA(_path) = substring_before( val = sel_path_n_filename
+            DATA(_path) = substring_before( val = selected_path_n_file
                                             sub = directory_hdlr->path_separator
                                             occ = -1 ).
-            DATA(_file_name) = substring_after( val = sel_path_n_filename
+            DATA(_file_name) = substring_after( val = selected_path_n_file
                                                 sub = directory_hdlr->path_separator
                                                 occ = -1 ).
 
             CASE content_type.
-              WHEN cvc_file_util->content_type-directories.
+              WHEN cvc_file_util->content_type-directory.
                 with_f4_selected_path = _path.
 
-              WHEN cvc_file_util->content_type-files.
+              WHEN cvc_file_util->content_type-file.
                 with_f4_selected_path      = _path.
                 with_f4_selected_file_name = _file_name.
             ENDCASE.
@@ -923,8 +932,8 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
         GET CURSOR FIELD _cursor_in_field.
         ASSERT sy-subrc EQ 0.
 
-        DATA(_content_type) = COND #( WHEN _cursor_in_field CP '*PTH' THEN cvc_file_util->content_type-directories
-                                      WHEN _cursor_in_field CP '*NAM' THEN cvc_file_util->content_type-files
+        DATA(_content_type) = COND #( WHEN _cursor_in_field CP 'P_FL+PTH' THEN cvc_file_util->content_type-directory
+                                      WHEN _cursor_in_field CP 'P_FL+NAM' THEN cvc_file_util->content_type-file
                                                  "Parameter '&1' has invalid value '&2'
                                       ELSE THROW zcx_ca_file_utility( textid   = zcx_ca_file_utility=>param_invalid
                                                                       mv_msgty = 'E'
@@ -972,6 +981,10 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     file_hdlr = zcl_ca_file_handler=>get_instance( directory_hdlr->location ).
     file_hdlr->set_processing_parameters( provide_selscreen_param_values( ) ).
+
+    IF result IS SUPPLIED.
+      result = file_hdlr.
+    ENDIF.
   ENDMETHOD.                    "zif_ca_file_util_selscr_ctlr~get_file_handler
 
 
@@ -979,37 +992,48 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     "-----------------------------------------------------------------*
     "   Modifying / adjusting selection screen fields
     "-----------------------------------------------------------------*
-    DATA(_len_mask_hiding)    = strlen( mask_2_hide_sel_params ).        "Length of hiding mask
-    DATA(_len_mask_disp_only) = strlen( mask_2_set_params_disp_only ).   "Length of display only mask
+    "Local data definitions
+    DATA:
+      _mod_groups                  TYPE ty_tt_mod_groups,
+      _mod_group                   TYPE char2,
+      _mask_2_hide_sel_params      TYPE char30,
+      _mask_2_set_params_disp_only TYPE char30.
 
-    DATA(_name_pattern)   = CONV sychar132( |*FL{ sel_field_id }*BLOCK*| ) ##no_text.
-    DATA(_group1_pattern) = CONV char3( |F+{ sel_field_id }| ) ##no_text.
+    CASE use_for_value_help_only.
+      WHEN abap_false.
+        _mask_2_hide_sel_params      = mask_2_hide_sel_params.
+        _mask_2_set_params_disp_only = mask_2_set_params_disp_only.
 
-    LOOP AT SCREEN INTO DATA(_screen).
-      IF _screen-name   NP _name_pattern   AND
-         _screen-group1 NP _group1_pattern ##no_text.
-        CONTINUE.
+      WHEN abap_true.
+        _mask_2_hide_sel_params = c_mask_4_all_sel_params.
+    ENDCASE.
+
+    DATA(_name_pattern) = CONV sychar132( |*FL{ sel_field_id }*BLOCK*| ) ##no_text.
+
+    "Make all fields visible and for input before changing for requested appearance
+    cvc_scr_fld_attr->activate( screen_field_name  = _name_pattern ).                 "= block / frame
+    cvc_scr_fld_attr->activate( screen_modif_group = CONV char3( |F+{ sel_field_id }| ) ) ##no_text.  "= selection parameters
+
+    "H I D E  fields
+    IF _mask_2_hide_sel_params IS NOT INITIAL.
+      SPLIT _mask_2_hide_sel_params AT ';' INTO TABLE _mod_groups.
+      LOOP AT _mod_groups INTO _mod_group.
+        cvc_scr_fld_attr->deactivate( screen_modif_group = _mod_group && sel_field_id ) ##no_text.
+      ENDLOOP.
+
+      "Hide block frame too if all parameters should be hidden
+      IF strlen( _mask_2_hide_sel_params ) GE c_max_mask_length.
+        cvc_scr_fld_attr->deactivate( screen_field_name = _name_pattern ) ##no_text.
       ENDIF.
+    ENDIF.
 
-      IF   use_for_value_help_only EQ abap_true   AND
-           _screen-group3    EQ 'BLK'             AND
-         ( _screen-name      CP _name_pattern      OR
-           _screen-group1    CP _group1_pattern ) ##no_text.
-        _screen-active = cvc_scr_fld_attr->switch-off.
-
-      ELSEIF _screen-group1                           IS NOT INITIAL AND
-             mask_2_hide_sel_params                   IS NOT INITIAL AND
-             mask_2_hide_sel_params(_len_mask_hiding) CS _screen-group1(2).
-        _screen-active = cvc_scr_fld_attr->switch-off.
-
-      ELSEIF _screen-group1                                   IS NOT INITIAL AND
-             mask_2_set_params_disp_only                      IS NOT INITIAL AND
-             mask_2_set_params_disp_only(_len_mask_disp_only) CS _screen-group1(2).
-        _screen-input = cvc_scr_fld_attr->switch-off.
-      ENDIF.
-
-      MODIFY SCREEN FROM _screen.
-    ENDLOOP.
+    "D I S P L A Y   O N L Y   fields / block handling is here not necessary, some fields  are visible
+    IF _mask_2_set_params_disp_only IS NOT INITIAL.
+      SPLIT _mask_2_set_params_disp_only AT ';' INTO TABLE _mod_groups.
+      LOOP AT _mod_groups INTO _mod_group.
+        cvc_scr_fld_attr->set_to_display_only( screen_modif_group = _mod_group && sel_field_id ) ##no_text.
+      ENDLOOP.
+    ENDIF.
   ENDMETHOD.                    "zif_ca_file_util_selscr_ctlr~modify_selection_fields
 
 
@@ -1020,53 +1044,53 @@ CLASS zcl_ca_file_util_selscr_ctlr IMPLEMENTATION.
     TRY.
         get_field_value(
                     EXPORTING
-                      field_name = sel_field_names-location-field_name
+                      field_name      = sel_field_names-location-field_name
                     IMPORTING
-                      parameter_value     = result-location ).
+                      parameter_value = result-location ).
 
         get_field_value(
                     EXPORTING
-                      field_name = sel_field_names-path_type-field_name
+                      field_name      = sel_field_names-path_type-field_name
                     IMPORTING
-                      parameter_value     = result-type ).
+                      parameter_value = result-type ).
 
         get_field_value(
                     EXPORTING
-                      field_name = sel_field_names-path-field_name
+                      field_name      = sel_field_names-path-field_name
                     IMPORTING
-                      parameter_value     = result-path ).
+                      parameter_value = result-path ).
 
-*        "Clean up directory delimiter for a uniform / consistent path + file name handling
-*        IF result-path IS NOT INITIAL.
-*          DATA(lv_offset) = strlen( result-path ) - 1.
-*          IF result-path+lv_offset(1) EQ directory_hdlr->path_separator.
-*            result-path+lv_offset(1) = space.
-*          ENDIF.
-*
-*          result-path_file = result-path.
-*        ENDIF.
+        "Clean up directory delimiter for a uniform / consistent path + file name handling
+        IF result-path IS NOT INITIAL.
+          DATA(lv_offset) = strlen( result-path ) - 1.
+          IF result-path+lv_offset(1) EQ directory_hdlr->path_separator.
+            result-path+lv_offset(1) = space.
+          ENDIF.
+
+          result-path_file = result-path.
+        ENDIF.
 
         get_field_value(
                     EXPORTING
-                      field_name = sel_field_names-file_name-field_name
+                      field_name      = sel_field_names-file_name-field_name
                     IMPORTING
-                      parameter_value     = result-file_name ).
+                      parameter_value = result-file_name ).
 
-*        IF result-file_name IS NOT INITIAL.
-*          result-path_file = |{ result-path_file }{ directory_hdlr->path_separator }{ result-file_name }|.
-*        ENDIF.
-
-        get_field_value(
-                    EXPORTING
-                      field_name = sel_field_names-operation-field_name
-                    IMPORTING
-                      parameter_value     = result-operation ).
+        IF result-file_name IS NOT INITIAL.
+          result-path_file = |{ result-path_file }{ directory_hdlr->path_separator }{ result-file_name }|.
+        ENDIF.
 
         get_field_value(
                     EXPORTING
-                      field_name = sel_field_names-mode-field_name
+                      field_name      = sel_field_names-operation-field_name
                     IMPORTING
-                      parameter_value     = result-mode ).
+                      parameter_value = result-operation ).
+
+        get_field_value(
+                    EXPORTING
+                      field_name      = sel_field_names-mode-field_name
+                    IMPORTING
+                      parameter_value = result-mode ).
 
       CATCH zcx_ca_conv
             zcx_ca_vh_tool INTO DATA(_catched).

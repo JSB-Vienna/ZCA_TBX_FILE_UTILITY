@@ -57,6 +57,16 @@
      <DESCRIPT>CA-TBX: Constants and value checks for value help tool</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>C_MASK_4_ALL_SEL_PARAMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Mask for all selection parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_MAX_MASK_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Max. mask length for all selection parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>F4_BROWSE_LOGICAL_FILE_NAME</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Browsing for logical file name</DESCRIPT>
@@ -135,6 +145,11 @@
      <CMPNAME>TY_TT_LOG_PATH_NAMES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>All found logical path names to selected location</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_TT_MOD_GROUPS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Screen modification groups from mask</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>VALUE_HELP_TOOL</CMPNAME>
@@ -437,9 +452,9 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
-     <SCONAME>SEL_PATH_N_FILENAME</SCONAME>
+     <SCONAME>SELECTED_PATH_N_FILE</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Chosen path and file name</DESCRIPT>
+     <DESCRIPT>Selected path and file name</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>

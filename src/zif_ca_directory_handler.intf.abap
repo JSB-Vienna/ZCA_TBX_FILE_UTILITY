@@ -4,27 +4,31 @@ INTERFACE zif_ca_directory_handler PUBLIC.
   TYPES:
     "! <p class="shorttext synchronized" lang="en">File infos from directory (copied from program RSWATCH0)</p>
     BEGIN OF ty_s_directory_entry,
-      directory_name       TYPE dirname_al11,     " name of directory
-      file_name            TYPE filename_al11,    " name of entry
-      extension            TYPE saedoktyp,
-      file_name_wo_ext     TYPE filename_al11,    " name of entry without ext
-      techn_type           TYPE c length 10,      " type of entry
+      directory_name       TYPE dirname_al11,     "is the original path case sensitive
+      dir_name_lower_case  TYPE dirname_al11,     "is the original path in lower case
+      file_name            TYPE filename_al11,    "is the original file name case sensitive WITH extension
+      file_name_lower_case TYPE filename_al11,    "is the original file name in lower case
+      file_name_wo_ext     TYPE filename_al11,    "is the original file name case sensitive WITHOUT extension
+      extension            TYPE saedoktyp,        "extension in upper case (to find technical settings in SAP)
+      techn_type           TYPE char10,
+      content_type         TYPE zca_d_vht_dirs_files,
       length(8)            TYPE p DECIMALS 0,     " length in bytes
-      owner                TYPE fileowner_al11,   " owner of the entry
-      date_time_changed(6) TYPE p DECIMALS 0,     " last mod. date, sec since 1970.
-      protection_mode      TYPE c length 9,       " like "rwx-r-x--x": prot. mode
       useable              TYPE abap_boolean,
-      subrc                TYPE c length 4,
-      error_no             TYPE c length 3,
-      error_message        TYPE c length 100,
-      mod_date             TYPE d,
-      mod_time             TYPE t,
       seen                 TYPE abap_boolean,
       changed              TYPE abap_boolean,
-*    status     TYPE abap_boolean,               " not used
+      owner                TYPE fileowner_al11,   " owner of the entry
+      mod_timestamp(6)     TYPE p DECIMALS 0,     " last mod. date, sec since 1970.
+      mod_date             TYPE d,
+      mod_time             TYPE t,
+      protection_mode      TYPE c LENGTH 9,       " like "rwx-r-x--x": prot. mode
+      subrc                TYPE c LENGTH 4,
+      error_no             TYPE c LENGTH 3,
+      error_message        TYPE c LENGTH 100,
     END   OF ty_s_directory_entry,
-    ty_t_directory_content TYPE STANDARD TABLE OF ty_s_directory_entry
-                                             WITH NON-UNIQUE DEFAULT KEY.
+    ty_t_directory_content TYPE STANDARD TABLE OF ty_s_directory_entry WITH EMPTY KEY
+                                    WITH NON-UNIQUE SORTED KEY name_ext  COMPONENTS file_name extension
+                                    WITH NON-UNIQUE SORTED KEY ext_name  COMPONENTS extension file_name
+                                    WITH NON-UNIQUE SORTED KEY type_name COMPONENTS content_type file_name.
 
 * i n s t a n c e   a t t r i b u t e s
   DATA:
@@ -93,6 +97,19 @@ INTERFACE zif_ca_directory_handler PUBLIC.
     is_path_file_available
       IMPORTING
         path_file TYPE zca_d_path_n_file_name_n_ext
+      RAISING
+        zcx_ca_file_utility,
+
+    "! <p class="shorttext synchronized" lang="en">Resolve a dir. parameter of the AS into a directory path</p>
+    "!
+    "! @parameter directory_param     | <p class="shorttext synchronized" lang="en">Directory parameter as shown in the first column of TA AL11</p>
+    "! @parameter result              | <p class="shorttext synchronized" lang="en">Parameter values</p>
+    "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
+    resolve_dir_param_2_dir_path
+      IMPORTING
+        directory_param TYPE dirprofilenames DEFAULT 'DIR_HOME'
+      RETURNING
+        VALUE(result)   TYPE dirname_al11
       RAISING
         zcx_ca_file_utility,
 

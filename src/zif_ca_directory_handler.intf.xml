@@ -67,6 +67,11 @@
      <DESCRIPT>Read directory content to the given path</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>RESOLVE_DIR_PARAM_2_DIR_PATH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Resolve a dir. parameter of the AS into a directory path</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>SET_PHYSICAL_PATH_FILENAME</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Set physical path and file name (see docu in method)</DESCRIPT>
@@ -128,6 +133,24 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>READ_CONTENT</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RESOLVE_DIR_PARAM_2_DIR_PATH</CMPNAME>
+     <SCONAME>DIRECTORY_PARAM</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Directory parameter as shown in the first column of TA AL11</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RESOLVE_DIR_PARAM_2_DIR_PATH</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parameter values</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RESOLVE_DIR_PARAM_2_DIR_PATH</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>

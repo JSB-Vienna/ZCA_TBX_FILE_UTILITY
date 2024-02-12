@@ -71,18 +71,25 @@ INTERFACE zif_ca_file_util_selscr_ctlr PUBLIC.
 
     "! <p class="shorttext synchronized" lang="en">Get file handler for selected file (attribute FILE_HDLR)</p>
     "!
+    "! @parameter result              | <p class="shorttext synchronized" lang="en">New file handler if requested</p>
     "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     get_file_handler
+      RETURNING
+        VALUE(result) TYPE REF TO zif_ca_file_handler
       RAISING
         zcx_ca_file_utility,
 
     "! <p class="shorttext synchronized" lang="en">Modifying / adjusting selection screen fields</p>
     "!
-    "! <p>Call this method for each file you have a selection screen include. Use masks to hide or display
-    "! only selection fields that are needed. Concatenate several  modification Ids delimited by a semicolon,
-    "! e. g. like this: FM;FO;FT</p>
-    "! Possible values are (in the order as displayed at the selection screen):<br>
+    "! <p>Call this method for each file you use a selection screen include. You can either use masks to hide
+    "! or display the selection fields that are needed or you can hide them all using the parameter
+    "! {@link .METH:modify_selection_fields.DATA:use_for_value_help_only}. The latter overrules the other two.</p>
     "!
+    "! <p>Concatenate several  modification Ids delimited by a semicolon, e. g. like this: FM;FO;FT in the
+    "! parameters {@link .METH:modify_selection_fields.DATA:mask_2_hide_sel_params} and/or
+    "! {@link .METH:modify_selection_fields.DATA:mask_2_set_params_disp_only}.</p>
+    "!
+    "! Possible values are (in the order as displayed at the selection screen):<br>
     "! <ul>
     "! <li>FL - Location</li>
     "! <li>FT - Logical or physical name</li>

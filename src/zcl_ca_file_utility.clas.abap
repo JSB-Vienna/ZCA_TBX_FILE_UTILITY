@@ -1,4 +1,4 @@
-"! <p class="shorttext synchronized" lang="en">CA-TBX: File utility for server + client/PC</p>
+"! <p class="shorttext synchronized" lang="en">CA-TBX: OBSOLET! File utility for server + client/PC</p>
 "!
 "! <p>This class synergize / combine the two techniques of handling application server files and PC files
 "! (= presentation server) in one class.</p>
@@ -135,7 +135,7 @@ CLASS zcl_ca_file_utility DEFINITION PUBLIC
           path             TYPE string  OPTIONAL
           filter           TYPE string  DEFAULT '*'
           sort             TYPE char1   DEFAULT zcl_ca_c_file_utility=>list_sorting-by_date_time_changed
-          content_type          TYPE zca_d_vht_dirs_files DEFAULT zcl_ca_c_file_utility=>content_type-directories
+          content_type          TYPE zca_d_vht_dirs_files DEFAULT zcl_ca_c_file_utility=>content_type-directory
         RETURNING
           VALUE(file_list) TYPE ty_t_file_list
         RAISING
@@ -1040,10 +1040,10 @@ CLASS zcl_ca_file_utility IMPLEMENTATION.
             CONTINUE.
           ENDIF.
 
-          IF ( iv_vh_type           EQ mo_file_options->content_type-directories AND
+          IF ( iv_vh_type           EQ mo_file_options->content_type-directory AND
                ls_file_list-type    NE 'directory'      )                           OR
 
-             ( iv_vh_type           EQ mo_file_options->content_type-files       AND
+             ( iv_vh_type           EQ mo_file_options->content_type-file       AND
                ls_file_list-type    EQ 'directory'      )                           OR
 
              "Don't offer anything that is no file and no directory
@@ -1129,8 +1129,8 @@ CLASS zcl_ca_file_utility IMPLEMENTATION.
       EXPORTING
         directory                   = iv_path
         filter                      = iv_filter
-        files_only                  = xsdbool( iv_vh_type EQ mo_file_options->content_type-files )
-        directories_only            = xsdbool( iv_vh_type EQ mo_file_options->content_type-directories )
+        files_only                  = xsdbool( iv_vh_type EQ mo_file_options->content_type-file )
+        directories_only            = xsdbool( iv_vh_type EQ mo_file_options->content_type-directory )
       CHANGING
         file_table                  = lt_flist
         count                       = lv_file_cnt

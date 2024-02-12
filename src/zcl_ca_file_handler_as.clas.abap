@@ -53,7 +53,7 @@ CLASS zcl_ca_file_handler_as DEFINITION PUBLIC
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       transfer_dataset
         IMPORTING
-          record          TYPE simple
+          record          TYPE data
           max_file_length TYPE i DEFAULT -1
         RAISING
           zcx_ca_file_utility,

@@ -17,6 +17,41 @@
      <LANGU>E</LANGU>
      <DESCRIPT>Constructor</DESCRIPT>
     </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CONVERT_CHANGE_TIME_STAMP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Convert time stamp of last modification into date and time</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FINISH_READING</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Convert time stamp of last modification into date and time</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>INITIALIZE_READING</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Convert time stamp of last modification into date and time</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_FILE_OR_DIRECTORY_RELEVANT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check whether the file or the directory is relevant</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MAP_TECHNICAL_2_CONTENT_TYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check whether it is a file or directory</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ_NEXT_DIRECTORY_ENTRY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Read next entry of the directory</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_FLAG_IS_USABLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determines whether an entry is usable</DESCRIPT>
+    </SEOCOMPOTX>
    </DESCRIPTIONS>
    <DESCRIPTIONS_SUB>
     <SEOSUBCOTX>
@@ -24,6 +59,90 @@
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_CHANGE_TIME_STAMP</CMPNAME>
+     <SCONAME>DIRECTORY_ENTRY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Actual state of directory entry</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONVERT_CHANGE_TIME_STAMP</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Directory entry with modification date and time</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>FINISH_READING</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INITIALIZE_READING</CMPNAME>
+     <SCONAME>PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path, may incl. file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>INITIALIZE_READING</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_FILE_OR_DIRECTORY_RELEVANT</CMPNAME>
+     <SCONAME>CONTENT_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Content type (Dirs or Files, CVC_FILE_HDLR-&gt;VALUE_HELP-*)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_FILE_OR_DIRECTORY_RELEVANT</CMPNAME>
+     <SCONAME>DIRECTORY_ENTRY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Actual state of directory entry</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_FILE_OR_DIRECTORY_RELEVANT</CMPNAME>
+     <SCONAME>FILTER_NAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Filter for directory or file names</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MAP_TECHNICAL_2_CONTENT_TYPE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Content type (Dirs or Files, but not BOTH = *)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MAP_TECHNICAL_2_CONTENT_TYPE</CMPNAME>
+     <SCONAME>TECHNICAL_TYPE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Technical type provided by the application server</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_NEXT_DIRECTORY_ENTRY</CMPNAME>
+     <SCONAME>PATH_FILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Complete physical path, may incl. file name</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_NEXT_DIRECTORY_ENTRY</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Next directory entry</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ_NEXT_DIRECTORY_ENTRY</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FLAG_IS_USABLE</CMPNAME>
+     <SCONAME>DIRECTORY_ENTRY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Actual state of directory entry</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>
