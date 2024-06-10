@@ -1,4 +1,4 @@
-"! <p class="shorttext synchronized" lang="en">CA-TBX: Selection screen controller for File Utility (OLD!)</p>
+"! <p class="shorttext synchronized" lang="en">CA-TBX: OBSOLET! Sel. screen controller for File Utility</p>
 "!
 "! <strong>To read the following documentation in a formatted way, scroll down in this coding to the first
 "! CLASS statement, make a single click on the class name ZCL_CA_... and press F2. Or instead open the view
@@ -580,8 +580,8 @@ CLASS ZCL_CA_FILE_UTILITY_SELSCRCTLR IMPLEMENTATION.
         GET CURSOR FIELD lv_cursor_field.
         ASSERT sy-subrc EQ 0.
 
-        DATA(lv_vh_type) = COND #( WHEN lv_cursor_field CP '*PTH' THEN mo_file_options->content_type-directories
-                                   WHEN lv_cursor_field CP '*NAM' THEN mo_file_options->content_type-files
+        DATA(lv_vh_type) = COND #( WHEN lv_cursor_field CP '*PTH' THEN mo_file_options->content_type-directory
+                                   WHEN lv_cursor_field CP '*NAM' THEN mo_file_options->content_type-file
                                               "Parameter '&1' has invalid value '&2'
                                    ELSE THROW zcx_ca_file_utility( textid   = zcx_ca_file_utility=>param_invalid
                                                                    mv_msgty = 'E'
@@ -640,10 +640,10 @@ CLASS ZCL_CA_FILE_UTILITY_SELSCRCTLR IMPLEMENTATION.
     "   Browsing for logical path / filename
     "-----------------------------------------------------------------*
     CASE iv_vh_type.
-      WHEN mo_file_options->content_type-directories.
+      WHEN mo_file_options->content_type-directory.
         f4_browse_logical_path( ).
 
-      WHEN mo_file_options->content_type-files.
+      WHEN mo_file_options->content_type-file.
         f4_browse_logical_file_name( ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_logical_name
@@ -666,10 +666,10 @@ CLASS ZCL_CA_FILE_UTILITY_SELSCRCTLR IMPLEMENTATION.
     "   Browsing for physical path / filename at the client PC
     "-----------------------------------------------------------------*
     CASE iv_vh_type.
-      WHEN mo_file_options->content_type-directories.
+      WHEN mo_file_options->content_type-directory.
         f4_browse_pc_4_directory( ).
 
-      WHEN mo_file_options->content_type-files.
+      WHEN mo_file_options->content_type-file.
         f4_browse_pc_4_file( ).
     ENDCASE.
   ENDMETHOD.                    "f4_browse_pc
@@ -764,7 +764,7 @@ CLASS ZCL_CA_FILE_UTILITY_SELSCRCTLR IMPLEMENTATION.
     ENDIF.
 
     separate_file_name_from_sel( iv_sel_path_n_filename = lv_file_name_incl_path
-                                 iv_vh_type             = mo_file_options->content_type-files ).
+                                 iv_vh_type             = mo_file_options->content_type-file ).
   ENDMETHOD.                    "f4_browse_pc_4_file
 
 
@@ -1065,10 +1065,10 @@ CLASS ZCL_CA_FILE_UTILITY_SELSCRCTLR IMPLEMENTATION.
                                                 path_kind = cl_fs_path=>path_kind_smart ).
 
             CASE iv_vh_type.
-              WHEN mo_file_options->content_type-directories.
+              WHEN mo_file_options->content_type-directory.
                 mv_f4_sel_path = lo_path->get_path_component( ).
 
-              WHEN mo_file_options->content_type-files.
+              WHEN mo_file_options->content_type-file.
                 mv_f4_sel_path      = lo_path->get_path_component( ).
                 mv_f4_sel_file_name = lo_path->get_file_name( ).
             ENDCASE.
@@ -1082,10 +1082,10 @@ CLASS ZCL_CA_FILE_UTILITY_SELSCRCTLR IMPLEMENTATION.
                                                   occ = -1 ).
 
             CASE iv_vh_type.
-              WHEN mo_file_options->content_type-directories.
+              WHEN mo_file_options->content_type-directory.
                 mv_f4_sel_path = lv_path.
 
-              WHEN mo_file_options->content_type-files.
+              WHEN mo_file_options->content_type-file.
                 mv_f4_sel_path      = lv_path.
                 mv_f4_sel_file_name = lv_file_name.
             ENDCASE.

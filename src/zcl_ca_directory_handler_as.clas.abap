@@ -236,7 +236,6 @@
 
          DO.
            DATA(_directory_entry) = read_next_directory_entry( path ).
-
            IF _directory_entry-subrc EQ 1.
              EXIT.     "No more slots available.
 

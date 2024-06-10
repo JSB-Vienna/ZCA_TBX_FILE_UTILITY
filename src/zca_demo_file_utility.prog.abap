@@ -239,6 +239,12 @@ CLASS demo_usage_file_utility DEFINITION FINAL
         RAISING
           zcx_ca_file_utility,
 
+      "! <p class="shorttext synchronized" lang="en">Instantiate files and set values for the second option</p>
+      initialize_second_option,
+
+      "! <p class="shorttext synchronized" lang="en">Instantiate files and set values for the third option</p>
+      initialize_third_option,
+
       "! <p class="shorttext synchronized" lang="en">Check selection values for execution</p>
       "!
       "! @raising   zcx_ca_error | <p class="shorttext synchronized" lang="en">Common exception: Abstract SUPER exception + helper methods</p>
