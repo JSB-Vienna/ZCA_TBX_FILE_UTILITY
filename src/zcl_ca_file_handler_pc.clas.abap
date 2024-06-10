@@ -69,8 +69,13 @@ CLASS zcl_ca_file_handler_pc DEFINITION PUBLIC
     METHODS:
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
       "!
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be processed</p>
+      "! @parameter directory_entry     | <p class="shorttext synchronized" lang="en">CA-TBX: Directory entry details</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       constructor
+        IMPORTING
+          processing_params TYPE zca_s_file_util_sel_params
+          directory_entry   TYPE zca_s_directory_entry OPTIONAL
         RAISING
           zcx_ca_file_utility.
 
@@ -89,7 +94,8 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
     "---------------------------------------------------------------------*
     "     Constructor
     "---------------------------------------------------------------------*
-    super->constructor( ).
+    super->constructor( processing_params = processing_params
+                        directory_entry   = directory_entry ).
     directory_hdlr = zcl_ca_directory_handler=>get_instance( cvc_file_util->location-pc ).
   ENDMETHOD.                    "Constructor
 
@@ -107,7 +113,7 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
 
     cl_gui_frontend_services=>gui_download(
       EXPORTING
-        filename                  = processing_params-path_file
+        filename                  = CONV #( processing_params-path_file )
         bin_filesize              = max_file_length
         filetype                  = SWITCH #( processing_params-mode
                                       WHEN cvc_file_util->mode-binary THEN 'BIN'
@@ -121,7 +127,7 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
         write_lf                  = add_cr_lf_at_lines_end
         confirm_overwrite         = confirm_overwriting
       IMPORTING
-        filelength                = length_of_file
+        filelength                = file_length
       CHANGING
         data_tab                  = file
       EXCEPTIONS
@@ -160,6 +166,8 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
+    length_of_file = file_length.
+
     ADD 1 TO zcl_ca_file_handler=>dataset_counter_per_operation-input.
     DATA(_lines) = lines( file ).
     ADD _lines TO: record_cnt_per_file_operation-transfer,
@@ -189,7 +197,7 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
 
     cl_gui_frontend_services=>gui_upload(
       EXPORTING
-        filename                = processing_params-path_file
+        filename                = CONV #( processing_params-path_file )
         filetype                = SWITCH #( processing_params-mode
                                     WHEN cvc_file_util->mode-binary THEN 'BIN'
                                     WHEN cvc_file_util->mode-text   THEN 'ASC' ) ##no_text
@@ -197,7 +205,7 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
         codepage                = _codepage
         read_by_line            = read_line_by_line
       IMPORTING
-        filelength              = length_of_file
+        filelength              = file_length
       CHANGING
         data_tab                = file
       EXCEPTIONS
@@ -230,6 +238,8 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
         RAISE EXCEPTION _error.
       ENDIF.
     ENDIF.
+
+    length_of_file = file_length.
   ENDMETHOD.                    "upload
 
 
@@ -241,11 +251,9 @@ CLASS zcl_ca_file_handler_pc IMPLEMENTATION.
     DATA:
       _return_code         TYPE syst_subrc ##needed.
 
-    directory_hdlr->is_path_file_available( processing_params-path_file ).
-
     cl_gui_frontend_services=>file_delete(
       EXPORTING
-        filename             = processing_params-path_file
+        filename             = CONV #( processing_params-path_file )
       CHANGING
         rc                   = _return_code
       EXCEPTIONS

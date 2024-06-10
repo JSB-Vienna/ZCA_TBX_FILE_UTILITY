@@ -14,20 +14,44 @@
    <TPOOL>
     <item>
      <ID>I</ID>
+     <KEY>AC1</KEY>
+     <ENTRY>Look up a connection entry in one of the tables TOA01 - 03. Filter in column</ENTRY>
+     <LENGTH>79</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>AC2</KEY>
+     <ENTRY>RESERVE for the document class PDF. Use for the following selection parameters</ENTRY>
+     <LENGTH>79</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>AC3</KEY>
+     <ENTRY>the values of the columns SAP_OBJECT and OBJECT_ID.</ENTRY>
+     <LENGTH>79</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>CAF</KEY>
-     <ENTRY>Copy archived files of ...</ENTRY>
+     <ENTRY>Copy archived PDF file of ...</ENTRY>
      <LENGTH>70</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>CAS</KEY>
-     <ENTRY>Copy archived file to appl. server or PC</ENTRY>
+     <ENTRY>Copy an archived PDF to the application server or the PC</ENTRY>
      <LENGTH>70</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>CDA</KEY>
-     <ENTRY>Copy file from local documents folder to appl. server</ENTRY>
+     <ENTRY>Copy a file from a local folder (= PC) to a folder of the appl. server</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>CFL</KEY>
+     <ENTRY>Display a file list of a selected directory</ENTRY>
      <LENGTH>70</LENGTH>
     </item>
     <item>
@@ -53,6 +77,12 @@
      <KEY>FL2</KEY>
      <ENTRY>Specifications for file 2</ENTRY>
      <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>LTI</KEY>
+     <ENTRY>Files of directory</ENTRY>
+     <LENGTH>40</LENGTH>
     </item>
     <item>
      <ID>I</ID>
@@ -109,12 +139,6 @@
     </item>
     <item>
      <ID>S</ID>
-     <KEY>P_FL1VHT</KEY>
-     <ENTRY>Val.hlp directories or files 1</ENTRY>
-     <LENGTH>38</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
      <KEY>P_FL2LOC</KEY>
      <ENTRY>Location 2</ENTRY>
      <LENGTH>18</LENGTH>
@@ -151,26 +175,26 @@
     </item>
     <item>
      <ID>S</ID>
-     <KEY>P_FL2VHT</KEY>
-     <ENTRY>Val.hlp directories or files 2</ENTRY>
-     <LENGTH>38</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
      <KEY>P_INSTID</KEY>
      <ENTRY>Key of object instance</ENTRY>
      <LENGTH>30</LENGTH>
     </item>
     <item>
      <ID>S</ID>
-     <KEY>P_RBCAAS</KEY>
-     <ENTRY>Copy archived file to appl. se</ENTRY>
+     <KEY>P_RBCASP</KEY>
+     <ENTRY>Copy archived file to AS or PC</ENTRY>
      <LENGTH>38</LENGTH>
     </item>
     <item>
      <ID>S</ID>
-     <KEY>P_RBCDAS</KEY>
-     <ENTRY>Copy file from local documents</ENTRY>
+     <KEY>P_RBCP2S</KEY>
+     <ENTRY>Copy file from PC to AS</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_RBFLDI</KEY>
+     <ENTRY>Display file list to directory</ENTRY>
      <LENGTH>38</LENGTH>
     </item>
     <item>

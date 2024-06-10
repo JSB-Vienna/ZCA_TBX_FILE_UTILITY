@@ -19,7 +19,7 @@
     <SEOCOMPOTX>
      <CMPNAME>DIRECTORY_HDLR</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Logical path names to selected location</DESCRIPT>
+     <DESCRIPT>CA-TBX: Directory handler for applic. server OR client/PC</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>F4_BROWSE</CMPNAME>
@@ -70,6 +70,12 @@
    <DESCRIPTIONS_SUB>
     <SEOSUBCOTX>
      <CMPNAME>GET_FILE_HANDLER</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>New file handler if requested</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_HANDLER</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
@@ -90,7 +96,7 @@
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
      <SCONAME>USE_FOR_VALUE_HELP_ONLY</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>X = Hide all selection parameters</DESCRIPT>
+     <DESCRIPT>X = Hide all selection parameters (silly name from the past)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>

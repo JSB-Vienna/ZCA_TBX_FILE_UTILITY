@@ -22,19 +22,34 @@
      <DESCRIPT>Delete file</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>DIRECTORY_ENTRY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>DIRECTORY_HDLR</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Directory handler for applic. server OR client/PC</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>FILE_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File length after reading</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILE_NAME_HANDLER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>File name handler</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>PROCESSING_PARAMS</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Description</DESCRIPT>
+     <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>READ</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Location: A = server / P = client/PC</DESCRIPT>
+     <DESCRIPT>Read entire file</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>

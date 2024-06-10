@@ -2,8 +2,8 @@
 *&  Include           ZCA_FILE_UTIL_SLSCR_4_REUSEFL1
 *&---------------------------------------------------------------------*
 
-"!  For details how to use it, please refer to the help of the global class {@link ZCL_CA_FILE_UTIL_SELSCR_CTLR}.
-"!  The prepared text elements can also be found there.
+"For details how to use it, please refer to the help of the global class ZCL_CA_FILE_UTIL_SELSCR_CTLR.
+"The prepared text elements can also be found there.
 
 * s e l e c t i o n   f i e l d s
 *- Specifications for file 1 -----------------------------------------*
@@ -25,12 +25,12 @@ SELECTION-SCREEN BEGIN OF BLOCK fl1 WITH FRAME TITLE TEXT-fl1.
                                  MODIF ID ft1,
     "Path name 1
     p_fl1pth TYPE dxlpath        LOWER CASE        "Don't make it obligatory here because of the functions!
-                                 VISIBLE LENGTH 120
+                                 VISIBLE LENGTH 120   "more than 45 can not be displayed, but the full length can be used
                                  MEMORY ID zca_path_1 ##exists
                                  MODIF ID fp1,
     "File name 1
     p_fl1nam TYPE dxfilename     LOWER CASE        "Don't make it obligatory here because of the functions!
-                                 VISIBLE LENGTH 120
+                                 VISIBLE LENGTH 120   "more than 45 can not be displayed, but the full length can be used
                                  MEMORY ID zca_file_name_1 ##exists
                                  MODIF ID fn1,
     "File operation type 1

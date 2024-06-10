@@ -5,24 +5,20 @@ INTERFACE zif_ca_file_handler PUBLIC.
 *   o b j e c t   r e f e r e n c e s
     "! <p class="shorttext synchronized" lang="en">CA-TBX: Directory handler for applic. server OR client/PC</p>
     directory_hdlr    TYPE REF TO zif_ca_directory_handler READ-ONLY,
+    "! <p class="shorttext synchronized" lang="en">File name handler</p>
+    file_name_handler TYPE REF TO cl_fs_path READ-ONLY,
     "! <p class="shorttext synchronized" lang="en">CA-TBX: Constants and value checks for file utility</p>
     cvc_file_util     TYPE REF TO zcl_ca_c_file_utility READ-ONLY,
 
-**   d a t a   r e f e r e n c e s
-*    "! <p class="shorttext synchronized" lang="en">Description</p>
-*    mr_...               TYPE REF TO x..
-*
-**   t a b l e s
-*    "! <p class="shorttext synchronized" lang="en">Description</p>
-*    mt_...               TYPE x..
-
 *   s t r u c t u r e s
-    "! <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
-    processing_params TYPE zca_s_file_util_sel_params READ-ONLY.
+    "! <p class="shorttext synchronized" lang="en">CA-TBX: Directory entry details</p>
+    directory_entry   TYPE zca_s_directory_entry READ-ONLY,
+    "! <p class="shorttext synchronized" lang="en">Parameters where and how the file should be processed</p>
+    processing_params TYPE zca_s_file_util_sel_params READ-ONLY,
 
-**   s i n g l e   v a l u e s
-*    "! <p class="shorttext synchronized" lang="en">Location: A = server / P = client/PC</p>
-*    mv_location    TYPE dxlocation READ-ONLY.
+*   s i n g l e   v a l u e s
+    "! <p class="shorttext synchronized" lang="en">File length after reading</p>
+    file_length       TYPE i READ-ONLY.
 
 *   i n s t a n c e   m e t h o d s
   METHODS:

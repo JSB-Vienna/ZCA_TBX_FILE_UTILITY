@@ -57,6 +57,16 @@
      <DESCRIPT>CA-TBX: Constants and value checks for value help tool</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>C_MASK_4_ALL_SEL_PARAMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Mask for all selection parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_MAX_MASK_LENGTH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Max. mask length for all selection parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>F4_BROWSE_LOGICAL_FILE_NAME</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Browsing for logical file name</DESCRIPT>
@@ -102,6 +112,11 @@
      <DESCRIPT>Get value either from screen or from default value</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>GET_VALUES_FROM_SEL_SCREEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get values from assigned selection screen block</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>READ_LOGICAL_FILE_NAMES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Read logical file names for value help request</DESCRIPT>
@@ -124,7 +139,7 @@
     <SEOCOMPOTX>
      <CMPNAME>TY_S_LOG_PATH_NAME</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Names to all parts of a selection parameter</DESCRIPT>
+     <DESCRIPT>Logical path names to selected location</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TY_TT_LOG_FILE_NAMES</CMPNAME>
@@ -135,6 +150,11 @@
      <CMPNAME>TY_TT_LOG_PATH_NAMES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>All found logical path names to selected location</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_TT_MOD_GROUPS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Screen modification groups from mask</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>VALUE_HELP_TOOL</CMPNAME>
@@ -406,6 +426,24 @@
      <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>GET_VALUES_FROM_SEL_SCREEN</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Values of assigned selection screen block</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VALUES_FROM_SEL_SCREEN</CMPNAME>
+     <SCONAME>ZCX_CA_CONV</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: Conversion failed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_VALUES_FROM_SEL_SCREEN</CMPNAME>
+     <SCONAME>ZCX_CA_VH_TOOL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX exception: While calling / supporting value help</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>READ_LOGICAL_FILE_NAMES</CMPNAME>
      <SCONAME>RESULT</SCONAME>
      <LANGU>E</LANGU>
@@ -437,9 +475,9 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>
-     <SCONAME>SEL_PATH_N_FILENAME</SCONAME>
+     <SCONAME>SELECTED_PATH_N_FILE</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Chosen path and file name</DESCRIPT>
+     <DESCRIPT>Selected path and file name</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>SEPARATE_FILE_NAME_FROM_SEL</CMPNAME>

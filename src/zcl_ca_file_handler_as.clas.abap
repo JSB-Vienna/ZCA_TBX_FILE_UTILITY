@@ -53,7 +53,7 @@ CLASS zcl_ca_file_handler_as DEFINITION PUBLIC
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       transfer_dataset
         IMPORTING
-          record          TYPE simple
+          record          TYPE data
           max_file_length TYPE i DEFAULT -1
         RAISING
           zcx_ca_file_utility,
@@ -93,8 +93,13 @@ CLASS zcl_ca_file_handler_as DEFINITION PUBLIC
 
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
       "!
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be processed</p>
+      "! @parameter directory_entry     | <p class="shorttext synchronized" lang="en">CA-TBX: Directory entry details</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       constructor
+        IMPORTING
+          processing_params TYPE zca_s_file_util_sel_params
+          directory_entry   TYPE zca_s_directory_entry OPTIONAL
         RAISING
           zcx_ca_file_utility,
 
@@ -249,7 +254,8 @@ CLASS zcl_ca_file_handler_as IMPLEMENTATION.
     "     Close dataset
     "---------------------------------------------------------------------*
     TRY.
-        GET DATASET processing_params-path_file POSITION result.
+        GET DATASET processing_params-path_file POSITION file_length.
+        result = file_length.
 
         "May implement a locking logic for appl. server files -> further details are here:
         "https://help.sap.com/doc/abapdocu_752_index_htm/7.52/en-US/abenfile_interface_locking.htm
@@ -272,7 +278,8 @@ CLASS zcl_ca_file_handler_as IMPLEMENTATION.
     "---------------------------------------------------------------------*
     "     Constructor
     "---------------------------------------------------------------------*
-    super->constructor( ).
+    super->constructor( processing_params = processing_params
+                        directory_entry   = directory_entry ).
     directory_hdlr = zcl_ca_directory_handler=>get_instance( cvc_file_util->location-server ).
   ENDMETHOD.                    "Constructor
 

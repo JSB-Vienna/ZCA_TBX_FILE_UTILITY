@@ -20,30 +20,6 @@ INTERFACE zif_ca_file_util_selscr_ctlr PUBLIC.
       mode      TYPE ty_s_sel_param_names,
     END   OF ty_s_sel_field_names.
 
-*    "! <p class="shorttext synchronized" lang="en">Logical path names to selected location</p>
-*    BEGIN OF ty_s_log_path_name,
-*      filesys    TYPE filesys_d,
-*      opsys      TYPE opsys,
-*      pathintern TYPE pathintern,
-*      pathextern TYPE pathextern,
-*    END   OF ty_s_log_path_name,
-*    "! <p class="shorttext synchronized" lang="en">All found logical path names to selected location</p>
-*    ty_tt_log_path_names TYPE STANDARD TABLE OF ty_s_log_path_name WITH EMPTY KEY,
-*
-*    "! <p class="shorttext synchronized" lang="en">Logical file names to selected location</p>
-*    BEGIN OF ty_s_log_file_name,
-*      fileintern TYPE fileintern,
-*      filename   TYPE filename_d,
-*      fileextern TYPE fileextern,
-*      fileformat TYPE fileformat,
-*      pathintern TYPE pathintern,
-*      pathextern TYPE pathextern,
-*      filesys    TYPE filesys_d,
-*      opsys      TYPE opsys,
-*    END   OF ty_s_log_file_name,
-*    "! <p class="shorttext synchronized" lang="en">All found logical file names to selected location</p>
-*    ty_tt_log_file_names TYPE STANDARD TABLE OF ty_s_log_file_name WITH EMPTY KEY.
-
 * i n s t a n c e   a t t r i b u t e s
   DATA:
 *   o b j e c t   r e f e r e n c e s
@@ -71,18 +47,25 @@ INTERFACE zif_ca_file_util_selscr_ctlr PUBLIC.
 
     "! <p class="shorttext synchronized" lang="en">Get file handler for selected file (attribute FILE_HDLR)</p>
     "!
+    "! @parameter result              | <p class="shorttext synchronized" lang="en">New file handler if requested</p>
     "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
     get_file_handler
+      RETURNING
+        VALUE(result) TYPE REF TO zif_ca_file_handler
       RAISING
         zcx_ca_file_utility,
 
     "! <p class="shorttext synchronized" lang="en">Modifying / adjusting selection screen fields</p>
     "!
-    "! <p>Call this method for each file you have a selection screen include. Use masks to hide or display
-    "! only selection fields that are needed. Concatenate several  modification Ids delimited by a semicolon,
-    "! e. g. like this: FM;FO;FT</p>
-    "! Possible values are (in the order as displayed at the selection screen):<br>
+    "! <p>Call this method for each file you use a selection screen include. You can either use masks to hide
+    "! or display the selection fields that are needed or you can hide them all using the parameter
+    "! {@link .METH:modify_selection_fields.DATA:use_for_value_help_only}. The latter overrules the other two.</p>
     "!
+    "! <p>Concatenate several  modification Ids delimited by a semicolon, e. g. like this: FM;FO;FT in the
+    "! parameters {@link .METH:modify_selection_fields.DATA:mask_2_hide_sel_params} and/or
+    "! {@link .METH:modify_selection_fields.DATA:mask_2_set_params_disp_only}.</p>
+    "!
+    "! Possible values are (in the order as displayed at the selection screen):<br>
     "! <ul>
     "! <li>FL - Location</li>
     "! <li>FT - Logical or physical name</li>
@@ -92,7 +75,7 @@ INTERFACE zif_ca_file_util_selscr_ctlr PUBLIC.
     "! <li>FM - Text or binary mode</li>
     "! </ul>
     "!
-    "! @parameter use_for_value_help_only     | <p class="shorttext synchronized" lang="en">X = Hide all selection parameters</p>
+    "! @parameter use_for_value_help_only     | <p class="shorttext synchronized" lang="en">X = Hide all selection parameters (silly name from the past)</p>
     "! @parameter mask_2_hide_sel_params      | <p class="shorttext synchronized" lang="en">Mask to hide selection parameters</p>
     "! @parameter mask_2_set_params_disp_only | <p class="shorttext synchronized" lang="en">Mask to set selection parameters to display only</p>
     "! @raising   zcx_ca_file_utility         | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>

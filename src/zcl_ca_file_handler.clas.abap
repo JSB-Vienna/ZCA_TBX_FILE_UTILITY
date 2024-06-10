@@ -33,7 +33,10 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
 *   a l i a s e s
     ALIASES:
 *     Attributes
+      directory_entry           FOR zif_ca_file_handler~directory_entry,
       directory_hdlr            FOR zif_ca_file_handler~directory_hdlr,
+      file_name_handler         FOR zif_ca_file_handler~file_name_handler,
+      file_length               FOR zif_ca_file_handler~file_length,
       cvc_file_util             FOR zif_ca_file_handler~cvc_file_util,
       processing_params         FOR zif_ca_file_handler~processing_params,
 *     Method
@@ -76,14 +79,16 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
     CLASS-METHODS:
       "! <p class="shorttext synchronized" lang="en">Get instance</p>
       "!
-      "! @parameter location            | <p class="shorttext synchronized" lang="en">Location: server or client (CVC_FILE_HDLR-&gt;LOCATION-*)</p>
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be processed</p>
+      "! @parameter directory_entry     | <p class="shorttext synchronized" lang="en">CA-TBX: Directory entry details</p>
       "! @parameter result              | <p class="shorttext synchronized" lang="en">CA-TBX: File utility for server OR client/PC</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       get_instance
         IMPORTING
-          location      TYPE dxlocation
+          processing_params TYPE zca_s_file_util_sel_params
+          directory_entry   TYPE zca_s_directory_entry OPTIONAL
         RETURNING
-          VALUE(result) TYPE REF TO zif_ca_file_handler
+          VALUE(result)     TYPE REF TO zif_ca_file_handler
         RAISING
           zcx_ca_file_utility,
 
@@ -95,38 +100,6 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
 
 *   i n s t a n c e   m e t h o d s
     METHODS:
-      "! <p class="shorttext synchronized" lang="en">Get physical path and file name to a logical filename</p>
-      "!
-      "! <p><strong>Attention!</strong> The parameters {@link .DATA:iv_including_dir} and {@link .DATA:iv_with_file_extension}
-      "! exclude each other, means you can either use one or the other with value ABAP_TRUE.</p>
-      "!
-      "! <p>Some more details about the parameters of this method you can find in the documentation of function
-      "! module {@link FUNC:file_get_name} which has the same parameters as the function module
-      "! {@link FUNC:file_get_name_and_validate} used in this method.</p>
-      "!
-      "! @parameter logical_filename    | <p class="shorttext synchronized" lang="en">Logical file name defined in TA FILE</p>
-      "! @parameter parameter_1         | <p class="shorttext synchronized" lang="en">Replacement parameter 1</p>
-      "! @parameter parameter_2         | <p class="shorttext synchronized" lang="en">Replacement parameter 2</p>
-      "! @parameter parameter_3         | <p class="shorttext synchronized" lang="en">Replacement parameter 3</p>
-      "! @parameter is_for_local_client | <p class="shorttext synchronized" lang="en">X = Location is the local client/PC</p>
-      "! @parameter including_dir       | <p class="shorttext synchronized" lang="en">X = Expecting / return a physical path</p>
-      "! @parameter with_file_extension | <p class="shorttext synchronized" lang="en">X = Append internal file extension to file name ..e. g. BIN</p>
-      "! @parameter result              | <p class="shorttext synchronized" lang="en">Complete path and file name</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
-      get_pathfile_from_logical_name
-        IMPORTING
-          logical_filename    TYPE fileintern
-          parameter_1         TYPE text255 DEFAULT space
-          parameter_2         TYPE text255 DEFAULT space
-          parameter_3         TYPE text255 DEFAULT space
-          is_for_local_client TYPE abap_boolean DEFAULT abap_false
-          including_dir       TYPE abap_boolean DEFAULT abap_true
-          with_file_extension TYPE abap_boolean DEFAULT abap_false
-        RETURNING
-          VALUE(result)       TYPE string
-        RAISING
-          zcx_ca_file_utility,
-
       "! <p class="shorttext synchronized" lang="en">Print simple log with statistics</p>
       print_log.
 
@@ -135,29 +108,21 @@ CLASS zcl_ca_file_handler DEFINITION PUBLIC
   PROTECTED SECTION.
 *   i n s t a n c e   m e t h o d s
     METHODS:
-      "! <p class="shorttext synchronized" lang="en">Assemble path and file name, after resolving logical names</p>
-      "!
-      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
-      "! @parameter result              | <p class="shorttext synchronized" lang="en">Processing parameters completed by path and file name</p>
-      "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
-      assemble_path_n_file_name
-        IMPORTING
-          processing_params TYPE zca_s_file_util_sel_params
-        RETURNING
-          VALUE(result)     TYPE zca_s_file_util_sel_params
-        RAISING
-          zcx_ca_file_utility,
-
       "! <p class="shorttext synchronized" lang="en">Constructor</p>
       "!
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be processed</p>
+      "! @parameter directory_entry     | <p class="shorttext synchronized" lang="en">CA-TBX: Directory entry details</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       constructor
+        IMPORTING
+          processing_params TYPE zca_s_file_util_sel_params
+          directory_entry   TYPE zca_s_directory_entry OPTIONAL
         RAISING
           zcx_ca_file_utility,
 
       "! <p class="shorttext synchronized" lang="en">Check whether a file name is provided</p>
       "!
-      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be proceeded</p>
+      "! @parameter processing_params   | <p class="shorttext synchronized" lang="en">Parameters where and how the file should be processed</p>
       "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
       is_file_name_provided
         IMPORTING
@@ -176,51 +141,14 @@ ENDCLASS.
 
 CLASS zcl_ca_file_handler IMPLEMENTATION.
 
-  METHOD assemble_path_n_file_name.
-    "---------------------------------------------------------------------*
-    "     Assemble path and file name, after resolving logical names if necessary
-    "---------------------------------------------------------------------*
-    result = processing_params.
-
-    CASE processing_params-type.
-      WHEN cvc_file_util->type-physical.
-        "Clean up directory delimiter for a uniform / consistent path + file name handling
-        IF result-path IS NOT INITIAL.
-          DATA(lv_offset) = strlen( result-path ) - 1.
-          IF result-path+lv_offset(1) EQ directory_hdlr->path_separator.
-            result-path+lv_offset(1) = space.
-          ENDIF.
-
-          result-path_file = result-path.
-        ENDIF.
-
-        IF result-file_name IS NOT INITIAL.
-          result-path_file = |{ result-path_file }{ directory_hdlr->path_separator }| &
-                             |{ result-file_name }|.
-        ENDIF.
-
-      WHEN cvc_file_util->type-logical.
-        result-path_file = get_pathfile_from_logical_name(
-                             logical_filename = CONV #( result-file_name )
-*                     USE_PRESENTATION_SERVER = xsdbool( result-location eq cvc_file_util->location-pc )
-*                     iv_param_1          = space
-*                     iv_param_2          = space
-*                     iv_param_3          = space
-*                     iv_incl_dir         = abap_true
-*                     iv_with_file_ext    = abap_false
-*                     iv_use_buffer       = abap_false
-                           ).
-    ENDCASE.
-
-    directory_hdlr->is_path_file_available( result-path_file ).
-  ENDMETHOD.                    "assemble_path_n_file_name
-
-
   METHOD constructor.
     "---------------------------------------------------------------------*
     "     Constructor
     "---------------------------------------------------------------------*
-    cvc_file_util = zcl_ca_c_file_utility=>get_instance( ).
+    cvc_file_util       = zcl_ca_c_file_utility=>get_instance( ).
+    directory_hdlr      = zcl_ca_directory_handler=>get_instance( processing_params-location ).
+    me->directory_entry = directory_entry.
+    set_processing_parameters( processing_params ).
   ENDMETHOD.                    "Constructor
 
 
@@ -229,52 +157,18 @@ CLASS zcl_ca_file_handler IMPLEMENTATION.
     "     Get instance
     "---------------------------------------------------------------------*
     DATA(_cvc_file) = zcl_ca_c_file_utility=>get_instance( ).
-    _cvc_file->is_location_valid( location ).
+    _cvc_file->is_location_valid( processing_params-location ).
 
-    CASE location.
+    CASE processing_params-location.
       WHEN _cvc_file->location-pc.
-        result ?= NEW zcl_ca_file_handler_pc( ).
+        result ?= NEW zcl_ca_file_handler_pc( processing_params = processing_params
+                                              directory_entry   = directory_entry ).
 
       WHEN _cvc_file->location-server.
-        result ?= NEW zcl_ca_file_handler_as( ).
+        result ?= NEW zcl_ca_file_handler_as( processing_params = processing_params
+                                              directory_entry   = directory_entry ).
     ENDCASE.
   ENDMETHOD.                    "download
-
-
-  METHOD get_pathfile_from_logical_name.
-    "---------------------------------------------------------------------*
-    "     Get physical path and file name to a logical filename
-    "---------------------------------------------------------------------*
-    CALL FUNCTION 'FILE_GET_NAME_AND_VALIDATE'
-      EXPORTING
-        logical_filename    = logical_filename
-        operating_system    = directory_hdlr->operation_system
-        parameter_1         = parameter_1
-        parameter_2         = parameter_2
-        parameter_3         = parameter_3
-        including_dir       = abap_true
-        with_file_extension = abap_false
-        use_buffer          = abap_false
-      IMPORTING
-        file_name           = result
-      EXCEPTIONS
-        file_not_found      = 1
-        validation_failed   = 2
-        incorrect_path      = 3
-        OTHERS              = 4.
-    IF sy-subrc NE 0.
-      DATA(_error) = CAST zcx_ca_file_utility( zcx_ca_error=>create_exception(
-                                                        iv_excp_cls = zcx_ca_file_utility=>c_zcx_ca_file_utility
-                                                        iv_function = 'FILE_GET_NAME_AND_VALIDATE'
-                                                        iv_subrc    = sy-subrc ) )  ##no_text.
-      IF _error IS BOUND.
-        RAISE EXCEPTION _error.
-      ENDIF.
-    ENDIF.
-
-    "Create physical filename handler
-    directory_hdlr->get_physical_filename_handler( result ).
-  ENDMETHOD.                    "get_pathfile_from_logical_name
 
 
   METHOD is_file_name_provided.
@@ -410,7 +304,13 @@ CLASS zcl_ca_file_handler IMPLEMENTATION.
     cvc_file_util->is_type_valid( processing_params-type ).
 
     is_file_name_provided( processing_params ).
-    me->processing_params = assemble_path_n_file_name( processing_params ).
+    me->processing_params = processing_params.
+
+    directory_hdlr->assemble_path_n_file_name(
+                                        IMPORTING
+                                          path_file_name_hdlr = file_name_handler
+                                        CHANGING
+                                          processing_params   = me->processing_params ).
   ENDMETHOD.                    "zif_ca_file_handler~set_processing_parameters
 
 

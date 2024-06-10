@@ -7,7 +7,7 @@
    PUBLIC SECTION.
 *    i n s t a n c e   m e t h o d s
      METHODS:
-       zif_ca_directory_handler~read_content REDEFINITION.
+       zif_ca_directory_handler~resolve_dir_param_2_dir_path REDEFINITION.
 
 
 *  P R O T E C T E D   S E C T I O N
@@ -16,8 +16,11 @@
      METHODS:
        "! <p class="shorttext synchronized" lang="en">Constructor</p>
        "!
+       "! @parameter sel_screen_ctlr     | <p class="shorttext synchronized" lang="en">Selection screen controller if available</p>
        "! @raising   zcx_ca_file_utility | <p class="shorttext synchronized" lang="en">CA-TBX exception: File handling errors</p>
        constructor
+         IMPORTING
+           sel_screen_ctlr TYPE REF TO zif_ca_file_util_selscr_ctlr OPTIONAL
          RAISING
            zcx_ca_file_utility,
 
@@ -40,7 +43,8 @@
      "-----------------------------------------------------------------*
      "   Constructor
      "-----------------------------------------------------------------*
-     super->constructor( ).
+     super->constructor( sel_screen_ctlr ).
+     determine_location_parameters( ).
      location = cvc_file_util->location-pc.
    ENDMETHOD.                    "constructor
 
@@ -162,17 +166,15 @@
      "Local data definitions
      DATA:
        _file_list       TYPE rstt_t_files,
-       _directory_entry TYPE ty_s_directory_entry,
+       _directory_entry TYPE zca_s_directory_entry,   "ty_s_directory_entry,
        _file_count      TYPE epsfilsiz ##needed.
-
-     cvc_file_util->is_content_type_valid( content_type ).
 
      cl_gui_frontend_services=>directory_list_files(
        EXPORTING
-         directory                   = path
+         directory                   = CONV #( path )
          filter                      = filter
-         files_only                  = xsdbool( content_type EQ cvc_file_util->content_type-files )
-         directories_only            = xsdbool( content_type EQ cvc_file_util->content_type-directories )
+         files_only                  = xsdbool( content_type EQ cvc_file_util->content_type-file )
+         directories_only            = xsdbool( content_type EQ cvc_file_util->content_type-directory )
        CHANGING
          file_table                  = _file_list
          count                       = _file_count
@@ -197,75 +199,35 @@
      "Map / convert directory entries into result parameter
      LOOP AT _file_list INTO DATA(_file_entry).
        CLEAR _directory_entry.
-       _directory_entry-directory_name = path.
+       _directory_entry-path = path.
+       _directory_entry-path_lower_case = to_lower( path ).   "for filtering
+       _directory_entry-techn_type     = COND #( WHEN _file_entry-isdir IS INITIAL
+                                                   THEN techn_type-file ELSE techn_type-directory ).
+       _directory_entry-content_type   = COND #( WHEN _directory_entry-techn_type EQ techn_type-file
+                                                   THEN cvc_file_util->content_type-file
+                                                   ELSE cvc_file_util->content_type-directory ) ##no_text.
        _directory_entry-file_name      = _file_entry-filename.
+       _directory_entry = complete_name_variants_n_ext( _directory_entry ).
+
+       _directory_entry-useable        = xsdbool( _directory_entry-techn_type EQ techn_type-file OR
+                                                  _directory_entry-length     GT 0 ).
        _directory_entry-length         = _file_entry-filelength.
        _directory_entry-mod_date       = _file_entry-writedate.
        _directory_entry-mod_time       = _file_entry-writetime.
-       _directory_entry-techn_type     = COND #( WHEN _file_entry-isdir IS INITIAL
-                                                   THEN 'file' ELSE 'directory' ) ##no_text.
-       _directory_entry-useable        = xsdbool( _directory_entry-techn_type EQ 'file' OR
-                                                  _directory_entry-length     GT 0 ).
-
-       IF _directory_entry-file_name CA '.'.
-         "Get extension
-         SPLIT _directory_entry-file_name AT '.' INTO TABLE DATA(_file_name_splitter) IN CHARACTER MODE.
-         READ TABLE _file_name_splitter INTO  DATA(_name_splitter)
-                                        INDEX lines( _file_name_splitter ).
-         _directory_entry-extension = to_upper( CONV saedoktyp( _name_splitter ) ).
-         TRY.
-             "Get file name without extension
-             DATA(_file_name_length) = find( val  = _directory_entry-file_name
-                                             sub  = '.' && _directory_entry-extension
-                                             case = abap_false ).
-             IF _file_name_length GE 0.
-               _directory_entry-file_name_wo_ext = _directory_entry-file_name(_file_name_length).
-             ELSE.
-               _directory_entry-file_name_wo_ext = _directory_entry-file_name.
-             ENDIF.
-
-           CATCH cx_sy_strg_par_val.
-             _directory_entry-file_name_wo_ext = _directory_entry-file_name.
-         ENDTRY.
-       ENDIF.
-
        APPEND _directory_entry TO content.
      ENDLOOP.
    ENDMETHOD.                    "get_content_from_location
 
 
-   METHOD zif_ca_directory_handler~read_content.
+   METHOD zif_ca_directory_handler~resolve_dir_param_2_dir_path.
      "-----------------------------------------------------------------*
-     "   Get file OR directory list in the given directory
+     "   Resolve a dir. parameter of the AS into a directory path
      "-----------------------------------------------------------------*
-     super->read_content( path_file    = path_file
-                          filter       = filter
-                          sort_by      = sort_by
-                          content_type = content_type ).
-
-     DATA(_path) = path_handler->get_path_name( ).
-
-     get_content_from_location( path         = _path
-                                filter       = filter
-                                content_type = content_type ).
-
-     IF content IS INITIAL.
-       "No files found in directory &1
-       RAISE EXCEPTION TYPE zcx_ca_file_utility
-         EXPORTING
-           textid   = zcx_ca_file_utility=>no_files_found
-           mv_msgty = zcx_ca_file_utility=>c_msgty_s
-           mv_msgv1 = CONV #( _path ).
-     ENDIF.
-
-     CASE sort_by.
-       WHEN cvc_file_util->list_sorting-by_date_time_changed.
-         SORT content BY mod_date mod_time file_name.
-
-       WHEN cvc_file_util->list_sorting-by_file_name.
-         SORT content BY file_name.
-     ENDCASE.
-   ENDMETHOD.                    "zif_ca_directory_hdlr~read_content
+     "Function &1 not allowed in Context &2
+     RAISE EXCEPTION TYPE zcx_ca_file_utility
+       MESSAGE ID 'SD_EXPRESSION' TYPE 'E' NUMBER '045'
+       WITH 'RESOLVE_DIR_PARAM_2_DIR_PATH' 'client/PC' ##no_text.
+   ENDMETHOD.                    "zif_ca_directory_handler~resolve_dir_param_2_dir_path
 
  ENDCLASS.
 

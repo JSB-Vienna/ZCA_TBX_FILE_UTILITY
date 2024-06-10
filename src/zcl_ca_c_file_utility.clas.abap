@@ -51,12 +51,14 @@ CLASS zcl_ca_c_file_utility DEFINITION PUBLIC
         by_file_name         TYPE char1        VALUE 'N'  ##no_text,
       END OF list_sorting,
 
-      "! <p class="shorttext synchronized" lang="en">Content type: Find directories or files</p>
+      "! <p class="shorttext synchronized" lang="en">Content type: Value help for a directory or a file</p>
       BEGIN OF content_type,
-        "! <p class="shorttext synchronized" lang="en">Value help with directories only</p>
-        directories TYPE zca_d_vht_dirs_files VALUE 'D'  ##no_text,
-        "! <p class="shorttext synchronized" lang="en">Value help with files only</p>
-        files       TYPE zca_d_vht_dirs_files VALUE 'F'  ##no_text,
+        "! <p class="shorttext synchronized" lang="en">Dirs. + files to navigate in value help for a specific file</p>
+        both      TYPE zca_d_vht_dirs_files VALUE '*' ##no_text,
+        "! <p class="shorttext synchronized" lang="en">Only dirs., e. g. to choose a dir. to write a file into it</p>
+        directory TYPE zca_d_vht_dirs_files VALUE 'D'  ##no_text,
+        "! <p class="shorttext synchronized" lang="en">Only files, e. g. to loop over some files to read them</p>
+        file      TYPE zca_d_vht_dirs_files VALUE 'F'  ##no_text,
       END OF content_type,
 
       "! <p class="shorttext synchronized" lang="en">Selection fields for file x</p>
