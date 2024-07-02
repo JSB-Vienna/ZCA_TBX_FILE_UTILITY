@@ -49,7 +49,7 @@ CLASS zcl_ca_file_handler_pc DEFINITION PUBLIC
         IMPORTING
           codepage                    TYPE cpcodepage OPTIONAL
           fields_are_separated_by_tab TYPE abap_boolean DEFAULT abap_false
-          read_line_by_line           TYPE abap_boolean DEFAULT abap_false
+          read_line_by_line           TYPE abap_boolean DEFAULT abap_true
         EXPORTING
           file                        TYPE STANDARD TABLE
           length_of_file              TYPE i
