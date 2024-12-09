@@ -10,11 +10,27 @@
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
+   <DESCRIPTIONS_INTERFACE>
+    <SEOCLASSTX>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: File handler for applic. server OR client/PC</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_INTERFACE>
    <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CVC_FILE_UTIL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CVC_FILE_UTIL</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Delete file</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DELETE</CMPNAME>
@@ -23,8 +39,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DIRECTORY_ENTRY</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIRECTORY_ENTRY</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIRECTORY_HDLR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Directory handler for applic. server OR client/PC</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DIRECTORY_HDLR</CMPNAME>
@@ -33,8 +59,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>FILE_LENGTH</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File length after reading</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILE_LENGTH</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>File length after reading</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILE_NAME_HANDLER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File name handler</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>FILE_NAME_HANDLER</CMPNAME>
@@ -43,8 +79,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>PROCESSING_PARAMS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROCESSING_PARAMS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>READ</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Read entire file</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>READ</CMPNAME>
@@ -53,8 +99,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Set parameters where and how the file should be proceeded</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Set parameters where and how the file should be proceeded</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Write entire file</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>WRITE</CMPNAME>
@@ -66,8 +122,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DELETE</CMPNAME>
      <SCONAME>CHECK_AUTHORITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>CHECK_AUTHORITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DELETE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DELETE</CMPNAME>
@@ -78,8 +146,20 @@
     <SEOSUBCOTX>
      <CMPNAME>READ</CMPNAME>
      <SCONAME>CHECK_AUTHORITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Check authority for path and file (appl. server only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>CHECK_AUTHORITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Check authority for path and file (appl. server only)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>CODEPAGE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>READ</CMPNAME>
@@ -90,8 +170,20 @@
     <SEOSUBCOTX>
      <CMPNAME>READ</CMPNAME>
      <SCONAME>FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>FILE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>LENGTH_OF_FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>READ</CMPNAME>
@@ -102,8 +194,20 @@
     <SEOSUBCOTX>
      <CMPNAME>READ</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>READ</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>
+     <SCONAME>PROCESSING_PARAMS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameters where and how the file should be proceeded</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>
@@ -114,8 +218,20 @@
     <SEOSUBCOTX>
      <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PROCESSING_PARAMETERS</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>CHECK_AUTHORITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>WRITE</CMPNAME>
@@ -126,8 +242,20 @@
     <SEOSUBCOTX>
      <CMPNAME>WRITE</CMPNAME>
      <SCONAME>CODEPAGE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>CODEPAGE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Codepage (can use MV_CODEPAGE as default, see TCP00)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>WRITE</CMPNAME>
@@ -138,14 +266,32 @@
     <SEOSUBCOTX>
      <CMPNAME>WRITE</CMPNAME>
      <SCONAME>LENGTH_OF_FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>LENGTH_OF_FILE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Transmitted length</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>WRITE</CMPNAME>
      <SCONAME>MAX_FILE_LENGTH</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Max. length of the file to write (lower 0 = complete file)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>MAX_FILE_LENGTH</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Max. length of the file to write (lower 0 = complete file)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>WRITE</CMPNAME>

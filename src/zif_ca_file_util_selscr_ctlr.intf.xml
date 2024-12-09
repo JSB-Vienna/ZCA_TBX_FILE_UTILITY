@@ -10,11 +10,27 @@
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
+   <DESCRIPTIONS_INTERFACE>
+    <SEOCLASSTX>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Selection screen controller for File Utility</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_INTERFACE>
    <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CVC_FILE_UTIL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CVC_FILE_UTIL</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Constants and value checks for file utility</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DIRECTORY_HDLR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Directory handler for applic. server OR client/PC</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DIRECTORY_HDLR</CMPNAME>
@@ -23,8 +39,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>F4_BROWSE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Browsing for logical or physical path / filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>F4_BROWSE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Browsing for logical or physical path / filename</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>FILE_HDLR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: File handler for applic. server OR client/PC</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>FILE_HDLR</CMPNAME>
@@ -33,8 +59,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_FILE_HANDLER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get file handler for selected file (attribute FILE_HDLR)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_FILE_HANDLER</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Get file handler for selected file (attribute FILE_HDLR)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Modifying / adjusting selection screen fields</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
@@ -43,8 +79,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Provide (hidden) selection screen parameter values</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Provide (hidden) selection screen parameter values</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SEL_FIELD_ID</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>This instance is assigned to the selection fields n</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>SEL_FIELD_ID</CMPNAME>
@@ -53,13 +99,28 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>SEL_FIELD_NAMES</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>All the names to each selection field</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SEL_FIELD_NAMES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>All the names to each selection field</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TY_S_SEL_FIELD_NAMES</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Names/Commands to selection fields</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_SEL_FIELD_NAMES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Names/Commands to selection fields</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_SEL_PARAM_NAMES</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Names to all parts of a selection parameter</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TY_S_SEL_PARAM_NAMES</CMPNAME>
@@ -71,8 +132,20 @@
     <SEOSUBCOTX>
      <CMPNAME>GET_FILE_HANDLER</CMPNAME>
      <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>New file handler if requested</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_HANDLER</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>New file handler if requested</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILE_HANDLER</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_FILE_HANDLER</CMPNAME>
@@ -83,8 +156,20 @@
     <SEOSUBCOTX>
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
      <SCONAME>MASK_2_HIDE_SEL_PARAMS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Mask to hide selection parameters</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>MASK_2_HIDE_SEL_PARAMS</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Mask to hide selection parameters</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>MASK_2_SET_PARAMS_DISP_ONLY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Mask to set selection parameters to display only</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
@@ -95,8 +180,20 @@
     <SEOSUBCOTX>
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
      <SCONAME>USE_FOR_VALUE_HELP_ONLY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Hide all selection parameters (silly name from the past)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>USE_FOR_VALUE_HELP_ONLY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Hide all selection parameters (silly name from the past)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>MODIFY_SELECTION_FIELDS</CMPNAME>
@@ -107,8 +204,20 @@
     <SEOSUBCOTX>
      <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
      <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameter values</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Parameter values</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>PROVIDE_SELSCREEN_PARAM_VALUES</CMPNAME>

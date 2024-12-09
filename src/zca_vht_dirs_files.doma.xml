@@ -38,7 +38,7 @@
    <DD01_TEXTS>
     <item>
      <DDLANGUAGE>D</DDLANGUAGE>
-     <DDTEXT>Schalter für Wertehilfe - nur Verzeichnisse oder nur Dateien</DDTEXT>
+     <DDTEXT>CA-TBX: Schalter für Wertehilfe - nur Verz. oder nur Dateien</DDTEXT>
     </item>
    </DD01_TEXTS>
    <DD07_TEXTS>
@@ -58,6 +58,7 @@
      <VALPOS>0003</VALPOS>
      <DDLANGUAGE>D</DDLANGUAGE>
      <DOMVALUE_L>*</DOMVALUE_L>
+     <DDTEXT>Beides, Verzeichnisse und Dateien</DDTEXT>
     </item>
    </DD07_TEXTS>
   </asx:values>

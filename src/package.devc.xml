@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DEVC>
-    <CTEXT>CA-TBX: File utility (up-/download + read/transfer)</CTEXT>
+    <CTEXT>CA-TBX: Business Application Logging (BAL)</CTEXT>
     <COMP_POSID>CA</COMP_POSID>
     <COMPONENT>HLB0009110</COMPONENT>
    </DEVC>

@@ -79,7 +79,91 @@
      <LENGTH>50</LENGTH>
     </item>
    </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>S01</KEY>
+       <ENTRY>Dateiname für INPUT (gelesen) ...................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S02</KEY>
+       <ENTRY>Anzahl der gelesenen Dateien ....................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S03</KEY>
+       <ENTRY>Dateiname für OUTPUT (übertragen) ...............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S04</KEY>
+       <ENTRY>Anzahl der übertragenen Datensätze ..............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S05</KEY>
+       <ENTRY>Anzahl aller gelesenen Datensätze ...............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S06</KEY>
+       <ENTRY>Anzahl aller übertragenen Datensätze ............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S07</KEY>
+       <ENTRY>Anzahl geöffneter Dateien ....</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S08</KEY>
+       <ENTRY>... Aktion INPUT ................................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S09</KEY>
+       <ENTRY>... Aktion OUTPUT ...............................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S10</KEY>
+       <ENTRY>... Aktion APPEND ...............................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S11</KEY>
+       <ENTRY>... Aktion UPDATE ...............................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <DESCRIPTIONS_CLASS>
+    <SEOCLASSTX>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: File utility for client/PC</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_CLASS>
    <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <LANGU>E</LANGU>
@@ -87,8 +171,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Download a file to the PC/client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Download a file to the PC/client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Upload a file from the PC/client</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>UPLOAD</CMPNAME>
@@ -100,8 +194,20 @@
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>DIRECTORY_ENTRY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>DIRECTORY_ENTRY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>PROCESSING_PARAMS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
@@ -112,8 +218,20 @@
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>ADD_CR_LF_AT_LINES_END</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Add CR/LF at end of CHAR lines</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
@@ -124,8 +242,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
      <SCONAME>CHECK_AUTHORITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>CHECK_AUTHORITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Check authority for path and file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>CODEPAGE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Codepage (can use CODEPAGE as default, see TCP00)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
@@ -136,14 +266,32 @@
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
      <SCONAME>CONFIRM_OVERWRITING</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Confirm overwriting file</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>CONFIRM_OVERWRITING</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Confirm overwriting file</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
      <SCONAME>FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>FILE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>File as table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>LENGTH_OF_FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Transmitted length</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
@@ -154,8 +302,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
      <SCONAME>MAX_FILE_LENGTH</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Write file of this length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>MAX_FILE_LENGTH</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Write file of this length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>TRUNCATE_TRAILING_BLANKS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of CHAR fields</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
@@ -166,8 +326,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
      <SCONAME>TRUNCATE_TRAILING_BLANKS_EOL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Truncate trailing blanks at end of the last column</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>TRUNCATE_TRAILING_BLANKS_EOL</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Truncate trailing blanks at end of the last column</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>USE_HORIZONT_TAB_AS_DELIM</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Separate fields by horizontal tabulator</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
@@ -178,8 +350,20 @@
     <SEOSUBCOTX>
      <CMPNAME>DOWNLOAD</CMPNAME>
      <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DOWNLOAD</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>CODEPAGE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Codepage (can use CODEPAGE as default, see TCP00)</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>UPLOAD</CMPNAME>
@@ -190,8 +374,20 @@
     <SEOSUBCOTX>
      <CMPNAME>UPLOAD</CMPNAME>
      <SCONAME>FIELDS_ARE_SEPARATED_BY_TAB</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Flds are TAB separated, result table needs corresp cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>FIELDS_ARE_SEPARATED_BY_TAB</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = Flds are TAB separated, result table needs corresp cols</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File as table</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>UPLOAD</CMPNAME>
@@ -202,14 +398,32 @@
     <SEOSUBCOTX>
      <CMPNAME>UPLOAD</CMPNAME>
      <SCONAME>LENGTH_OF_FILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File length</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>LENGTH_OF_FILE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>File length</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>UPLOAD</CMPNAME>
      <SCONAME>READ_LINE_BY_LINE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = File is written line-by-line into the internal table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>READ_LINE_BY_LINE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>X = File is written line-by-line into the internal table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>UPLOAD</CMPNAME>

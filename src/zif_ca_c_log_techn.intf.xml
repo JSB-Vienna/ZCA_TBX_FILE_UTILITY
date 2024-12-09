@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_CA_C_LOG_TECHN</CLSNAME>
+    <LANGU>D</LANGU>
+    <DESCRIPT>CA-TBX: Technical constants for application log</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_INTERFACE>
+    <SEOCLASSTX>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Technical constants for application log</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_INTERFACE>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_CLASS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Field name: Column for class or program name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_CLASS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Field name: Column for class or program name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_LINE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Field name: Column for source code line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_LINE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Field name: Column for source code line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_METHOD</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Field name: Column for method or subroutine name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_METHOD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Field name: Column for method or subroutine name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_S_EXCEP_SRCPOS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Field name: Structure with exception position</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_FNAME_S_EXCEP_SRCPOS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Field name: Structure with exception position</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_OBJECT_ZCA</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Object ZCA</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>C_OBJECT_ZCA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Object ZCA</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

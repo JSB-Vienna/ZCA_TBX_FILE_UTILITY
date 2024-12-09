@@ -1,0 +1,1058 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_CA_LOG</CLSNAME>
+    <LANGU>D</LANGU>
+    <DESCRIPT>CA-TBX: Business Application Logging (BAL)</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_INTERFACE>
+    <SEOCLASSTX>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Business Application Logging (BAL)</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_INTERFACE>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add single message using message variables</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add single message using message variables</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add message from structure BAL_S_MSG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add message from structure BAL_S_MSG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAL_TAB</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add messages from tabletype ACO_TT_BAL_MSG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAL_TAB</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add messages from tabletype ACO_TT_BAL_MSG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add message from structure BAPIRET2</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add message from structure BAPIRET2</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add messages from tabletype BAPIRET2_T</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add messages from tabletype BAPIRET2_T</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add message from exception class</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add message from exception class</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_FREE_TEXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add message free text</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Add message from structure SYST</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add message from structure SYST</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Close log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Close log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Display log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Display log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_EXT_NUMBER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get current external number</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_EXT_NUMBER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get current external number</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MSG_COUNT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get number of all BAL messages depending on message type</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MSG_COUNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get number of all BAL messages depending on message type</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MSG_LIST_BAL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get all messages from BAL (table type ACO_TT_BAL_MSG)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MSG_LIST_BAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get all messages from BAL (table type ACO_TT_BAL_MSG)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MSG_LIST_BAPIRET2</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get messages from BAL and convert into BAPIRET2 format</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MSG_LIST_BAPIRET2</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get messages from BAL and convert into BAPIRET2 format</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Get prepared display profile</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get prepared display profile</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_LOG_OPTIONS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Constants and value checks for application log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_LOG_OPTIONS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Constants and value checks for application log</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RELEASE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Delete instance from buffer (closes log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RELEASE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Delete instance from buffer (closes log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Save all messages (optional with CLOSE)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Save all messages (optional with CLOSE)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ADDITIONAL_REF_OBJECT_ID</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Set additional reference object id</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ADDITIONAL_REF_OBJECT_ID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set additional reference object id</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_EXT_NUMBER</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Set new external number (late, before saving/displaying log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_EXT_NUMBER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set new external number (late, before saving/displaying log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PROGRAM_NAME</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Set program name (late, before saving/displaying log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_PROGRAM_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set program name (late, before saving/displaying log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_SOURCE_POSITION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Set source code position to message</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_SOURCE_POSITION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set source code position to message</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TRANSACTION_CODE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Set transaction code (late, before saving/displaying log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_TRANSACTION_CODE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Set transaction code (late, before saving/displaying log)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Write all messages (use of WRITE command)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Write all messages (use of WRITE command)</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Common object: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGID</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message ID</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message ID</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGNO</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message Number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGNO</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message Number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV1</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Message variable 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV1</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message variable 1</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV2</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Message variable 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV2</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message variable 2</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV3</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Message variable 3</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV3</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message variable 3</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV4</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Message variable 4</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_MSGV4</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message variable 4</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAL</CMPNAME>
+     <SCONAME>IS_MSG</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Message Data</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAL</CMPNAME>
+     <SCONAME>IS_MSG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Message Data</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAL</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Common object: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAL</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAL_TAB</CMPNAME>
+     <SCONAME>IT_MSG</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Message Log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAL_TAB</CMPNAME>
+     <SCONAME>IT_MSG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message Log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IS_BAPIRET2</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Return Parameter</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IS_BAPIRET2</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Return Parameter</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Common object: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Common object: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IT_BAPIRET2</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Return table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IT_BAPIRET2</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Return table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_BAPIRET2_TAB</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IV_ALL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Append all previous messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IV_ALL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Append all previous messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IX_EXCEP</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Catched exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_EXC</CMPNAME>
+     <SCONAME>IX_EXCEP</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Catched exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_FREE_TEXT</CMPNAME>
+     <SCONAME>MSGTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Common object: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <SCONAME>IV_DETLEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Level of detail</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_MSG_SYST</CMPNAME>
+     <SCONAME>IV_PROBCLASS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application log: Message problem class</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IO_PARENT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parent container to display log in-place</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IO_PARENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parent container to display log in-place</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IS_PROFILE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Log Output Format Profile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IS_PROFILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Log Output Format Profile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_DISP_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display source code position of exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_DISP_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Display source code position of exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_OPT_CWIDTH</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Optimize column width</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_OPT_CWIDTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Optimize column width</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_POPUP</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display as popup</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_POPUP</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Display as popup</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_SHOW_ALL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Show all messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_SHOW_ALL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Show all messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_TITLE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Dynpro Title</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_TITLE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Dynpro Title</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_USE_GRID</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display as grid</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>DISPLAY</CMPNAME>
+     <SCONAME>IV_USE_GRID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Display as grid</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXT_NUMBER</CMPNAME>
+     <SCONAME>RV_EXTNUMBER</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: External ID</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_EXT_NUMBER</CMPNAME>
+     <SCONAME>RV_EXTNUMBER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: External ID</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_COUNT</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_COUNT</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_COUNT</CMPNAME>
+     <SCONAME>RV_RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Number of message found</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_COUNT</CMPNAME>
+     <SCONAME>RV_RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Number of message found</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAL</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAL</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAL</CMPNAME>
+     <SCONAME>RT_DATA</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Message Log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAL</CMPNAME>
+     <SCONAME>RT_DATA</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message Log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAPIRET2</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAPIRET2</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAPIRET2</CMPNAME>
+     <SCONAME>RT_DATA</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Return table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MSG_LIST_BAPIRET2</CMPNAME>
+     <SCONAME>RT_DATA</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Return table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_DISP_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display source code position of exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_DISP_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Display source code position of exception</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_OPT_CWIDTH</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Optimize column width</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_OPT_CWIDTH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Optimize column width</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_POPUP</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display as popup</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_POPUP</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Display as popup</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_REPORT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Program for saving layout variant</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_REPORT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Program for saving layout variant</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_SHOW_ALL</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Show all messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_SHOW_ALL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Show all messages</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_TITLE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Dynpro Title</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_TITLE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Dynpro Title</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_USE_GRID</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Display as grid</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>IV_USE_GRID</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Display as grid</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Log Output Format Profile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PROFILE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Log Output Format Profile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RELEASE</CMPNAME>
+     <SCONAME>IV_IN_UPD_TASK</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Save log in update task</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RELEASE</CMPNAME>
+     <SCONAME>IV_IN_UPD_TASK</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Save log in update task</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RELEASE</CMPNAME>
+     <SCONAME>IV_SAVE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Save log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RELEASE</CMPNAME>
+     <SCONAME>IV_SAVE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Save log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_CLOSE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Close log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_CLOSE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Close log</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_COMMIT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Execute commit work</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_COMMIT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Execute commit work</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_IN_UPD_TASK</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Save log in update task</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_IN_UPD_TASK</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Save log in update task</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_NO_EMPTY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>X = Do not save empty logs</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>IV_NO_EMPTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>X = Do not save empty logs</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>RV_LOGNUMBER</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application log: log number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SAVE</CMPNAME>
+     <SCONAME>RV_LOGNUMBER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application log: log number</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ADDITIONAL_REF_OBJECT_ID</CMPNAME>
+     <SCONAME>IS_LPOR</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Additional object key</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ADDITIONAL_REF_OBJECT_ID</CMPNAME>
+     <SCONAME>IS_LPOR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Additional object key</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ADDITIONAL_REF_OBJECT_ID</CMPNAME>
+     <SCONAME>IV_ADD_KEY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Additional key of e. g. a subobject</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ADDITIONAL_REF_OBJECT_ID</CMPNAME>
+     <SCONAME>IV_ADD_KEY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Additional key of e. g. a subobject</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXT_NUMBER</CMPNAME>
+     <SCONAME>IV_EXTNUMBER</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>External ID (or something else)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_EXT_NUMBER</CMPNAME>
+     <SCONAME>IV_EXTNUMBER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>External ID (or something else)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PROGRAM_NAME</CMPNAME>
+     <SCONAME>IV_PROGRAM_NAME</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Program name (or something else)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_PROGRAM_NAME</CMPNAME>
+     <SCONAME>IV_PROGRAM_NAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Program name (or something else)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SOURCE_POSITION</CMPNAME>
+     <SCONAME>IS_MSGH</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Application Log: Message handle</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SOURCE_POSITION</CMPNAME>
+     <SCONAME>IS_MSGH</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Application Log: Message handle</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SOURCE_POSITION</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Common object: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_SOURCE_POSITION</CMPNAME>
+     <SCONAME>IS_SRCPOS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CA-TBX: Exception position in source code</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRANSACTION_CODE</CMPNAME>
+     <SCONAME>IV_TRANSACTION_CODE</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Transaction code (or something else)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_TRANSACTION_CODE</CMPNAME>
+     <SCONAME>IV_TRANSACTION_CODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Transaction code (or something else)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>WRITE</CMPNAME>
+     <SCONAME>IV_MSGTY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP System Field: Message Type</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

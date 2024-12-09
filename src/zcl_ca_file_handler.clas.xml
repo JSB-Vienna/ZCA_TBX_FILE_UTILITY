@@ -79,11 +79,100 @@
      <LENGTH>50</LENGTH>
     </item>
    </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>S01</KEY>
+       <ENTRY>Dateiname für INPUT (gelesen) ...................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S02</KEY>
+       <ENTRY>Anzahl der gelesenen Dateien ....................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S03</KEY>
+       <ENTRY>Dateiname für OUTPUT (übertragen) ...............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S04</KEY>
+       <ENTRY>Anzahl der übertragenen Datensätze ..............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S05</KEY>
+       <ENTRY>Anzahl aller gelesenen Datensätze ...............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S06</KEY>
+       <ENTRY>Anzahl aller übertragenen Datensätze ............:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S07</KEY>
+       <ENTRY>Anzahl geöffneter Dateien ....</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S08</KEY>
+       <ENTRY>... Aktion INPUT ................................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S09</KEY>
+       <ENTRY>... Aktion OUTPUT ...............................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S10</KEY>
+       <ENTRY>... Aktion APPEND ...............................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>S11</KEY>
+       <ENTRY>... Aktion UPDATE ...............................:</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <DESCRIPTIONS_CLASS>
+    <SEOCLASSTX>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: File utility for application server OR client/PC</DESCRIPT>
+    </SEOCLASSTX>
+   </DESCRIPTIONS_CLASS>
    <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Constructor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>DATASET_COUNTER_PER_OPERATION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Dataset counters depending on operation type</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>DATASET_COUNTER_PER_OPERATION</CMPNAME>
@@ -92,8 +181,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Current codepage of either the app. server or the client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Current codepage of either the app. server or the client/PC</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_FILE_NAME_PROVIDED</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Check whether a file name is provided</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>IS_FILE_NAME_PROVIDED</CMPNAME>
@@ -102,8 +201,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>PRINT_LOG</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Print simple log with statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PRINT_LOG</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Print simple log with statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>PRINT_LOG_OVER_ALL</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Print simple log with statistics over all activities</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>PRINT_LOG_OVER_ALL</CMPNAME>
@@ -112,8 +221,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>RECORD_CNT_OVER_ALL_OPERATIONS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Record counters over all</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RECORD_CNT_OVER_ALL_OPERATIONS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Record counters over all</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RECORD_CNT_PER_FILE_OPERATION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>File System Paths</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>RECORD_CNT_PER_FILE_OPERATION</CMPNAME>
@@ -122,13 +241,28 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>RESET_STATISTICS</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Reset statistics</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RESET_STATISTICS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Reset statistics</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TY_S_CNT_PER_OPERATION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Counters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_CNT_PER_OPERATION</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Counters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TY_S_DATASET_CNT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Dataset counter</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TY_S_DATASET_CNT</CMPNAME>
@@ -140,14 +274,32 @@
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>DIRECTORY_ENTRY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>DIRECTORY_ENTRY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <SCONAME>PROCESSING_PARAMS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>PROCESSING_PARAMS</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
@@ -158,8 +310,20 @@
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
      <SCONAME>DIRECTORY_ENTRY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>DIRECTORY_ENTRY</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: Directory entry details</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>PROCESSING_PARAMS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
@@ -170,8 +334,20 @@
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
      <SCONAME>RESULT</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX: File utility for server OR client/PC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>RESULT</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>CA-TBX: File utility for server OR client/PC</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>GET_INSTANCE</CMPNAME>
@@ -182,8 +358,20 @@
     <SEOSUBCOTX>
      <CMPNAME>IS_FILE_NAME_PROVIDED</CMPNAME>
      <SCONAME>PROCESSING_PARAMS</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_FILE_NAME_PROVIDED</CMPNAME>
+     <SCONAME>PROCESSING_PARAMS</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Parameters where and how the file should be processed</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>IS_FILE_NAME_PROVIDED</CMPNAME>
+     <SCONAME>ZCX_CA_FILE_UTILITY</SCONAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>CA-TBX exception: File handling errors</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>IS_FILE_NAME_PROVIDED</CMPNAME>

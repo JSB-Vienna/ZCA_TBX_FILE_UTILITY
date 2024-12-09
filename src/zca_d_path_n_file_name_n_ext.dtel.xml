@@ -18,6 +18,19 @@
     <DTELMASTER>E</DTELMASTER>
     <REFKIND>D</REFKIND>
    </DD04V>
+   <I18N_LANGS>
+    <LANGU>D</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>D</DDLANGUAGE>
+     <DDTEXT>CA-TBX: Pfad, Dateiname und Dateierweiterung</DDTEXT>
+     <REPTEXT>Pfad, Dateiname + -erweiterung</REPTEXT>
+     <SCRTEXT_S>Pfad+Datei</SCRTEXT_S>
+     <SCRTEXT_M>Pfad+Dateiname+Erw.</SCRTEXT_M>
+     <SCRTEXT_L>Pfad, Dateiname + -erweiterung</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
   </asx:values>
  </asx:abap>
 </abapGit>
